@@ -1,0 +1,19 @@
+{
+  "app": {
+    "title": "SmartLocker - Tủ Gửi & Thuê Đồ Thông Minh",
+    "headerTitle": "SmartLocker Vinhomes",
+    "headerColor": "#FFFFFF",
+    "textColor": "black",
+    "statusBar": "transparent"
+  },
+  "pages": [
+    "pages/index/index"
+  ],
+  "listCSS": [
+    "static/css/index.css"
+  ],
+  "listSyncJS": [
+    "static/js/index.js"
+  ],
+  "listAsyncJS": []
+}

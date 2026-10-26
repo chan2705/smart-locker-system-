@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SmartLocker - Giao Diện Điện Thoại (Zalo Mini App)</title>
+  <meta name="description" content="Giao diện điện thoại Zalo Mini App cho hệ thống Smart Locker, thiết kế chuẩn Light Mode cao cấp">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#2563EB',
+            brandLight: '#EFF6FF',
+            brandDark: '#1D4ED8',
+            surface: '#F8FAFC',
+          },
+          boxShadow: {
+            phone: '0 25px 60px -15px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(15, 23, 42, 0.05)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .press-effect {
+      transition: transform 0.12s ease-out, filter 0.12s ease-out;
+    }
+    .press-effect:active {
+      transform: scale(0.96);
+      filter: brightness(0.95);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-100/90 text-slate-900 select-none antialiased flex flex-col justify-between">
+
+  <!-- ================= TOP APP BAR ================= -->
+  <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+    <div class="max-w-5xl mx-auto px-4 h-15 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-brand text-white flex items-center justify-center font-bold text-lg shadow-md shadow-brand/20">
+          <i data-lucide="smartphone" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">SMART LOCKER • MOBILE VIEW</h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+              Zalo Mini App
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-500 font-medium">Bản Giao Diện Điện Thoại Thuần • Chuẩn Tỉ Lệ 19.5:9</p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center space-x-2">
+        <button onclick="toggleFitScreen()" id="btn-fit-screen" class="press-effect text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center space-x-1.5 shadow-xs">
+          <i data-lucide="maximize" class="w-3.5 h-3.5"></i>
+          <span>Vừa Màn Hình</span>
+        </button>
+
+        <!-- Link chuyển sang bản Full có Tủ -->
+        <a href="demo-giang-vien.html" class="press-effect text-xs font-bold text-brand bg-brandLight hover:bg-blue-100 px-3.5 py-1.5 rounded-xl border border-blue-200 flex items-center space-x-1.5 shadow-xs">
+          <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Mở Bản Full (Có Tủ)</span>
+          <span class="sm:hidden">Bản Full Tủ</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN MOBILE VIEWPORT ================= -->
+  <main class="flex-1 w-full flex items-center justify-center p-3 sm:p-5 my-auto overflow-hidden">
+
+    <!-- Outer Phone Mockup (iPhone 16 Pro Proportions: 400x844px) -->
+    <div id="phone-mockup-wrapper" class="w-full max-w-[400px] h-[844px] bg-slate-900 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700 transition-transform duration-200">
+      
+      <!-- Hardware Side Buttons (Titanium Finish) -->
+      <div class="absolute -left-[3px] top-28 w-[4px] h-10 bg-slate-600 rounded-l-sm"></div>
+      <div class="absolute -left-[3px] top-42 w-[4px] h-12 bg-slate-600 rounded-l-sm"></div>
+      <div class="absolute -right-[3px] top-32 w-[4px] h-16 bg-slate-600 rounded-r-sm"></div>
+
+      <!-- Inner Screen Bezel Container -->
+      <div class="w-full h-full bg-slate-50 rounded-[46px] flex flex-col overflow-hidden relative border border-slate-200">
+        
+        <!-- Dynamic Island -->
+        <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-50 flex items-center justify-between px-3">
+          <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800"></div>
+          <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="pt-3.5 px-6 pb-1 flex justify-between items-center text-xs font-bold text-slate-800 z-40 bg-white">
+          <span id="mobile-clock">9:41</span>
+          <div class="flex items-center space-x-1.5 text-slate-800">
+            <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+            <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+            <i data-lucide="battery" class="w-4 h-4"></i>
+          </div>
+        </div>
+
+        <!-- Zalo Mini App Navigation Header -->
+        <div class="bg-white border-b border-slate-200 px-4 py-2.5 flex items-center justify-between z-40">
+          <div class="flex items-center space-x-2.5">
+            <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center font-bold text-sm shadow-xs">
+              ZL
+            </div>
+            <div>
+              <h3 class="text-sm font-extrabold text-slate-900 leading-tight">SmartLocker</h3>
+              <p class="text-[11px] font-medium text-slate-500 flex items-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span> Sảnh A • Đã kết nối
+              </p>
+            </div>
+          </div>
+          <!-- Zalo Action Capsule -->
+          <div class="bg-slate-100 border border-slate-200 rounded-full px-2.5 py-1 flex items-center space-x-2 text-slate-600 text-xs font-bold">
+            <span>•••</span>
+            <span class="text-slate-300">|</span>
+            <i data-lucide="x" class="w-3.5 h-3.5 cursor-pointer"></i>
+          </div>
+        </div>
+
+        <!-- Phone Scrollable Body -->
+        <div class="flex-1 overflow-y-auto p-4 no-scrollbar pb-24" id="phone-content-viewport">
+
+          <!-- ================= TAB 1: GỬI ĐỒ (SHIPPER) ================= -->
+          <div id="tab-content-shipper" class="space-y-4">
+            <!-- Banner Card -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-3.5 flex justify-between items-center">
+              <div>
+                <div class="text-[11px] font-bold uppercase text-brand tracking-wider">Shipper Gửi Đồ</div>
+                <div class="text-sm font-extrabold text-slate-900 mt-0.5">Mở Ngăn Tủ Nhanh</div>
+              </div>
+              <div class="text-right">
+                <span class="text-lg font-black text-brand" id="shipper-free-boxes-text">8</span>
+                <span class="text-xs font-semibold text-slate-500">ngăn trống</span>
+              </div>
+            </div>
+
+            <!-- 1. Chọn Cỡ Ngăn -->
+            <div>
+              <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center space-x-1.5 mb-2">
+                <span>1. Chọn cỡ ngăn tủ</span>
+              </label>
+              <div class="grid grid-cols-3 gap-2.5" id="size-selector-group">
+                <button onclick="selectLockerSize('S')" id="size-btn-S" class="press-effect border-2 border-brand bg-brandLight/60 rounded-2xl p-3 text-center transition-all">
+                  <div class="w-8 h-8 mx-auto rounded-xl bg-blue-100 text-brand flex items-center justify-center font-bold text-sm mb-1.5">
+                    S
+                  </div>
+                  <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
+                  <div class="text-[10px] text-slate-500 font-medium">Tài liệu, ví</div>
+                  <div class="text-xs font-bold text-brand mt-1">Trống: 3</div>
+                </button>
+                <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all">
+                  <div class="w-8 h-8 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm mb-1.5">
+                    M
+                  </div>
+                  <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
+                  <div class="text-[10px] text-slate-500 font-medium">Hộp giày, áo</div>
+                  <div class="text-xs font-bold text-slate-600 mt-1">Trống: 2</div>
+                </button>
+                <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all">
+                  <div class="w-8 h-8 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm mb-1.5">
+                    L
+                  </div>
+                  <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
+                  <div class="text-[10px] text-slate-500 font-medium">Thùng lớn</div>
+                  <div class="text-xs font-bold text-slate-600 mt-1">Trống: 3</div>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. SĐT Người Nhận (ĐÃ BỎ HOÀN TOÀN CÁC NÚT SĐT CÓ SẴN) -->
+            <div>
+              <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide block mb-2">
+                2. SĐT Người Nhận
+              </label>
+              <div class="relative">
+                <input type="tel" id="recipient-phone-input" placeholder="Nhập số điện thoại người nhận (vd: 0912345678)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-3 text-sm font-bold text-slate-900 outline-none transition-all shadow-sm">
+                <div class="absolute right-3.5 top-3.5 text-slate-400">
+                  <i data-lucide="phone" class="w-4 h-4"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Mã Vận Đơn (Tùy chọn) -->
+            <div>
+              <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide block mb-2">
+                3. Mã Vận Đơn (Tùy chọn)
+              </label>
+              <div class="relative">
+                <input type="text" id="tracking-code-input" placeholder="Tự sinh nếu để trống (vd: VNPOST-8821)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-3 text-sm font-bold text-slate-900 outline-none transition-all shadow-sm">
+                <div class="absolute right-3.5 top-3.5 text-slate-400">
+                  <i data-lucide="barcode" class="w-4 h-4"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA BUTTON TO ĐÙNG MÀU XANH -->
+            <button onclick="executeShipperDropoff()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-4 px-6 rounded-2xl font-black text-base shadow-lg shadow-brand/25 flex items-center justify-center space-x-2 mt-4">
+              <i data-lucide="unlock" class="w-5 h-5"></i>
+              <span>MỞ TỦ NGAY</span>
+            </button>
+
+            <div class="text-[11px] text-center text-slate-600 font-medium pt-1">
+              ⏱️ Thao tác 3 giây • Tự động gửi thông báo Zalo cho cư dân
+            </div>
+          </div>
+
+          <!-- ================= TAB 2: NHẬN ĐỒ (CƯ DÂN) ================= -->
+          <div id="tab-content-resident" class="space-y-4 hidden">
+            <!-- Parcel Card Ready for Pickup -->
+            <div id="resident-parcel-card" class="bg-white border-2 border-slate-200 rounded-3xl p-5 shadow-sm text-center relative overflow-hidden">
+              <div class="absolute -top-10 -right-10 w-28 h-28 bg-emerald-50 rounded-full z-0"></div>
+              <div class="relative z-10">
+                <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner mb-3">
+                  <i data-lucide="gift" class="w-9 h-9"></i>
+                </div>
+                <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-extrabold uppercase tracking-wide">
+                  Đang Chờ Nhận
+                </span>
+                <h4 class="text-base font-extrabold text-slate-900 mt-2">Bưu Kiện #VN-9821</h4>
+                <p class="text-xs text-slate-500 font-medium mt-0.5">Người gửi: Shopee Express • Gửi lúc: 14:20</p>
+                
+                <!-- Cabinet Info Highlight -->
+                <div class="my-4 p-3 bg-slate-50 border border-slate-200 rounded-2xl flex justify-around items-center">
+                  <div>
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Vị trí ngăn tủ</div>
+                    <div class="text-lg font-black text-brand">Ngăn #02</div>
+                  </div>
+                  <div class="w-px h-8 bg-slate-200"></div>
+                  <div>
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Mã PIN Mở Tủ</div>
+                    <div class="text-lg font-black text-emerald-600 tracking-wider">892104</div>
+                  </div>
+                </div>
+
+                <!-- QR Display -->
+                <div class="p-3 bg-white border-2 border-slate-100 rounded-2xl inline-block shadow-inner">
+                  <div class="w-24 h-24 bg-slate-900 rounded-xl flex items-center justify-center p-2 mx-auto">
+                    <svg viewBox="0 0 100 100" class="w-full h-full fill-white">
+                      <rect x="0" y="0" width="30" height="30" />
+                      <rect x="5" y="5" width="20" height="20" fill="#000" />
+                      <rect x="10" y="10" width="10" height="10" />
+                      <rect x="70" y="0" width="30" height="30" />
+                      <rect x="75" y="5" width="20" height="20" fill="#000" />
+                      <rect x="80" y="10" width="10" height="10" />
+                      <rect x="0" y="70" width="30" height="30" />
+                      <rect x="5" y="75" width="20" height="20" fill="#000" />
+                      <rect x="10" y="80" width="10" height="10" />
+                      <rect x="40" y="10" width="10" height="20" />
+                      <rect x="40" y="40" width="20" height="20" />
+                      <rect x="70" y="50" width="20" height="10" />
+                    </svg>
+                  </div>
+                  <p class="text-[10px] text-slate-500 font-bold mt-1">Quét mã trước camera tủ</p>
+                </div>
+
+                <!-- CTA Mở Tủ Nhận Hàng -->
+                <button onclick="executeResidentPickup(2)" class="press-effect w-full mt-4 bg-emerald-600 hover:bg-emerald-700 text-white py-4 px-6 rounded-2xl font-black text-base shadow-lg shadow-emerald-600/25 flex items-center justify-center space-x-2">
+                  <i data-lucide="key" class="w-5 h-5"></i>
+                  <span>MỞ TỦ NHẬN HÀNG</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Empty state (hidden by default) -->
+            <div id="resident-empty-state" class="hidden bg-white border-2 border-slate-200 rounded-3xl p-8 text-center">
+              <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mb-3">
+                <i data-lucide="inbox" class="w-8 h-8"></i>
+              </div>
+              <h4 class="text-sm font-extrabold text-slate-800">Không có bưu kiện nào</h4>
+              <p class="text-xs text-slate-500 mt-1">Khi có hàng giao vào tủ, bạn sẽ nhận được thông báo Zalo kèm mã mở tủ tại đây.</p>
+            </div>
+          </div>
+
+          <!-- ================= TAB 3: THUÊ ĐỒ (RENTAL) ================= -->
+          <div id="tab-content-rental" class="space-y-3 hidden">
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-3 flex justify-between items-center">
+              <div>
+                <div class="text-[11px] font-bold uppercase text-amber-700 tracking-wider">Tiện Ích Chung Cư</div>
+                <div class="text-sm font-extrabold text-slate-900 mt-0.5">Mượn & Thuê Đồ Dùng</div>
+              </div>
+              <span class="text-xs font-bold bg-white text-amber-800 px-2.5 py-1 rounded-lg border border-amber-200 shadow-xs">
+                eKYC CCCD
+              </span>
+            </div>
+
+            <!-- Grid 4 món đồ tiện ích -->
+            <div class="grid grid-cols-2 gap-2.5">
+              <!-- Tool 1: Máy khoan Bosch -->
+              <div id="rental-card-1" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
+                <div>
+                  <div class="w-12 h-12 rounded-xl bg-blue-100 text-brand flex items-center justify-center font-bold text-2xl mb-2">
+                    🪛
+                  </div>
+                  <div class="text-sm font-extrabold text-slate-900 leading-tight">Máy khoan Bosch</div>
+                  <div class="text-xs font-bold text-amber-600 mt-0.5">20k/h • Ngăn #05</div>
+                </div>
+                <button id="btn-rent-1" onclick="openRentalProcess(1, 'Máy khoan Bosch', 'Ngăn #05', 5, 200000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
+                  <span>Thuê Ngay</span>
+                </button>
+              </div>
+
+              <!-- Tool 2: Vợt Pickleball -->
+              <div id="rental-card-2" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
+                <div>
+                  <div class="w-12 h-12 rounded-xl bg-pink-100 text-pink-600 flex items-center justify-center font-bold text-2xl mb-2">
+                    🏓
+                  </div>
+                  <div class="text-sm font-extrabold text-slate-900 leading-tight">Vợt Pickleball</div>
+                  <div class="text-xs font-bold text-amber-600 mt-0.5">15k/h • Ngăn #06</div>
+                </div>
+                <button id="btn-rent-2" onclick="openRentalProcess(2, 'Vợt Pickleball', 'Ngăn #06', 6, 150000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
+                  <span>Thuê Ngay</span>
+                </button>
+              </div>
+
+              <!-- Tool 3: Máy rửa xe mini -->
+              <div id="rental-card-3" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
+                <div>
+                  <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-2xl mb-2">
+                    🚗
+                  </div>
+                  <div class="text-sm font-extrabold text-slate-900 leading-tight">Máy rửa xe Mini</div>
+                  <div class="text-xs font-bold text-amber-600 mt-0.5">25k/h • Ngăn #07</div>
+                </div>
+                <button id="btn-rent-3" onclick="openRentalProcess(3, 'Máy rửa xe Mini', 'Ngăn #07', 7, 300000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
+                  <span>Thuê Ngay</span>
+                </button>
+              </div>
+
+              <!-- Tool 4: Trạm sạc dự phòng -->
+              <div id="rental-card-4" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
+                <div>
+                  <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-2xl mb-2">
+                    🔋
+                  </div>
+                  <div class="text-sm font-extrabold text-slate-900 leading-tight">Trạm sạc dự phòng</div>
+                  <div class="text-xs font-bold text-amber-600 mt-0.5">10k/h • Ngăn #08</div>
+                </div>
+                <button id="btn-rent-4" onclick="openRentalProcess(4, 'Trạm sạc dự phòng', 'Ngăn #08', 8, 200000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
+                  <span>Thuê Ngay</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Navigation Bar (3 Tabs + iOS Home Indicator) -->
+        <div class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 flex flex-col px-3 pt-1 pb-1.5 z-40 shadow-sm">
+          <div class="flex items-center justify-around h-14">
+            <button onclick="switchTab('shipper')" id="nav-btn-shipper" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-brand">
+              <i data-lucide="package" class="w-5 h-5"></i>
+              <span class="text-[11px] font-extrabold mt-0.5">Gửi Đồ</span>
+            </button>
+            <button onclick="switchTab('resident')" id="nav-btn-resident" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400 relative">
+              <span class="absolute top-0 right-7 w-2 h-2 rounded-full bg-red-500" id="nav-badge-resident"></span>
+              <i data-lucide="key" class="w-5 h-5"></i>
+              <span class="text-[11px] font-extrabold mt-0.5">Nhận Đồ</span>
+            </button>
+            <button onclick="switchTab('rental')" id="nav-btn-rental" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
+              <i data-lucide="wrench" class="w-5 h-5"></i>
+              <span class="text-[11px] font-extrabold mt-0.5">Thuê Đồ</span>
+            </button>
+          </div>
+          <!-- iOS Home Indicator -->
+          <div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mb-0.5"></div>
+        </div>
+
+        <!-- ================= BOTTOM SHEET POPUP: THUÊ ĐỒ (eKYC & CỌC) ================= -->
+        <div id="rental-bottom-sheet" class="absolute inset-0 bg-slate-900/50 backdrop-blur-xs z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
+          <div id="rental-sheet-panel" class="bg-white rounded-t-[32px] p-5 space-y-4 max-h-[85%] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl">
+            
+            <!-- Sheet Handle & Close -->
+            <div class="flex justify-between items-center">
+              <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto -ml-3"></div>
+              <button onclick="closeRentalSheet()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Header Item Info -->
+            <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+              <div class="text-3xl" id="sheet-item-icon">🪛</div>
+              <div>
+                <h4 class="text-sm font-extrabold text-slate-900" id="sheet-item-name">Máy khoan Bosch</h4>
+                <p class="text-xs text-slate-500" id="sheet-item-location">Vị trí: Ngăn #05 • Tình trạng: Sẵn sàng</p>
+              </div>
+            </div>
+
+            <!-- eKYC Simulation Step -->
+            <div class="bg-blue-50 border border-blue-200 rounded-2xl p-3.5 space-y-2">
+              <div class="flex items-center space-x-2 text-xs font-bold text-brand">
+                <i data-lucide="shield-check" class="w-4 h-4"></i>
+                <span>Xác thực danh tính cư dân (eKYC)</span>
+              </div>
+              <div class="flex items-center justify-between text-xs bg-white p-2.5 rounded-xl border border-blue-100">
+                <div class="flex items-center space-x-2">
+                  <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                    ✓
+                  </div>
+                  <div>
+                    <div class="font-extrabold text-slate-800">Khuất Văn Chân</div>
+                    <div class="text-[10px] text-slate-500">CCCD: 00120200**** (Đã duyệt)</div>
+                  </div>
+                </div>
+                <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md">Chính chủ</span>
+              </div>
+            </div>
+
+            <!-- Deposit Info -->
+            <div class="space-y-1.5 border-t border-slate-100 pt-3 text-xs">
+              <div class="flex justify-between text-slate-600">
+                <span>Tiền cọc giữ đồ:</span>
+                <span class="font-bold text-slate-900" id="sheet-deposit-amount">200.000 đ</span>
+              </div>
+              <div class="flex justify-between text-slate-600">
+                <span>Giá thuê:</span>
+                <span class="font-bold text-amber-600">20.000 đ / giờ</span>
+              </div>
+              <p class="text-[10px] text-slate-500 italic">* Tiền cọc sẽ được hoàn lại 100% về ví ZaloPay ngay khi trả đồ vào tủ.</p>
+            </div>
+
+            <!-- Confirm Action -->
+            <button onclick="confirmRentalDeposit()" id="btn-confirm-deposit" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-2xl font-black text-sm shadow-lg shadow-brand/20 flex items-center justify-center space-x-2">
+              <i data-lucide="wallet" class="w-4 h-4"></i>
+              <span>CỌC VÍ ZALOPAY & MỞ TỦ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= IN-APP TOAST ALERTS ================= -->
+        <div id="phone-toast" class="absolute top-18 left-4 right-4 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl z-50 text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
+          <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+          <span id="phone-toast-text">Đã mở ngăn tủ thành công!</span>
+        </div>
+
+        <!-- ================= SHIPPER DROP SUCCESS MODAL ================= -->
+        <div id="shipper-success-modal" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+          <div class="bg-white rounded-3xl p-5 w-full max-w-[340px] text-center space-y-3.5 shadow-2xl transform scale-90 transition-transform duration-300" id="shipper-modal-card">
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner">
+              <i data-lucide="unlock" class="w-7 h-7"></i>
+            </div>
+            <div>
+              <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 uppercase tracking-wide">
+                Cửa Tủ Đang Mở
+              </span>
+              <h3 class="text-lg font-black text-slate-900 mt-1">Đã Mở Ngăn <span id="modal-assigned-box" class="text-brand">#01</span></h3>
+              <p class="text-xs text-slate-500 mt-0.5">Vui lòng đặt hàng vào ngăn tủ và đóng chặt cửa.</p>
+            </div>
+
+            <!-- PIN Code Card -->
+            <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3">
+              <div class="text-[11px] font-bold text-slate-500">MÃ NHẬN HÀNG (OTP)</div>
+              <div class="text-2xl font-black text-slate-900 tracking-widest my-1 font-mono" id="modal-otp-code">749201</div>
+              <div class="text-[10px] text-slate-600">Đã tự động gửi Zalo thông báo đến cư dân: <span class="font-bold text-slate-800" id="modal-recipient-phone">0912.***.678</span></div>
+            </div>
+
+            <button onclick="closeShipperSuccessModal()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-2xl font-black text-sm shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5">
+              <i data-lucide="check" class="w-4 h-4"></i>
+              <span>Xác Nhận Đã Đặt Đồ & Đóng Tủ</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500 font-medium">
+    Giao Diện Zalo Mini App SmartLocker • Tối giản • Nền Sáng • Thân thiện người dùng
+  </footer>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Live Clock Update
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const el = document.getElementById('mobile-clock');
+      if (el) el.textContent = `${hours}:${minutes}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // Audio Synthesis Engine (Offline, No External MP3 needed)
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      beep(freq = 600, duration = 0.08) {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      },
+      solenoidThud() {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(120, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.15);
+          gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.15);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.15);
+        } catch (e) {}
+      }
+    };
+
+    let currentSelectedSize = 'S';
+    let currentRentingItem = null;
+
+    // ================= PHONE NAVIGATION TABS =================
+    function switchTab(tabName) {
+      AudioEngine.beep(600, 0.05);
+
+      const tabs = ['shipper', 'resident', 'rental'];
+      tabs.forEach(t => {
+        const content = document.getElementById(`tab-content-${t}`);
+        const navBtn = document.getElementById(`nav-btn-${t}`);
+        if (t === tabName) {
+          content.classList.remove('hidden');
+          navBtn.classList.remove('text-slate-400');
+          navBtn.classList.add('text-brand');
+        } else {
+          content.classList.add('hidden');
+          navBtn.classList.add('text-slate-400');
+          navBtn.classList.remove('text-brand');
+        }
+      });
+    }
+
+    function selectLockerSize(size) {
+      AudioEngine.beep(500, 0.05);
+      currentSelectedSize = size;
+      ['S', 'M', 'L'].forEach(s => {
+        const btn = document.getElementById(`size-btn-${s}`);
+        if (s === size) {
+          btn.className = 'press-effect border-2 border-brand bg-brandLight/60 rounded-2xl p-3 text-center transition-all';
+        } else {
+          btn.className = 'press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all';
+        }
+      });
+    }
+
+    // ================= TAB 1: SHIPPER GỬI ĐỒ =================
+    function executeShipperDropoff() {
+      const phoneInput = document.getElementById('recipient-phone-input');
+      const phone = phoneInput && phoneInput.value.trim() ? phoneInput.value.trim() : '0912.345.678';
+      
+      AudioEngine.solenoidThud();
+
+      const assignedBoxNumber = currentSelectedSize === 'S' ? 1 : (currentSelectedSize === 'M' ? 5 : 9);
+      const randomOtp = Math.floor(100000 + Math.random() * 900000);
+
+      // Show Shipper Modal
+      document.getElementById('modal-assigned-box').textContent = `#${String(assignedBoxNumber).padStart(2, '0')}`;
+      document.getElementById('modal-otp-code').textContent = randomOtp;
+      document.getElementById('modal-recipient-phone').textContent = phone;
+
+      const modal = document.getElementById('shipper-success-modal');
+      const card = document.getElementById('shipper-modal-card');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-90');
+      card.classList.add('scale-100');
+
+      showPhoneToast(`Đã mở Ngăn #${String(assignedBoxNumber).padStart(2, '0')} để bỏ đồ!`);
+    }
+
+    function closeShipperSuccessModal() {
+      AudioEngine.beep(400, 0.06);
+      const modal = document.getElementById('shipper-success-modal');
+      const card = document.getElementById('shipper-modal-card');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      card.classList.remove('scale-100');
+      card.classList.add('scale-90');
+
+      showPhoneToast('Đã đóng cửa tủ thành công. Hoàn tất gửi hàng!');
+    }
+
+    // ================= TAB 2: NHẬN ĐỒ =================
+    function executeResidentPickup(boxId) {
+      AudioEngine.solenoidThud();
+      showPhoneToast(`Đã mở Ngăn #${String(boxId).padStart(2, '0')}! Cư dân vui lòng lấy đồ.`);
+
+      document.getElementById('resident-parcel-card').classList.add('hidden');
+      document.getElementById('resident-empty-state').classList.remove('hidden');
+      document.getElementById('nav-badge-resident').classList.add('hidden');
+    }
+
+    // ================= TAB 3: THUÊ ĐỒ =================
+    function openRentalProcess(itemId, name, location, boxId, deposit) {
+      AudioEngine.beep(650, 0.05);
+      currentRentingItem = { itemId, name, location, boxId, deposit };
+
+      const icons = { 1: '🪛', 2: '🏓', 3: '🚗', 4: '🔋' };
+      document.getElementById('sheet-item-icon').textContent = icons[itemId] || '🧰';
+      document.getElementById('sheet-item-name').textContent = name;
+      document.getElementById('sheet-item-location').textContent = `Vị trí: ${location} • Tình trạng: Sẵn sàng`;
+      document.getElementById('sheet-deposit-amount').textContent = `${deposit.toLocaleString('vi-VN')} đ`;
+
+      const sheet = document.getElementById('rental-bottom-sheet');
+      const panel = document.getElementById('rental-sheet-panel');
+      sheet.classList.remove('opacity-0', 'pointer-events-none');
+      panel.classList.remove('translate-y-full');
+      panel.classList.add('translate-y-0');
+    }
+
+    function closeRentalSheet() {
+      AudioEngine.beep(400, 0.05);
+      const sheet = document.getElementById('rental-bottom-sheet');
+      const panel = document.getElementById('rental-sheet-panel');
+      panel.classList.remove('translate-y-0');
+      panel.classList.add('translate-y-full');
+      setTimeout(() => {
+        sheet.classList.add('opacity-0', 'pointer-events-none');
+      }, 250);
+    }
+
+    function confirmRentalDeposit() {
+      AudioEngine.solenoidThud();
+      closeRentalSheet();
+
+      if (currentRentingItem) {
+        showPhoneToast(`Cọc ví thành công! Đã mở ${currentRentingItem.location} để lấy đồ.`);
+        const card = document.getElementById(`rental-card-${currentRentingItem.itemId}`);
+        const btn = document.getElementById(`btn-rent-${currentRentingItem.itemId}`);
+        if (card && btn) {
+          card.classList.add('opacity-60', 'bg-slate-50');
+          btn.outerHTML = `<button onclick="returnRentedItem(${currentRentingItem.itemId}, '${currentRentingItem.name}', '${currentRentingItem.location}', ${currentRentingItem.boxId}, ${currentRentingItem.deposit})" class="press-effect w-full mt-3 bg-amber-500 hover:bg-amber-600 text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1"><span>Trả Đồ</span></button>`;
+        }
+      }
+    }
+
+    function returnRentedItem(itemId, name, location, boxId, deposit) {
+      AudioEngine.solenoidThud();
+      showPhoneToast(`Đã mở ${location} để trả ${name}. Hoàn cọc 100%!`);
+      const card = document.getElementById(`rental-card-${itemId}`);
+      if (card) {
+        card.classList.remove('opacity-60', 'bg-slate-50');
+        const btn = card.querySelector('button');
+        if (btn) {
+          btn.outerHTML = `<button id="btn-rent-${itemId}" onclick="openRentalProcess(${itemId}, '${name}', '${location}', ${boxId}, ${deposit})" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1"><span>Thuê Ngay</span></button>`;
+        }
+      }
+    }
+
+    // ================= TOAST NOTIFICATION =================
+    let toastTimer = null;
+    function showPhoneToast(msg) {
+      const toast = document.getElementById('phone-toast');
+      const text = document.getElementById('phone-toast-text');
+      if (!toast || !text) return;
+
+      text.textContent = msg;
+      toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3500);
+    }
+
+    // ================= AUTO-FIT SCREEN SCALING =================
+    let isFitScreen = true;
+    function applyFitScreen() {
+      const phone = document.getElementById('phone-mockup-wrapper');
+      if (!phone) return;
+      if (isFitScreen) {
+        const availableHeight = window.innerHeight - 100;
+        const contentHeight = 844;
+        if (availableHeight < contentHeight) {
+          const scale = Math.max(0.65, Math.min(1, availableHeight / contentHeight));
+          phone.style.transform = `scale(${scale})`;
+          phone.style.transformOrigin = 'center top';
+          phone.style.marginBottom = `${-(contentHeight * (1 - scale))}px`;
+        } else {
+          phone.style.transform = 'none';
+          phone.style.marginBottom = '0px';
+        }
+      } else {
+        phone.style.transform = 'none';
+        phone.style.marginBottom = '0px';
+      }
+    }
+    function toggleFitScreen() {
+      isFitScreen = !isFitScreen;
+      const btn = document.getElementById('btn-fit-screen');
+      if (btn) {
+        btn.innerHTML = isFitScreen 
+          ? '<i data-lucide="maximize" class="w-3.5 h-3.5"></i><span>Vừa Màn Hình</span>' 
+          : '<i data-lucide="minimize" class="w-3.5 h-3.5"></i><span>Chuẩn 100%</span>';
+        lucide.createIcons();
+      }
+      applyFitScreen();
+    }
+    window.addEventListener('resize', applyFitScreen);
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      applyFitScreen();
+    });
+    lucide.createIcons();
+    setTimeout(applyFitScreen, 120);
+  </script>
+</body>
+</html>
