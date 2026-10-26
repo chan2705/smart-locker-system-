@@ -214,19 +214,26 @@
 
             <!-- ================= TAB 1: GỬI ĐỒ (SHIPPER) ================= -->
             <div id="tab-content-shipper" class="space-y-4">
-              <!-- Banner Card -->
-              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-3.5 flex justify-between items-center">
+              <!-- Banner Card (Cập nhật đúng số lượng ô trống và ô đã có đồ) -->
+              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-3 flex justify-between items-center">
                 <div>
                   <div class="text-[11px] font-bold uppercase text-brand tracking-wider">Shipper Gửi Đồ</div>
                   <div class="text-sm font-extrabold text-slate-900 mt-0.5">Mở Ngăn Tủ Nhanh</div>
                 </div>
-                <div class="text-right">
-                  <span class="text-lg font-black text-brand" id="shipper-free-boxes-text">8</span>
-                  <span class="text-xs font-semibold text-slate-500">ngăn trống</span>
+                <div class="flex items-center space-x-3 text-right">
+                  <div>
+                    <span class="text-base font-black text-brand" id="shipper-free-boxes-text">6</span>
+                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">trống</span>
+                  </div>
+                  <div class="w-px h-6 bg-blue-200"></div>
+                  <div>
+                    <span class="text-base font-black text-amber-600" id="shipper-occupied-boxes-text">2</span>
+                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">có đồ</span>
+                  </div>
                 </div>
               </div>
 
-              <!-- 1. Chọn Cỡ Ngăn -->
+              <!-- 1. Chọn Cỡ Ngăn (Đếm chính xác từng cỡ) -->
               <div>
                 <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center space-x-1.5 mb-2">
                   <span>1. Chọn cỡ ngăn tủ</span>
@@ -238,7 +245,7 @@
                     </div>
                     <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
                     <div class="text-[10px] text-slate-500 font-medium">Tài liệu, ví</div>
-                    <div class="text-xs font-bold text-brand mt-1">Trống: 3</div>
+                    <div class="text-xs font-bold text-brand mt-1" id="count-size-S">Trống: 2</div>
                   </button>
                   <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all">
                     <div class="w-8 h-8 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm mb-1.5">
@@ -246,7 +253,7 @@
                     </div>
                     <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
                     <div class="text-[10px] text-slate-500 font-medium">Hộp giày, áo</div>
-                    <div class="text-xs font-bold text-slate-600 mt-1">Trống: 2</div>
+                    <div class="text-xs font-bold text-slate-600 mt-1" id="count-size-M">Trống: 0</div>
                   </button>
                   <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all">
                     <div class="w-8 h-8 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm mb-1.5">
@@ -254,22 +261,29 @@
                     </div>
                     <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
                     <div class="text-[10px] text-slate-500 font-medium">Thùng lớn</div>
-                    <div class="text-xs font-bold text-slate-600 mt-1">Trống: 3</div>
+                    <div class="text-xs font-bold text-slate-600 mt-1" id="count-size-L">Trống: 4</div>
                   </button>
                 </div>
               </div>
 
-              <!-- 2. SĐT Người Nhận (Đã loại bỏ hoàn toàn các nút SĐT có sẵn) -->
+              <!-- 2. SĐT Người Nhận (Validation 10 - 11 số) -->
               <div>
-                <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide block mb-2">
-                  2. SĐT Người Nhận
-                </label>
+                <div class="flex justify-between items-center mb-1.5">
+                  <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide">
+                    2. SĐT Người Nhận
+                  </label>
+                  <span class="text-[11px] font-semibold text-slate-400">Yêu cầu 10 - 11 chữ số</span>
+                </div>
                 <div class="relative">
-                  <input type="tel" id="recipient-phone-input" placeholder="Nhập số điện thoại người nhận (vd: 0912345678)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-3 text-sm font-bold text-slate-900 outline-none transition-all shadow-sm">
-                  <div class="absolute right-3.5 top-3.5 text-slate-400">
+                  <input type="tel" id="recipient-phone-input" maxlength="11" oninput="validatePhoneInputLive(this)" placeholder="Nhập số điện thoại (vd: 0912345678)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-3 text-sm font-bold text-slate-900 outline-none transition-all shadow-sm">
+                  <div class="absolute right-3.5 top-3.5 text-slate-400" id="recipient-phone-status-icon">
                     <i data-lucide="phone" class="w-4 h-4"></i>
                   </div>
                 </div>
+                <p id="recipient-phone-error" class="hidden text-xs font-bold text-rose-600 mt-1.5 flex items-center space-x-1">
+                  <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                  <span id="recipient-phone-error-text">Vui lòng nhập đủ 10 hoặc 11 chữ số (bắt đầu bằng số 0).</span>
+                </p>
               </div>
 
               <!-- CTA BUTTON TO ĐÙNG MÀU XANH -->
@@ -440,35 +454,85 @@
                 </div>
               </div>
 
-              <!-- BƯỚC 1: ĐỊNH DANH CCCD -->
-              <div id="sheet-step-1" class="border-2 border-slate-200 rounded-2xl p-4 text-center">
-                <div class="text-xs font-extrabold uppercase text-slate-500 tracking-wider mb-2">Bước 1: Xác Thực eKYC</div>
-                
-                <div id="ekyc-scanner-box" class="w-full h-32 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center relative overflow-hidden">
-                  <i data-lucide="scan-face" class="w-10 h-10 text-brand mb-1"></i>
-                  <span class="text-xs font-semibold text-slate-600" id="ekyc-scan-text">Định danh khuôn mặt & CCCD</span>
-                  <div id="ekyc-laser" class="absolute left-0 right-0 h-1 bg-brand shadow-md shadow-brand hidden"></div>
+              <!-- BƯỚC 1: XÁC THỰC SĐT & CCCD (eKYC AI MỨC 2) -->
+              <div id="sheet-step-1" class="border-2 border-slate-200 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs font-extrabold uppercase text-slate-700 tracking-wider flex items-center space-x-1.5">
+                    <span class="w-5 h-5 rounded-full bg-brand text-white flex items-center justify-center text-[10px]">1</span>
+                    <span>Xác Thực SĐT & CCCD Gắn Chip</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-brand bg-brandLight px-2 py-0.5 rounded-md">VNeID Mức 2</span>
                 </div>
 
-                <div id="ekyc-success-tag" class="hidden mt-3 p-2 bg-emerald-50 border border-emerald-200 rounded-xl text-xs font-bold text-emerald-700 flex items-center justify-center space-x-1.5">
-                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-                  <span>Đã xác thực Định danh Mức 2</span>
+                <!-- Input SĐT Người Thuê -->
+                <div>
+                  <label class="text-[11px] font-bold text-slate-600 block mb-1">Số điện thoại liên hệ (10 - 11 số)</label>
+                  <div class="relative">
+                    <input type="tel" id="rental-phone-input" maxlength="11" value="0988777666" placeholder="Ví dụ: 0988777666" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none transition-all">
+                    <div class="absolute right-3 top-2.5 text-slate-400">
+                      <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+                    </div>
+                  </div>
                 </div>
 
-                <button id="btn-trigger-ekyc" onclick="runSimulatedEkyc()" class="press-effect w-full mt-3 bg-brand text-white py-3 rounded-xl font-bold text-xs shadow-md shadow-brand/20">
-                  Giả lập Quét CCCD & FaceID (1s)
+                <!-- Input CCCD Gắn Chip (12 số) -->
+                <div>
+                  <label class="text-[11px] font-bold text-slate-600 block mb-1">Số CCCD gắn chip (12 chữ số)</label>
+                  <div class="relative">
+                    <input type="text" id="rental-cccd-input" maxlength="12" value="001202008921" placeholder="12 số trên thẻ CCCD" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none transition-all font-mono">
+                    <div class="absolute right-3 top-2.5 text-slate-400">
+                      <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <p id="rental-ekyc-error" class="hidden text-xs font-bold text-rose-600 flex items-center space-x-1">
+                  <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                  <span id="rental-ekyc-error-text">Vui lòng nhập đúng SĐT và 12 số CCCD!</span>
+                </p>
+
+                <!-- Scanner Animation Box -->
+                <div id="ekyc-scanner-box" class="w-full h-24 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center relative overflow-hidden transition-all">
+                  <i data-lucide="scan-face" class="w-8 h-8 text-brand mb-1"></i>
+                  <span class="text-[11px] font-semibold text-slate-600" id="ekyc-scan-text">Nhận diện khuôn mặt & Chip CCCD NFC</span>
+                  <div id="ekyc-laser" class="absolute left-0 right-0 h-1 bg-brand shadow-md shadow-brand hidden transition-all duration-700"></div>
+                </div>
+
+                <!-- Success Tag -->
+                <div id="ekyc-success-tag" class="hidden p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1">
+                  <div class="flex items-center space-x-1.5 font-extrabold text-emerald-800">
+                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                    <span>Đã Xác Thực eKYC Thành Công</span>
+                  </div>
+                  <div class="text-[11px] text-emerald-700 font-semibold" id="ekyc-verified-details">
+                    Chủ tài khoản: Khuất Văn Chân • CCCD: 001202008921
+                  </div>
+                </div>
+
+                <button id="btn-trigger-ekyc" onclick="runSimulatedEkyc()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3 rounded-xl font-bold text-xs shadow-md shadow-brand/20 flex items-center justify-center space-x-1.5">
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+                  <span>Xác Thực SĐT & Chip CCCD (eKYC)</span>
                 </button>
               </div>
 
               <!-- BƯỚC 2: ĐẶT CỌC VIETQR -->
-              <div id="sheet-step-2" class="border-2 border-slate-200 rounded-2xl p-4 text-center opacity-40 pointer-events-none">
-                <div class="text-xs font-extrabold uppercase text-slate-500 tracking-wider mb-2">Bước 2: Cọc Qua VietQR (200.000đ)</div>
+              <div id="sheet-step-2" class="border-2 border-slate-200 rounded-2xl p-4 text-center opacity-40 pointer-events-none transition-all space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="text-xs font-extrabold uppercase text-slate-700 tracking-wider flex items-center space-x-1.5">
+                    <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">2</span>
+                    <span>Cọc Tiền Tự Động Qua VietQR</span>
+                  </div>
+                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Hoàn cọc 100%</span>
+                </div>
                 
                 <!-- VietQR Image Mock -->
-                <div class="w-40 h-40 mx-auto bg-white border border-slate-300 rounded-xl p-2 shadow-sm flex flex-col items-center justify-center">
-                  <div class="text-[10px] font-black text-brand mb-1">VietQR • NAPAS 247</div>
-                  <div class="w-28 h-28 bg-slate-900 rounded-lg flex items-center justify-center p-1.5">
-                    <!-- Clean SVG QR Matrix mockup -->
+                <div class="w-full bg-white border border-slate-300 rounded-2xl p-3 shadow-sm flex flex-col items-center justify-center">
+                  <div class="flex items-center justify-between w-full px-2 mb-2">
+                    <span class="text-[10px] font-black text-brand tracking-wider">VietQR • NAPAS 247</span>
+                    <span class="text-[10px] font-bold text-slate-500">MBBank • 99998888SMART</span>
+                  </div>
+
+                  <div class="w-28 h-28 bg-slate-900 rounded-xl flex items-center justify-center p-2 shadow-inner">
                     <svg viewBox="0 0 100 100" class="w-full h-full fill-white">
                       <rect x="0" y="0" width="30" height="30" />
                       <rect x="5" y="5" width="20" height="20" fill="#000" />
@@ -479,17 +543,20 @@
                       <rect x="0" y="70" width="30" height="30" />
                       <rect x="5" y="75" width="20" height="20" fill="#000" />
                       <rect x="10" y="80" width="10" height="10" />
-                      <rect x="40" y="10" width="10" height="20" />
+                      <rect x="35" y="10" width="10" height="25" />
                       <rect x="40" y="40" width="20" height="20" />
-                      <rect x="70" y="50" width="20" height="10" />
-                      <rect x="50" y="70" width="30" height="20" />
+                      <rect x="65" y="45" width="25" height="10" />
+                      <rect x="45" y="70" width="35" height="20" />
                     </svg>
                   </div>
-                  <div class="text-[11px] font-black text-slate-800 mt-1">200.000 VNĐ</div>
+
+                  <div class="text-sm font-black text-slate-900 mt-2" id="sheet-deposit-price">200.000 VNĐ</div>
+                  <div class="text-[10px] text-slate-500 font-mono" id="sheet-deposit-content">SMARTLOCKER COC 05</div>
                 </div>
 
-                <button id="btn-trigger-vietqr" onclick="runSimulatedDepositPaid()" class="press-effect w-full mt-3 bg-emerald-600 text-white py-3 rounded-xl font-bold text-xs shadow-md shadow-emerald-600/20">
-                  Giả lập Khách Đã Chuyển Khoản
+                <button id="btn-trigger-vietqr" onclick="runSimulatedDepositPaid()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-xs shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                  <span>⚡ Giả Lập Khách Đã Chuyển Khoản (Webhook 24/7)</span>
                 </button>
               </div>
 
@@ -741,8 +808,64 @@
       });
 
       // Update badge counts
+      updateLockerCounts();
+    }
+
+    // ================= DYNAMIC LOCKER COUNTS UPDATE =================
+    function updateLockerCounts() {
+      const freeCount = CABINET_DATA.filter(b => b.status === 'AVAILABLE').length;
+      const occupiedCount = CABINET_DATA.filter(b => b.status === 'OCCUPIED').length;
+
+      const freeS = CABINET_DATA.filter(b => b.size === 'S' && b.status === 'AVAILABLE').length;
+      const freeM = CABINET_DATA.filter(b => b.size === 'M' && b.status === 'AVAILABLE').length;
+      const freeL = CABINET_DATA.filter(b => b.size === 'L' && b.status === 'AVAILABLE').length;
+
       const freeEl = document.getElementById('shipper-free-boxes-text');
       if (freeEl) freeEl.textContent = freeCount;
+
+      const occEl = document.getElementById('shipper-occupied-boxes-text');
+      if (occEl) occEl.textContent = occupiedCount;
+
+      const countSEl = document.getElementById('count-size-S');
+      if (countSEl) countSEl.textContent = `Trống: ${freeS}`;
+
+      const countMEl = document.getElementById('count-size-M');
+      if (countMEl) countMEl.textContent = `Trống: ${freeM}`;
+
+      const countLEl = document.getElementById('count-size-L');
+      if (countLEl) countLEl.textContent = `Trống: ${freeL}`;
+
+      // Update resident notification badge
+      const resBadge = document.getElementById('nav-badge-resident');
+      if (resBadge) {
+        if (occupiedCount > 0) resBadge.classList.remove('hidden');
+        else resBadge.classList.add('hidden');
+      }
+    }
+
+    // ================= PHONE INPUT LIVE VALIDATION =================
+    function validatePhoneInputLive(input) {
+      const val = input.value.replace(/[^0-9]/g, '');
+      input.value = val;
+      const errorEl = document.getElementById('recipient-phone-error');
+      const statusIcon = document.getElementById('recipient-phone-status-icon');
+      
+      if (val.length === 0) {
+        input.classList.remove('border-emerald-500', 'border-rose-500');
+        input.classList.add('border-slate-200');
+        if (statusIcon) statusIcon.innerHTML = '<i data-lucide="phone" class="w-4 h-4 text-slate-400"></i>';
+        if (errorEl) errorEl.classList.add('hidden');
+      } else if (val.startsWith('0') && (val.length === 10 || val.length === 11)) {
+        input.classList.remove('border-slate-200', 'border-rose-500');
+        input.classList.add('border-emerald-500');
+        if (statusIcon) statusIcon.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>';
+        if (errorEl) errorEl.classList.add('hidden');
+      } else {
+        input.classList.remove('border-emerald-500');
+        input.classList.add('border-slate-200');
+        if (statusIcon) statusIcon.innerHTML = `<span class="text-[10px] font-bold text-slate-400">${val.length}/10</span>`;
+      }
+      if (window.lucide) lucide.createIcons();
     }
 
     // ================= PHYSICAL UNLOCK SIMULATION =================
@@ -762,7 +885,7 @@
       }
 
       if (autoOpenPhoneToast) {
-        showPhoneToast(`Đã mở Ngăn #${String(boxId).padStart(2, '0')}!`);
+        showPhoneToast(toastTitle);
       }
     }
 
@@ -814,25 +937,62 @@
 
     function fillPhone(phone) {
       AudioEngine.beep(550, 0.04);
-      document.getElementById('recipient-phone-input').value = phone;
+      const input = document.getElementById('recipient-phone-input');
+      if (input) {
+        input.value = phone;
+        validatePhoneInputLive(input);
+      }
     }
 
     // ================= TAB 1: SHIPPER GỬI ĐỒ =================
     function executeShipperDropoff() {
-      const phone = document.getElementById('recipient-phone-input').value.trim() || '0912.345.678';
-      
-      // Find suitable empty box
+      const phoneInput = document.getElementById('recipient-phone-input');
+      const errorEl = document.getElementById('recipient-phone-error');
+      const errorText = document.getElementById('recipient-phone-error-text');
+      const rawVal = phoneInput ? phoneInput.value.trim() : '';
+      const cleanPhone = rawVal.replace(/[^0-9]/g, '');
+
+      // Strict validation: must start with 0 and have 10 or 11 digits
+      if (!cleanPhone.startsWith('0') || (cleanPhone.length !== 10 && cleanPhone.length !== 11)) {
+        AudioEngine.beep(250, 0.15);
+        if (errorEl) {
+          errorEl.classList.remove('hidden');
+          if (cleanPhone.length === 0) {
+            errorText.textContent = 'Vui lòng nhập số điện thoại người nhận để mở tủ!';
+          } else if (!cleanPhone.startsWith('0')) {
+            errorText.textContent = 'Số điện thoại hợp lệ phải bắt đầu bằng số 0!';
+          } else {
+            errorText.textContent = `Số điện thoại phải đủ 10 hoặc 11 chữ số (hiện có ${cleanPhone.length} số)!`;
+          }
+        }
+        if (phoneInput) {
+          phoneInput.classList.remove('border-slate-200', 'border-emerald-500');
+          phoneInput.classList.add('border-rose-500');
+          phoneInput.focus();
+        }
+        return;
+      }
+
+      // Valid: clear error
+      if (errorEl) errorEl.classList.add('hidden');
+      if (phoneInput) {
+        phoneInput.classList.remove('border-rose-500');
+        phoneInput.classList.add('border-emerald-500');
+      }
+
+      // Find suitable empty box for selected size, or any available
       const targetBox = CABINET_DATA.find(b => b.size === currentSelectedSize && b.status === 'AVAILABLE') 
                      || CABINET_DATA.find(b => b.status === 'AVAILABLE');
 
       if (!targetBox) {
-        alert('Tủ đã hết ngăn trống! Vui lòng chọn cỡ khác.');
+        AudioEngine.beep(250, 0.15);
+        alert('Tất cả các ngăn tủ hiện đã kín chỗ! Vui lòng quay lại sau.');
         return;
       }
 
       // Mark occupied
       targetBox.status = 'OCCUPIED';
-      targetBox.content = `📦 Bưu kiện (${phone.slice(-3)})`;
+      targetBox.content = `📦 Bưu kiện (${cleanPhone.slice(-4)})`;
 
       // Trigger physical unlock
       triggerPhysicalUnlock(targetBox.id, true, `Đã mở Ngăn #${String(targetBox.id).padStart(2, '0')}`);
@@ -846,11 +1006,13 @@
 
     // ================= TAB 2: CƯ DÂN NHẬN ĐỒ =================
     function executeResidentPickup() {
-      const targetBoxId = 3;
+      // Find first occupied box
+      let occupiedBox = CABINET_DATA.find(b => b.status === 'OCCUPIED');
+      const targetBoxId = occupiedBox ? occupiedBox.id : 3;
       const box = CABINET_DATA.find(b => b.id === targetBoxId);
       
       // Physical Unlock
-      triggerPhysicalUnlock(targetBoxId, true, 'Đã mở Ngăn #03');
+      triggerPhysicalUnlock(targetBoxId, true, `Đã mở Ngăn #${String(targetBoxId).padStart(2, '0')}`);
 
       // Confetti celebration
       confetti({
@@ -867,14 +1029,17 @@
       }
       renderLockerCabinet();
 
-      // Hide card, show empty state
-      document.getElementById('resident-parcel-card').classList.add('hidden');
-      document.getElementById('resident-empty-state').classList.remove('hidden');
-      document.getElementById('nav-badge-resident').classList.add('hidden');
+      // Check if any occupied left
+      const remainingOccupied = CABINET_DATA.filter(b => b.status === 'OCCUPIED').length;
+      if (remainingOccupied === 0) {
+        document.getElementById('resident-parcel-card').classList.add('hidden');
+        document.getElementById('resident-empty-state').classList.remove('hidden');
+        document.getElementById('nav-badge-resident').classList.add('hidden');
+      }
     }
 
     function fillSampleParcel() {
-      const box = CABINET_DATA.find(b => b.id === 3);
+      const box = CABINET_DATA.find(b => b.status === 'AVAILABLE') || CABINET_DATA.find(b => b.id === 3);
       if (box) {
         box.status = 'OCCUPIED';
         box.content = '📦 Bưu kiện mới';
@@ -894,10 +1059,33 @@
       document.getElementById('sheet-item-name').textContent = name;
       document.getElementById('sheet-item-box').textContent = `${boxLabel} • Tiền cọc: ${deposit.toLocaleString('vi-VN')}đ`;
       
+      const depositPriceEl = document.getElementById('sheet-deposit-price');
+      if (depositPriceEl) depositPriceEl.textContent = `${deposit.toLocaleString('vi-VN')} VNĐ`;
+
+      const depositContentEl = document.getElementById('sheet-deposit-content');
+      if (depositContentEl) depositContentEl.textContent = `SMARTLOCKER COC ${boxId}`;
+
       // Reset sheet steps
-      document.getElementById('ekyc-scanner-box').classList.remove('border-emerald-500', 'bg-emerald-50');
+      const scannerBox = document.getElementById('ekyc-scanner-box');
+      if (scannerBox) {
+        scannerBox.classList.remove('border-emerald-500', 'bg-emerald-50');
+        scannerBox.classList.add('border-slate-300', 'bg-slate-100');
+      }
       document.getElementById('ekyc-success-tag').classList.add('hidden');
-      document.getElementById('btn-trigger-ekyc').classList.remove('hidden');
+      
+      const btnEkyc = document.getElementById('btn-trigger-ekyc');
+      if (btnEkyc) {
+        btnEkyc.disabled = false;
+        btnEkyc.classList.remove('hidden');
+        btnEkyc.innerHTML = '<i data-lucide="shield-check" class="w-4 h-4"></i><span>Xác Thực SĐT & Chip CCCD (eKYC)</span>';
+      }
+
+      const laser = document.getElementById('ekyc-laser');
+      if (laser) laser.classList.add('hidden');
+
+      const errEl = document.getElementById('rental-ekyc-error');
+      if (errEl) errEl.classList.add('hidden');
+
       document.getElementById('sheet-step-2').classList.add('opacity-40', 'pointer-events-none');
 
       // Open bottom sheet
@@ -905,6 +1093,7 @@
       const panel = document.getElementById('rental-sheet-panel');
       sheet.classList.remove('opacity-0', 'pointer-events-none');
       panel.classList.remove('translate-y-full');
+      if (window.lucide) lucide.createIcons();
     }
 
     function closeRentalSheet() {
@@ -916,49 +1105,121 @@
     }
 
     function runSimulatedEkyc() {
+      const phoneInput = document.getElementById('rental-phone-input');
+      const cccdInput = document.getElementById('rental-cccd-input');
+      const errorEl = document.getElementById('rental-ekyc-error');
+      const errorText = document.getElementById('rental-ekyc-error-text');
+
+      const phone = phoneInput ? phoneInput.value.replace(/[^0-9]/g, '') : '';
+      const cccd = cccdInput ? cccdInput.value.replace(/[^0-9]/g, '') : '';
+
+      if (!phone.startsWith('0') || (phone.length !== 10 && phone.length !== 11)) {
+        AudioEngine.beep(250, 0.15);
+        if (errorEl) {
+          errorEl.classList.remove('hidden');
+          errorText.textContent = 'SĐT người thuê phải đủ 10 hoặc 11 chữ số (bắt đầu bằng số 0)!';
+        }
+        if (phoneInput) phoneInput.focus();
+        return;
+      }
+
+      if (cccd.length !== 12) {
+        AudioEngine.beep(250, 0.15);
+        if (errorEl) {
+          errorEl.classList.remove('hidden');
+          errorText.textContent = `Số CCCD gắn chip phải đủ 12 chữ số (hiện có ${cccd.length} số)!`;
+        }
+        if (cccdInput) cccdInput.focus();
+        return;
+      }
+
+      if (errorEl) errorEl.classList.add('hidden');
       AudioEngine.beep(700, 0.1);
+
       const btn = document.getElementById('btn-trigger-ekyc');
       const text = document.getElementById('ekyc-scan-text');
+      const laser = document.getElementById('ekyc-laser');
       btn.disabled = true;
-      btn.textContent = '⏳ Đang nhận diện FaceID & OCR CCCD...';
+      btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Đang xác thực CSDL VNeID Bộ Công An...</span>';
+      if (laser) laser.classList.remove('hidden');
+      if (window.lucide) lucide.createIcons();
 
       setTimeout(() => {
         AudioEngine.successFanfare();
         btn.classList.add('hidden');
+        if (laser) laser.classList.add('hidden');
+        
+        const detailsEl = document.getElementById('ekyc-verified-details');
+        if (detailsEl) {
+          detailsEl.textContent = `Chủ TK: Khuất Văn Chân • SĐT: ${phone} • CCCD: ${cccd}`;
+        }
+
+        const scannerBox = document.getElementById('ekyc-scanner-box');
+        if (scannerBox) {
+          scannerBox.classList.remove('border-slate-300', 'bg-slate-100');
+          scannerBox.classList.add('border-emerald-500', 'bg-emerald-50');
+        }
+
         document.getElementById('ekyc-success-tag').classList.remove('hidden');
         document.getElementById('sheet-step-2').classList.remove('opacity-40', 'pointer-events-none');
-      }, 1000);
+        if (window.lucide) lucide.createIcons();
+      }, 900);
     }
 
     function runSimulatedDepositPaid() {
       if (!currentRentingTarget) return;
 
       AudioEngine.successFanfare();
+      confetti({
+        particleCount: 80,
+        spread: 60,
+        origin: { y: 0.6 }
+      });
+
       closeRentalSheet();
 
       // Trigger physical unlock on right cabinet
-      triggerPhysicalUnlock(currentRentingTarget.boxId, true, `Đã mở ${currentRentingTarget.boxLabel}`);
+      triggerPhysicalUnlock(currentRentingTarget.boxId, true, `Đã cọc thành công! Mở ${currentRentingTarget.boxLabel}`);
+
+      // Update cabinet status for this tool box
+      const box = CABINET_DATA.find(b => b.id === currentRentingTarget.boxId);
+      if (box) {
+        box.content = `🛠️ Đang thuê (${currentRentingTarget.name.slice(0, 10)})`;
+      }
+      renderLockerCabinet();
 
       // Update button on rental card to "Trả Đồ & Hoàn Cọc"
       const rentBtn = document.getElementById(`btn-rent-${currentRentingTarget.toolId}`);
       if (rentBtn) {
         rentBtn.className = 'press-effect w-full mt-3 bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1';
-        rentBtn.innerHTML = '<span>Trả Đồ & Hoàn Cọc</span>';
-        rentBtn.onclick = () => executeReturnItem(currentRentingTarget.toolId, currentRentingTarget.boxId);
+        rentBtn.innerHTML = '<i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i><span>Trả Đồ & Hoàn Cọc</span>';
+        rentBtn.onclick = () => executeReturnItem(currentRentingTarget.toolId, currentRentingTarget.boxId, currentRentingTarget.name);
       }
+      if (window.lucide) lucide.createIcons();
     }
 
-    function executeReturnItem(toolId, boxId) {
+    function executeReturnItem(toolId, boxId, name) {
       AudioEngine.successFanfare();
       triggerPhysicalUnlock(boxId, true, `Mở Ngăn #${String(boxId).padStart(2, '0')} để cất đồ`);
+
+      // Reset cabinet box content
+      const box = CABINET_DATA.find(b => b.id === boxId);
+      if (box) {
+        const defaultNames = { 5: 'Máy khoan Bosch', 6: 'Vợt Pickleball', 7: 'Máy rửa xe Mini', 8: 'Trạm sạc dự phòng' };
+        box.content = `🧰 ${defaultNames[boxId] || 'Thiết bị'}`;
+      }
+      renderLockerCabinet();
 
       // Reset button
       const rentBtn = document.getElementById(`btn-rent-${toolId}`);
       if (rentBtn) {
         rentBtn.className = 'press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1';
         rentBtn.innerHTML = '<span>Thuê Ngay</span>';
+        rentBtn.onclick = () => openRentalProcess(toolId, name, `Ngăn #${String(boxId).padStart(2, '0')}`, boxId, 200000);
       }
-      alert('Đối soát thẻ RFID khớp 100%! Đã hoàn trả 200.000đ tiền cọc về ví của bạn.');
+      if (window.lucide) lucide.createIcons();
+
+      alert(`✅ Đối soát RFID khớp 100%! Thiết bị "${name || 'tiện ích'}" nguyên vẹn.\nĐã hoàn tiền cọc 200.000 VNĐ về tài khoản của bạn.`);
     }
 
     // ================= TOAST NOTIFICATION ON PHONE =================
