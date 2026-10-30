@@ -277,25 +277,25 @@
                   <div>
                     <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center justify-between mb-1.5">
                       <span>1. Chọn cỡ ngăn tủ gửi hàng</span>
-                      <span class="text-[10px] font-semibold text-slate-400">Ngăn #01 - #06</span>
+                      
                     </label>
                     <div class="grid grid-cols-3 gap-2">
                       <button onclick="selectLockerSize('S')" id="size-btn-S" class="press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all">
                         <div class="w-7 h-7 mx-auto rounded-xl bg-white text-brand border border-brandBorder flex items-center justify-center font-black text-xs mb-1">S</div>
                         <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
-                        <div class="text-[10px] text-slate-500 font-medium">Ngăn #01, #02</div>
+                        
                         <div class="text-xs font-extrabold text-brand mt-1" id="count-size-S">Trống: 2</div>
                       </button>
                       <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
                         <div class="w-7 h-7 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-xs mb-1">M</div>
                         <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
-                        <div class="text-[10px] text-slate-500 font-medium">Ngăn #03, #04</div>
+                        
                         <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-M">Trống: 2</div>
                       </button>
                       <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
                         <div class="w-7 h-7 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-xs mb-1">L</div>
                         <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
-                        <div class="text-[10px] text-slate-500 font-medium">Ngăn #05, #06</div>
+                        
                         <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-L">Trống: 2</div>
                       </button>
                     </div>
@@ -448,13 +448,13 @@
                     <span>Cửa Tủ Đang Mở</span>
                   </div>
 
-                  <h3 class="text-lg font-black text-slate-900" id="sim-modal-title">Ngăn #01 Đã Mở!</h3>
+                  <h3 class="text-lg font-black text-slate-900" id="sim-modal-title">Ngăn 01 Đã Mở!</h3>
                   <p class="text-xs text-slate-500 font-medium" id="sim-modal-subtitle">Vui lòng thao tác và đóng cửa tủ.</p>
 
                   <div class="w-36 h-36 mx-auto door-perspective relative">
                     <div class="w-full h-full bg-slate-800 rounded-2xl border-4 border-slate-700 flex flex-col items-center justify-between p-3 shadow-inner">
                       <div class="w-full flex justify-between text-[10px] font-mono text-emerald-400 font-bold">
-                        <span id="sim-cavity-box-label">BOX #01</span>
+                        <span id="sim-cavity-box-label">BOX 01</span>
                         <span id="sim-sensor-text">OPEN</span>
                       </div>
                       <div class="my-auto flex flex-col items-center" id="sim-cavity-content"></div>
@@ -462,7 +462,7 @@
                     </div>
                     <div id="sim-animated-door" class="sim-door absolute inset-0 bg-gradient-to-br from-white to-slate-100 rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-3">
                       <div class="flex justify-between items-center">
-                        <span class="font-black text-sm text-slate-800" id="sim-door-box-num">#01</span>
+                        <span class="font-black text-sm text-slate-800" id="sim-door-box-num">01</span>
                         <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brandLight text-brand" id="sim-door-size">S</span>
                       </div>
                       <div class="w-9 h-9 mx-auto rounded-xl bg-slate-200 flex items-center justify-center text-slate-600 font-bold">🔒</div>
@@ -495,7 +495,7 @@
                     <div class="flex-1">
                       <div class="flex items-center justify-between">
                         <h4 class="text-sm font-extrabold text-slate-900" id="rental-modal-name">Máy Cắt Tay</h4>
-                        <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn #07</span>
+                        <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn 07</span>
                       </div>
                       <p class="text-xs font-bold text-amber-600 mt-0.5" id="rental-modal-rate">30.000đ / 1 Block (3 giờ)</p>
                     </div>
@@ -658,7 +658,7 @@
                         <span class="text-[10px] font-bold text-emerald-400" id="rental-cavity-name">Máy Cắt Tay</span>
                       </div>
                       <div id="rental-animated-door" class="sim-door open absolute inset-0 bg-white rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-2.5">
-                        <span class="font-black text-xs text-slate-800 text-left" id="rental-door-num">#07</span>
+                        <span class="font-black text-xs text-slate-800 text-left" id="rental-door-num">07</span>
                         <div class="text-xl">🔓</div>
                         <span class="text-[9px] font-bold text-slate-400">RENTAL BOX</span>
                       </div>
@@ -749,7 +749,7 @@
         <div class="w-full flex flex-wrap justify-between items-center mb-2 gap-2">
           <div class="text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-white/90 px-3.5 py-1 rounded-full border border-slate-200 flex items-center space-x-1.5">
             <i data-lucide="layout-grid" class="w-4 h-4 text-brand"></i>
-            <span>Mô Hình Tủ Vật Lý 12 Ngăn (#01-#06 Giao Nhận • #07-#12 Thuê Đồ)</span>
+            <span>Mô Hình Tủ Vật Lý 12 Ngăn (01-06 Giao Nhận • 07-12 Thuê Đồ)</span>
           </div>
           <div class="flex space-x-3 text-xs font-bold text-slate-700 bg-white/90 px-3 py-1 rounded-full border border-slate-200">
             <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1"></span> Trống</span>
@@ -777,7 +777,7 @@
           <div id="alarm-warning-banner" class="hidden mt-4 bg-rose-600 text-white rounded-2xl p-3 flex items-center justify-between animate-pulse">
             <div class="flex items-center space-x-2 text-xs font-black">
               <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-              <span>CẢNH BÁO AN NINH: PHÁT HIỆN CẠY CỬA TRÁI PHÉP TẠI NGĂN #04!</span>
+              <span>CẢNH BÁO AN NINH: PHÁT HIỆN CẠY CỬA TRÁI PHÉP TẠI NGĂN 04!</span>
             </div>
             <button onclick="toggleTamperAlarm(false)" class="press-effect text-xs font-extrabold bg-white text-rose-700 px-3 py-1 rounded-xl">
               Tắt Báo Động
@@ -1052,7 +1052,7 @@
       if (!container) return;
       container.innerHTML = '';
 
-      // Render Ngăn #01 -> #06 (Giao nhận)
+      // Render Ngăn 01 -> 06 (Giao nhận)
       deliveryBoxes.forEach(box => {
         const isFree = box.status === 'AVAILABLE';
         const boxCol = document.createElement('div');
@@ -1062,7 +1062,7 @@
         cavity.className = 'w-full h-full bg-slate-800 rounded-2xl border-2 border-slate-700 p-2 flex flex-col justify-between shadow-inner';
         cavity.innerHTML = `
           <div class="flex justify-between items-center text-[9px] font-mono text-slate-400">
-            <span>#${String(box.id).padStart(2, '0')} (${box.size})</span>
+            <span>${String(box.id).padStart(2, '0')} (${box.size})</span>
             <span class="text-emerald-400 font-bold">${box.isDoorOpen ? 'OPEN' : 'LOCKED'}</span>
           </div>
           <div class="text-center font-bold text-[11px] text-white">
@@ -1076,7 +1076,7 @@
         door.className = `locker-door absolute inset-0 bg-white rounded-2xl border-2 ${box.isDoorOpen ? 'door-open' : ''} p-2.5 flex flex-col justify-between select-none border-slate-300 shadow-xs`;
         door.innerHTML = `
           <div class="flex justify-between items-center">
-            <span class="font-black text-xs text-slate-800">#${String(box.id).padStart(2, '0')}</span>
+            <span class="font-black text-xs text-slate-800">${String(box.id).padStart(2, '0')}</span>
             <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">Cỡ ${box.size}</span>
           </div>
           <div class="text-center">
@@ -1096,7 +1096,7 @@
         container.appendChild(boxCol);
       });
 
-      // Render Ngăn #07 -> #12 (Thuê đồ)
+      // Render Ngăn 07 -> 12 (Thuê đồ)
       rentalItems.forEach(item => {
         const isAvail = item.status === 'AVAILABLE';
         const boxCol = document.createElement('div');
@@ -1106,7 +1106,7 @@
         cavity.className = 'w-full h-full bg-slate-800 rounded-2xl border-2 border-slate-700 p-2 flex flex-col justify-between shadow-inner';
         cavity.innerHTML = `
           <div class="flex justify-between items-center text-[9px] font-mono text-slate-400">
-            <span>#${String(item.boxId).padStart(2, '0')}</span>
+            <span>${String(item.boxId).padStart(2, '0')}</span>
             <span class="text-blue-400 font-bold">RENTAL</span>
           </div>
           <div class="flex flex-col items-center justify-center">
@@ -1120,7 +1120,7 @@
         door.className = `locker-door absolute inset-0 bg-white rounded-2xl border-2 ${item.isDoorOpen ? 'door-open' : ''} p-2.5 flex flex-col justify-between select-none border-slate-300 shadow-xs`;
         door.innerHTML = `
           <div class="flex justify-between items-center">
-            <span class="font-black text-xs text-slate-800">#${String(item.boxId).padStart(2, '0')}</span>
+            <span class="font-black text-xs text-slate-800">${String(item.boxId).padStart(2, '0')}</span>
             <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-brand">Thuê Đồ</span>
           </div>
           <div class="text-center">
@@ -1326,7 +1326,7 @@
       openDoorSimulationModal({
         boxId: targetBox.id,
         boxSize: targetBox.size,
-        title: `Đã Mở Ngăn #${String(targetBox.id).padStart(2, '0')} (Cỡ ${targetBox.size})`,
+        title: `Đã Mở Ngăn ${String(targetBox.id).padStart(2, '0')} (Cỡ ${targetBox.size})`,
         subtitle: `Shipper đặt đơn [${rawTracking}] vào tủ và bấm đóng cửa tủ.`,
         contentEmoji: '📦',
         contentText: `MVĐ: ...${last4Digits}`,
@@ -1341,9 +1341,9 @@
 
       document.getElementById('sim-modal-title').textContent = title;
       document.getElementById('sim-modal-subtitle').textContent = subtitle;
-      document.getElementById('sim-cavity-box-label').textContent = `BOX #${String(boxId).padStart(2, '0')}`;
+      document.getElementById('sim-cavity-box-label').textContent = `BOX ${String(boxId).padStart(2, '0')}`;
       document.getElementById('sim-sensor-text').textContent = 'OPEN';
-      document.getElementById('sim-door-box-num').textContent = `#${String(boxId).padStart(2, '0')}`;
+      document.getElementById('sim-door-box-num').textContent = `${String(boxId).padStart(2, '0')}`;
       document.getElementById('sim-door-size').textContent = boxSize || 'S';
 
       document.getElementById('sim-cavity-content').innerHTML = `
@@ -1378,7 +1378,7 @@
       document.getElementById('sim-sensor-text').textContent = 'LOCKED';
       document.getElementById('sim-status-badge').className = 'inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 uppercase tracking-wide';
       document.getElementById('sim-status-badge').innerHTML = '<span>🔒 Đã Đóng Tủ An Toàn</span>';
-      document.getElementById('sim-modal-title').textContent = `Đã Đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')} Xong!`;
+      document.getElementById('sim-modal-title').textContent = `Đã Đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')} Xong!`;
 
       setTimeout(() => {
         document.getElementById('locker-door-sim-modal').classList.add('opacity-0', 'pointer-events-none');
@@ -1399,11 +1399,11 @@
             phone: pendingDoorAction.phone,
             type: 'SHIPPER',
             title: 'Thông Báo Đơn Hàng Mới',
-            bodyHtml: `Bạn có 1 đơn hàng shopper mã vận đơn 4 số cuối là <b class="text-emerald-700 text-sm font-mono underline">${pendingDoorAction.last4}</b> (Tại Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')}).`,
+            bodyHtml: `Bạn có 1 đơn hàng shopper mã vận đơn 4 số cuối là <b class="text-emerald-700 text-sm font-mono underline">${pendingDoorAction.last4}</b> (Tại Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')}).`,
             highlightCode: pendingDoorAction.last4
           });
 
-          showPhoneToast(`Đã đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')} & gửi thông báo cho khách!`);
+          showPhoneToast(`Đã đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')} & gửi thông báo cho khách!`);
           generateRandomTracking();
         } else if (pendingDoorAction.mode === 'RESIDENT_PICKUP') {
           const box = deliveryBoxes.find(b => b.id === pendingDoorAction.boxId);
@@ -1413,7 +1413,7 @@
           }
           syncAllCabinetUI();
           if (window.confetti) confetti({ particleCount: 65, spread: 60, origin: { y: 0.6 } });
-          showPhoneToast(`Đã lấy hàng & đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')}!`);
+          showPhoneToast(`Đã lấy hàng & đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')}!`);
           document.getElementById('pickup-phone-input').value = '';
           document.getElementById('pickup-tracking-input').value = '';
         }
@@ -1434,7 +1434,7 @@
       container.innerHTML = occupied.map(b => `
         <div onclick="fillPickupForm('${b.parcel.phone}', '${b.parcel.last4}')" class="press-effect cursor-pointer bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 rounded-xl p-2.5 flex items-center justify-between transition">
           <div class="flex items-center space-x-2">
-            <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 font-black text-xs flex items-center justify-center">#${String(b.id).padStart(2, '0')}</span>
+            <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 font-black text-xs flex items-center justify-center">${String(b.id).padStart(2, '0')}</span>
             <div>
               <div class="text-xs font-extrabold text-slate-800">SĐT: ${b.parcel.phone}</div>
               <div class="text-[10px] font-semibold text-slate-500">4 số cuối MVĐ: <b class="text-emerald-700">${b.parcel.last4}</b></div>
@@ -1495,10 +1495,10 @@
       openDoorSimulationModal({
         boxId: matchedBox.id,
         boxSize: matchedBox.size,
-        title: `Xác Thực Đúng! Mở Ngăn #${String(matchedBox.id).padStart(2, '0')}`,
+        title: `Xác Thực Đúng! Mở Ngăn ${String(matchedBox.id).padStart(2, '0')}`,
         subtitle: `Khách hàng (${matchedBox.parcel.phone}) lấy đơn [${matchedBox.parcel.trackingCode}] và đóng tủ.`,
         contentEmoji: '🎁',
-        contentText: `Đơn #${matchedBox.parcel.last4}`,
+        contentText: `Đơn ${matchedBox.parcel.last4}`,
         buttonText: 'Đã Lấy Hàng & Đóng Cửa Tủ'
       });
     }
@@ -1521,7 +1521,7 @@
                 </span>
               </div>
               <div class="text-xs font-extrabold text-slate-900 leading-tight">${item.name}</div>
-              <div class="text-[11px] font-bold text-amber-600 mt-0.5">${item.pricePerBlock.toLocaleString('vi-VN')}đ/block 3h • #${String(item.boxId).padStart(2, '0')}</div>
+              <div class="text-[11px] font-bold text-amber-600 mt-0.5">${item.pricePerBlock.toLocaleString('vi-VN')}đ/block 3h • Ngăn ${String(item.boxId).padStart(2, '0')}</div>
             </div>
             ${isAvail ? `
               <button onclick="openRentalModal('${item.id}')" class="press-effect w-full mt-2.5 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-extrabold text-xs">
@@ -1549,7 +1549,7 @@
 
       document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
       document.getElementById('rental-modal-name').textContent = item.name;
-      document.getElementById('rental-modal-box').textContent = `Ngăn #${String(item.boxId).padStart(2, '0')}`;
+      document.getElementById('rental-modal-box').textContent = `Ngăn ${String(item.boxId).padStart(2, '0')}`;
       document.getElementById('rental-modal-rate').textContent = `${item.pricePerBlock.toLocaleString('vi-VN')}đ / 1 Block (3 giờ)`;
 
       showRentalStep(1);
@@ -1673,10 +1673,10 @@
       const item = activeRentalSession.item;
       setPhysicalCabinetDoor(item.boxId, true);
 
-      document.getElementById('rental-door-title').textContent = `Cửa Ngăn #${String(item.boxId).padStart(2, '0')} Đang Mở!`;
+      document.getElementById('rental-door-title').textContent = `Cửa Ngăn ${String(item.boxId).padStart(2, '0')} Đang Mở!`;
       document.getElementById('rental-cavity-icon').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
       document.getElementById('rental-cavity-name').textContent = item.name;
-      document.getElementById('rental-door-num').textContent = `#${String(item.boxId).padStart(2, '0')}`;
+      document.getElementById('rental-door-num').textContent = `${String(item.boxId).padStart(2, '0')}`;
 
       const door = document.getElementById('rental-animated-door');
       door.classList.remove('open');
@@ -1711,12 +1711,12 @@
           phone: phone,
           type: 'RENTAL',
           title: 'Xác Nhận Thuê Thiết Bị',
-          bodyHtml: `Bạn đã thuê thành công <b class="text-brand">${item.name}</b> (Ngăn #${String(item.boxId).padStart(2, '0')}) trong <b class="text-emerald-700">${blocks} block (${hours} giờ)</b>.<br/>Tổng thanh toán: <b>${totalPrice.toLocaleString('vi-VN')} VNĐ</b>.`,
+          bodyHtml: `Bạn đã thuê thành công <b class="text-brand">${item.name}</b> (Ngăn ${String(item.boxId).padStart(2, '0')}) trong <b class="text-emerald-700">${blocks} block (${hours} giờ)</b>.<br/>Tổng thanh toán: <b>${totalPrice.toLocaleString('vi-VN')} VNĐ</b>.`,
           highlightCode: null
         });
 
         if (window.confetti) confetti({ particleCount: 60, spread: 55, origin: { y: 0.6 } });
-        showPhoneToast(`Đã đóng Ngăn #${String(item.boxId).padStart(2, '0')} & gửi tin nhắn thuê ${blocks} block!`);
+        showPhoneToast(`Đã đóng Ngăn ${String(item.boxId).padStart(2, '0')} & gửi tin nhắn thuê ${blocks} block!`);
         activeRentalSession = null;
       }, 600);
     }
@@ -1729,7 +1729,7 @@
       item.rentedBy = null;
       item.blocks = 0;
       syncAllCabinetUI();
-      showPhoneToast(`Đã trả [${item.name}] vào Ngăn #${String(item.boxId).padStart(2, '0')}!`);
+      showPhoneToast(`Đã trả [${item.name}] vào Ngăn ${String(item.boxId).padStart(2, '0')}!`);
     }
 
     function toggleTamperAlarm(enable) {

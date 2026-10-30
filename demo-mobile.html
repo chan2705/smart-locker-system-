@@ -249,46 +249,13 @@
               </button>
             </div>
 
-            <!-- Sơ đồ 12 Ngăn Tủ Thu Gọn (Theo dõi trực tiếp số ô thực tế, chống số ảo) -->
-            <div class="bg-white/90 border-b border-slate-200 px-3.5 py-2 z-30">
-              <div class="flex items-center justify-between text-[10px] font-bold text-slate-500 mb-1">
-                <span>SƠ ĐỒ 12 NGĂN TỦ THỰC TẾ (#01-#06 Gửi • #07-#12 Thuê)</span>
-                <span class="text-brand font-extrabold" id="mini-map-counter">6 ngăn gửi trống</span>
-              </div>
-              <div class="grid grid-cols-6 gap-1" id="mini-locker-map">
-                <!-- Render động từ LOCKER_BOXES -->
-              </div>
-            </div>
-
-            <!-- Phone Scrollable Body -->
-            <div class="flex-1 overflow-y-auto p-3.5 no-scrollbar pb-24" id="phone-content-viewport">
-
-              <!-- ================= TAB 1: GỬI ĐỒ (SHIPPER) ================= -->
-              <div id="tab-content-shipper" class="space-y-3.5">
-                <!-- Banner Card (Cập nhật chính xác số lượng ô trống và ô có đồ) -->
-                <div class="bg-brandLight border border-brandBorder rounded-2xl p-3 flex justify-between items-center transition-colors">
-                  <div>
-                    <div class="text-[10px] font-extrabold uppercase text-brand tracking-wider">Chế Độ Shipper</div>
-                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Gửi Hàng Vào Tủ</div>
-                  </div>
-                  <div class="flex items-center space-x-3 text-right">
-                    <div>
-                      <span class="text-base font-black text-brand" id="shipper-free-boxes-text">6</span>
-                      <span class="text-[10px] font-bold text-slate-500 block -mt-1">ô trống</span>
-                    </div>
-                    <div class="w-px h-6 bg-slate-300"></div>
-                    <div>
-                      <span class="text-base font-black text-amber-600" id="shipper-occupied-boxes-text">0</span>
-                      <span class="text-[10px] font-bold text-slate-500 block -mt-1">đang gửi</span>
-                    </div>
-                  </div>
-                </div>
+            <!-- Mini Map removed for spacious clean layout -->
 
                 <!-- 1. Chọn Cỡ Ngăn (Đếm chính xác từng cỡ S, M, L) -->
                 <div>
                   <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center justify-between mb-1.5">
                     <span>1. Chọn cỡ ngăn tủ gửi hàng</span>
-                    <span class="text-[10px] font-semibold text-slate-400">Tổng 6 ngăn giao nhận</span>
+                    
                   </label>
                   <div class="grid grid-cols-3 gap-2" id="size-selector-group">
                     <button onclick="selectLockerSize('S')" id="size-btn-S" class="press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all">
@@ -296,7 +263,7 @@
                         S
                       </div>
                       <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
-                      <div class="text-[10px] text-slate-500 font-medium">Ngăn #01, #02</div>
+                      
                       <div class="text-xs font-extrabold text-brand mt-1" id="count-size-S">Trống: 2</div>
                     </button>
                     <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
@@ -304,7 +271,7 @@
                         M
                       </div>
                       <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
-                      <div class="text-[10px] text-slate-500 font-medium">Ngăn #03, #04</div>
+                      
                       <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-M">Trống: 2</div>
                     </button>
                     <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
@@ -312,7 +279,7 @@
                         L
                       </div>
                       <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
-                      <div class="text-[10px] text-slate-500 font-medium">Ngăn #05, #06</div>
+                      
                       <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-L">Trống: 2</div>
                     </button>
                   </div>
@@ -495,7 +462,7 @@
                   <span>Cửa Tủ Đang Mở</span>
                 </div>
 
-                <h3 class="text-lg font-black text-slate-900" id="sim-modal-title">Ngăn #01 Đã Bung Mở!</h3>
+                <h3 class="text-lg font-black text-slate-900" id="sim-modal-title">Ngăn 01 Đã Bung Mở!</h3>
                 <p class="text-xs text-slate-500 font-medium" id="sim-modal-subtitle">Vui lòng đặt kiện hàng vào trong ngăn tủ và bấm đóng cửa tủ.</p>
 
                 <!-- Visual 3D Animated Locker Box -->
@@ -503,7 +470,7 @@
                   <!-- Hốc tủ bên trong -->
                   <div class="w-full h-full bg-slate-800 rounded-2xl border-4 border-slate-700 flex flex-col items-center justify-between p-3 shadow-inner">
                     <div class="w-full flex justify-between text-[10px] font-mono text-emerald-400 font-bold">
-                      <span id="sim-cavity-box-label">BOX #01</span>
+                      <span id="sim-cavity-box-label">BOX 01</span>
                       <span id="sim-sensor-text">SENSOR: OPEN</span>
                     </div>
                     <div class="my-auto flex flex-col items-center" id="sim-cavity-content">
@@ -516,7 +483,7 @@
                   <!-- Cánh cửa tủ mở/đóng 3D -->
                   <div id="sim-animated-door" class="sim-door absolute inset-0 bg-gradient-to-br from-white to-slate-100 rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-3">
                     <div class="flex justify-between items-center">
-                      <span class="font-black text-sm text-slate-800" id="sim-door-box-num">#01</span>
+                      <span class="font-black text-sm text-slate-800" id="sim-door-box-num">01</span>
                       <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brandLight text-brand" id="sim-door-size">S</span>
                     </div>
                     <div class="w-10 h-10 mx-auto rounded-xl bg-slate-200 flex items-center justify-center text-slate-600 font-bold">
@@ -536,7 +503,7 @@
 
             <!-- ================= MODAL 2: LUỒNG THUÊ ĐỒ 5 BƯỚC (CHỌN BLOCK -> QR XÁC THỰC -> QR THANH TOÁN -> MỞ/ĐÓNG TỦ) ================= -->
             <div id="rental-flow-modal" class="absolute inset-0 bg-slate-900/65 backdrop-blur-xs z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-              <div id="rental-flow-panel" class="bg-white rounded-t-[34px] p-5 space-y-4 max-h-[88%] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl">
+              <div id="rental-flow-panel" class="bg-white rounded-t-[34px] p-3.5 space-y-2.5 h-[52%] max-h-[52%] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
                 
                 <!-- Top Handle & Close -->
                 <div class="flex justify-between items-center">
@@ -557,7 +524,7 @@
                   <div class="flex-1">
                     <div class="flex items-center justify-between">
                       <h4 class="text-sm font-extrabold text-slate-900" id="rental-modal-name">Máy Cắt Tay</h4>
-                      <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn #07</span>
+                      <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn 07</span>
                     </div>
                     <p class="text-xs font-bold text-amber-600 mt-0.5" id="rental-modal-rate">30.000đ / 1 Block (3 giờ)</p>
                   </div>
@@ -619,118 +586,116 @@
                 </div>
 
                 <!-- STEP 2: HIỂN THỊ MÃ QR XÁC THỰC & ANIMATION QUAY QUAY -->
-                <div id="rental-step-2-auth" class="hidden space-y-3.5 text-center">
-                  <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
-                    <div class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-brandLight text-brand text-[11px] font-extrabold">
-                      <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                      <span>Mã QR Xác Thực Định Danh (VNeID / Zalo)</span>
+                <div id="rental-step-2-auth" class="hidden space-y-2 text-center my-auto">
+                  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-2 space-y-1.5 max-w-[260px] mx-auto">
+                    <div class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-brandLight text-brand text-[10px] font-extrabold">
+                      <i data-lucide="shield-check" class="w-3 h-3"></i>
+                      <span>Xác Thực Định Danh VNeID / Zalo</span>
                     </div>
 
                     <!-- QR Code Box -->
-                    <div id="auth-qr-box" class="w-36 h-36 mx-auto bg-white border-2 border-slate-200 rounded-2xl p-3 shadow-xs relative flex items-center justify-center">
-                      <svg viewBox="0 0 100 100" class="w-full h-full fill-slate-900">
-                        <rect x="0" y="0" width="30" height="30" />
-                        <rect x="5" y="5" width="20" height="20" fill="#fff" />
-                        <rect x="10" y="10" width="10" height="10" />
-                        <rect x="70" y="0" width="30" height="30" />
-                        <rect x="75" y="5" width="20" height="20" fill="#fff" />
-                        <rect x="80" y="10" width="10" height="10" />
-                        <rect x="0" y="70" width="30" height="30" />
-                        <rect x="5" y="75" width="20" height="20" fill="#fff" />
-                        <rect x="10" y="80" width="10" height="10" />
-                        <rect x="38" y="8" width="8" height="18" />
-                        <rect x="50" y="16" width="12" height="8" />
-                        <rect x="36" y="36" width="28" height="28" rx="4" fill="#2563EB" />
-                        <rect x="44" y="44" width="12" height="12" fill="#fff" />
-                        <rect x="12" y="42" width="16" height="10" />
-                        <rect x="72" y="44" width="18" height="12" />
-                        <rect x="40" y="74" width="22" height="18" />
-                        <rect x="70" y="72" width="14" height="20" />
-                      </svg>
+                    <div id="auth-qr-box" class="relative flex items-center justify-center">
+                      
+    <div class="relative p-1 bg-white rounded-xl border border-slate-200 shadow-inner flex items-center justify-center">
+      <svg viewBox="0 0 116 116" class="w-28 h-28 sm:w-32 sm:h-32 fill-slate-900">
+        <rect x="0" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="112" width="3.8" height="3.8" rx="0.6"/>
+      </svg>
+      
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-7 h-7 rounded-lg bg-white border-2 border-brand shadow-md flex items-center justify-center text-brand">
+          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+      </div>
+    
+    </div>
+  
 
                       <!-- Overlay Animation Quay Quay khi đang xác thực -->
-                      <div id="auth-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-2">
-                        <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-brand animate-spin mb-2"></div>
-                        <span class="text-[11px] font-extrabold text-brand">Đang xác thực...</span>
+                      <div id="auth-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-xl flex flex-col items-center justify-center p-2">
+                        <div class="w-9 h-9 rounded-full border-4 border-slate-200 border-t-brand animate-spin mb-1"></div>
+                        <span class="text-[10px] font-extrabold text-brand">Đang xác thực...</span>
                       </div>
 
                       <!-- Overlay Thành Công -->
-                      <div id="auth-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-2xl flex flex-col items-center justify-center p-2">
-                        <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1.5 shadow-md">
-                          <i data-lucide="check" class="w-7 h-7"></i>
+                      <div id="auth-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-xl flex flex-col items-center justify-center p-2">
+                        <div class="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1 shadow-md">
+                          <i data-lucide="check" class="w-5 h-5"></i>
                         </div>
                         <span class="text-xs font-black text-emerald-800">Xác Thực Thành Công!</span>
                       </div>
                     </div>
 
-                    <p class="text-xs text-slate-600 font-semibold" id="auth-status-desc">
-                      Khách hàng quét mã QR trên màn hình để xác thực danh tính thuê thiết bị
+                    <p class="text-[10px] text-slate-500 font-semibold" id="auth-status-desc">
+                      Quét mã để xác thực danh tính thuê thiết bị
                     </p>
                   </div>
 
-                  <button id="btn-simulate-auth" onclick="triggerSimulateAuthSpinner()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
-                    <i data-lucide="scan-line" class="w-4 h-4"></i>
+                  <button id="btn-simulate-auth" onclick="triggerSimulateAuthSpinner()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-2.5 rounded-xl font-black text-xs shadow-md flex items-center justify-center space-x-2">
+                    <i data-lucide="scan-line" class="w-3.5 h-3.5"></i>
                     <span>GIẢ LẬP QUÉT QR & XÁC THỰC</span>
                   </button>
                 </div>
 
-                <!-- STEP 3: HIỂN THỊ QR THANH TOÁN & SỐ TIỀN -> ANIMATION QUAY QUAY -->
-                <div id="rental-step-3-payment" class="hidden space-y-3.5 text-center">
-                  <div class="bg-emerald-50/60 border-2 border-emerald-200 rounded-2xl p-4 space-y-3">
-                    <div class="flex items-center justify-between">
-                      <span class="text-[11px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">VIETQR • NAPAS 247</span>
-                      <span class="text-[11px] font-bold text-slate-500" id="payment-block-badge">1 Block (3 giờ)</span>
+                <!-- STEP 3: HIỂN THỊ QR THANH TOÁN NGÂN HÀNG VIETQR CHUẨN (1/2 MÀN HÌNH) -->
+                <div id="rental-step-3-payment" class="hidden space-y-2 text-center my-auto">
+                  <div class="bg-white rounded-2xl p-2.5 border-2 border-emerald-300 shadow-md flex flex-col items-center max-w-[260px] mx-auto">
+                    <!-- VietQR & NAPAS Top Branding -->
+                    <div class="w-full flex items-center justify-between pb-1 border-b border-slate-100 px-1 mb-1">
+                      <div class="flex items-center space-x-1">
+                        <span class="text-xs font-black tracking-tight text-blue-600">VIET</span><span class="text-xs font-black tracking-tight text-red-500">QR</span>
+                      </div>
+                      <div class="flex items-center space-x-1">
+                        <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 font-mono">napas 247</span>
+                        <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">MBBank</span>
+                      </div>
                     </div>
 
-                    <!-- Số tiền thanh toán nổi bật -->
-                    <div class="bg-white rounded-xl py-2 px-3 border border-emerald-200">
-                      <div class="text-[10px] font-bold text-slate-400 uppercase">Số tiền cần thanh toán</div>
-                      <div class="text-2xl font-black text-emerald-600" id="payment-amount-display">30.000 VNĐ</div>
-                    </div>
-
-                    <!-- QR Thanh Toán Box -->
-                    <div class="w-36 h-36 mx-auto bg-white border-2 border-emerald-300 rounded-2xl p-3 shadow-xs relative flex items-center justify-center">
-                      <svg viewBox="0 0 100 100" class="w-full h-full fill-slate-900">
-                        <rect x="0" y="0" width="30" height="30" />
-                        <rect x="5" y="5" width="20" height="20" fill="#fff" />
-                        <rect x="10" y="10" width="10" height="10" />
-                        <rect x="70" y="0" width="30" height="30" />
-                        <rect x="75" y="5" width="20" height="20" fill="#fff" />
-                        <rect x="80" y="10" width="10" height="10" />
-                        <rect x="0" y="70" width="30" height="30" />
-                        <rect x="5" y="75" width="20" height="20" fill="#fff" />
-                        <rect x="10" y="80" width="10" height="10" />
-                        <rect x="35" y="12" width="12" height="20" />
-                        <rect x="52" y="10" width="10" height="14" />
-                        <rect x="38" y="38" width="24" height="24" rx="4" fill="#059669" />
-                        <rect x="45" y="45" width="10" height="10" fill="#fff" />
-                        <rect x="68" y="42" width="22" height="14" />
-                        <rect x="36" y="70" width="26" height="20" />
-                        <rect x="70" y="68" width="20" height="22" />
-                      </svg>
+                    <!-- QR Matrix with Center Badge & Overlay -->
+                    <div class="relative">
+                      
+    <div class="relative p-1 bg-white rounded-xl border border-slate-200 shadow-inner flex items-center justify-center">
+      <svg viewBox="0 0 116 116" class="w-28 h-28 sm:w-32 sm:h-32 fill-slate-900">
+        <rect x="0" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="112" width="3.8" height="3.8" rx="0.6"/>
+      </svg>
+      
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div class="w-7 h-7 rounded-lg bg-white border-2 border-blue-600 shadow-md flex items-center justify-center">
+          <span class="text-[9px] font-black text-blue-600">MB</span>
+        </div>
+      </div>
+    
+    </div>
+  
 
                       <!-- Overlay Animation Quay Quay khi đang thanh toán -->
-                      <div id="payment-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-2">
-                        <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-emerald-600 animate-spin mb-2"></div>
-                        <span class="text-[11px] font-extrabold text-emerald-700">Đang xử lý thanh toán...</span>
+                      <div id="payment-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-xl flex flex-col items-center justify-center p-2">
+                        <div class="w-9 h-9 rounded-full border-4 border-slate-200 border-t-emerald-600 animate-spin mb-1"></div>
+                        <span class="text-[10px] font-extrabold text-emerald-700">Đang xử lý thanh toán...</span>
                       </div>
 
                       <!-- Overlay Thanh Toán Thành Công -->
-                      <div id="payment-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-2xl flex flex-col items-center justify-center p-2">
-                        <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center mb-1.5 shadow-md">
-                          <i data-lucide="check-check" class="w-7 h-7"></i>
+                      <div id="payment-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-xl flex flex-col items-center justify-center p-2">
+                        <div class="w-9 h-9 rounded-full bg-emerald-600 text-white flex items-center justify-center mb-1 shadow-md">
+                          <i data-lucide="check-check" class="w-5 h-5"></i>
                         </div>
                         <span class="text-xs font-black text-emerald-800">Đã Thanh Toán Xong!</span>
                       </div>
                     </div>
 
-                    <p class="text-xs text-slate-600 font-semibold" id="payment-status-desc">
-                      Quét mã QR ngân hàng để thanh toán phí thuê thiết bị
-                    </p>
+                    <!-- Account & Amount Info -->
+                    <div class="w-full mt-1 pt-1 border-t border-slate-100 text-center space-y-0.5">
+                      <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wide">Chủ TK: SMART LOCKER VIETNAM</div>
+                      <div class="text-[11px] font-black text-slate-800 font-mono">9999 8888 SMART</div>
+                      <div class="text-sm font-black text-emerald-600" id="payment-amount-display">30.000 VNĐ</div>
+                      <div class="text-[9px] text-slate-500 font-mono" id="payment-memo-display">Nội dung: THUE DO NGAN 07</div>
+                    </div>
                   </div>
 
-                  <button id="btn-simulate-payment" onclick="triggerSimulatePaymentSpinner()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center space-x-2">
-                    <i data-lucide="credit-card" class="w-4 h-4"></i>
+                  <button id="btn-simulate-payment" onclick="triggerSimulatePaymentSpinner()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl font-black text-xs shadow-md flex items-center justify-center space-x-2">
+                    <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
                     <span>GIẢ LẬP ĐÃ THANH TOÁN XONG</span>
                   </button>
                 </div>
@@ -742,7 +707,7 @@
                     <span id="rental-door-badge">Cửa Tủ Đã Mở</span>
                   </div>
 
-                  <h4 class="text-base font-black text-slate-900" id="rental-door-title">Mời Lấy Thiết Bị Tại Ngăn #07</h4>
+                  <h4 class="text-base font-black text-slate-900" id="rental-door-title">Mời Lấy Thiết Bị Tại Ngăn 07</h4>
 
                   <!-- Mô hình cửa tủ mở trong modal thuê đồ -->
                   <div class="w-36 h-36 mx-auto door-perspective relative">
@@ -751,7 +716,7 @@
                       <span class="text-[10px] font-bold text-emerald-400" id="rental-cavity-name">Máy Cắt Tay</span>
                     </div>
                     <div id="rental-animated-door" class="sim-door open absolute inset-0 bg-white rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-2.5">
-                      <span class="font-black text-xs text-slate-800 text-left" id="rental-door-num">#07</span>
+                      <span class="font-black text-xs text-slate-800 text-left" id="rental-door-num">07</span>
                       <div class="text-xl">🔓</div>
                       <span class="text-[9px] font-bold text-slate-400">RENTAL BOX</span>
                     </div>
@@ -1061,8 +1026,8 @@
     // 3. CƠ SỞ DỮ LIỆU NGĂN TỦ DUY NHẤT (SINGLE SOURCE OF TRUTH - CHỐNG SỐ Ô ẢO)
     // =========================================================================
     // Tổng 12 ngăn:
-    // - Ngăn #01 -> #06: Dành cho Gửi/Nhận Hàng (2 cỡ S, 2 cỡ M, 2 cỡ L). Ban đầu TRỐNG CẢ 6 NGĂN!
-    // - Ngăn #07 -> #12: Dành cho Thuê Đồ Tiện Ích (6 thiết bị). Ban đầu CÓ SẴN CẢ 6 THIẾT BỊ!
+    // - Ngăn 01 -> Ngăn 06: Dành cho Gửi/Nhận Hàng (2 cỡ S, 2 cỡ M, 2 cỡ L). Ban đầu TRỐNG CẢ 6 NGĂN!
+    // - Ngăn 07 -> Ngăn 12: Dành cho Thuê Đồ Tiện Ích (6 thiết bị). Ban đầu CÓ SẴN CẢ 6 THIẾT BỊ!
     const INITIAL_DELIVERY_BOXES = [
       { id: 1, size: 'S', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
       { id: 2, size: 'S', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
@@ -1161,8 +1126,8 @@
               isFree
                 ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
                 : 'bg-amber-100 border-amber-400 text-amber-900'
-            }" title="Ngăn #0${b.id} (Cỡ ${b.size}): ${isFree ? 'Đang trống' : 'Có hàng - SĐT ' + b.parcel?.phone}">
-              #${String(b.id).padStart(2, '0')}(${b.size}) ${isFree ? 'Trống' : 'Có đồ'}
+            }" title="Ngăn 0${b.id} (Cỡ ${b.size}): ${isFree ? 'Đang trống' : 'Có hàng - SĐT ' + b.parcel?.phone}">
+              ${String(b.id).padStart(2, '0')}(${b.size}) ${isFree ? 'Trống' : 'Có đồ'}
             </div>
           `;
         });
@@ -1173,8 +1138,8 @@
               isAvail
                 ? 'bg-blue-50 border-blue-200 text-blue-800'
                 : 'bg-rose-100 border-rose-300 text-rose-800'
-            }" title="Ngăn #${String(r.boxId).padStart(2, '0')} (${r.name}): ${isAvail ? 'Sẵn sàng' : 'Đang cho thuê'}">
-              #${String(r.boxId).padStart(2, '0')} ${isAvail ? 'Sẵn' : 'Thuê'}
+            }" title="Ngăn ${String(r.boxId).padStart(2, '0')} (${r.name}): ${isAvail ? 'Sẵn sàng' : 'Đang cho thuê'}">
+              ${String(r.boxId).padStart(2, '0')} ${isAvail ? 'Sẵn' : 'Thuê'}
             </div>
           `;
         });
@@ -1437,7 +1402,7 @@
       openDoorSimulationModal({
         boxId: targetBox.id,
         boxSize: targetBox.size,
-        title: `Đã Mở Ngăn #${String(targetBox.id).padStart(2, '0')} (Cỡ ${targetBox.size})`,
+        title: `Đã Mở Ngăn ${String(targetBox.id).padStart(2, '0')} (Cỡ ${targetBox.size})`,
         subtitle: `Shipper vui lòng đặt đơn hàng [${rawTracking}] vào tủ và bấm đóng cửa tủ.`,
         contentEmoji: '📦',
         contentText: `MVĐ: ...${last4Digits}`,
@@ -1453,9 +1418,9 @@
 
       document.getElementById('sim-modal-title').textContent = title;
       document.getElementById('sim-modal-subtitle').textContent = subtitle;
-      document.getElementById('sim-cavity-box-label').textContent = `BOX #${String(boxId).padStart(2, '0')}`;
+      document.getElementById('sim-cavity-box-label').textContent = `BOX ${String(boxId).padStart(2, '0')}`;
       document.getElementById('sim-sensor-text').textContent = 'DOOR: OPEN';
-      document.getElementById('sim-door-box-num').textContent = `#${String(boxId).padStart(2, '0')}`;
+      document.getElementById('sim-door-box-num').textContent = `${String(boxId).padStart(2, '0')}`;
       document.getElementById('sim-door-size').textContent = boxSize || 'S';
 
       document.getElementById('sim-cavity-content').innerHTML = `
@@ -1492,7 +1457,7 @@
       document.getElementById('sim-sensor-text').textContent = 'DOOR: LOCKED';
       document.getElementById('sim-status-badge').className = 'inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 uppercase tracking-wide';
       document.getElementById('sim-status-badge').innerHTML = '<span>🔒 Đã Đóng Tủ An Toàn</span>';
-      document.getElementById('sim-modal-title').textContent = `Đã Đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')} Xong!`;
+      document.getElementById('sim-modal-title').textContent = `Đã Đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')} Xong!`;
 
       setTimeout(() => {
         const modal = document.getElementById('locker-door-sim-modal');
@@ -1519,11 +1484,11 @@
             phone: pendingDoorAction.phone,
             type: 'SHIPPER',
             title: 'Thông Báo Đơn Hàng Mới',
-            bodyHtml: `Bạn có 1 đơn hàng shopper mã vận đơn 4 số cuối là <b class="text-emerald-700 text-sm font-mono underline">${pendingDoorAction.last4}</b> (Tại Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')}).`,
+            bodyHtml: `Bạn có 1 đơn hàng shopper mã vận đơn 4 số cuối là <b class="text-emerald-700 text-sm font-mono underline">${pendingDoorAction.last4}</b> (Tại Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')}).`,
             highlightCode: pendingDoorAction.last4
           });
 
-          showPhoneToast(`Đã đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')} & gửi tin nhắn cho khách!`);
+          showPhoneToast(`Đã đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')} & gửi tin nhắn cho khách!`);
 
           // Tạo sẵn mã vận đơn ngẫu nhiên mới cho lần gửi tiếp theo
           generateRandomTracking();
@@ -1543,7 +1508,7 @@
             confetti({ particleCount: 65, spread: 60, origin: { y: 0.6 } });
           }
 
-          showPhoneToast(`Đã nhận hàng & đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')}. Ngăn tủ đã trống!`);
+          showPhoneToast(`Đã nhận hàng & đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')}. Ngăn tủ đã trống!`);
 
           // Xóa form nhận hàng
           document.getElementById('pickup-phone-input').value = '';
@@ -1575,7 +1540,7 @@
         <div onclick="fillPickupForm('${b.parcel.phone}', '${b.parcel.last4}')" class="press-effect cursor-pointer bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 rounded-xl p-2.5 flex items-center justify-between transition">
           <div class="flex items-center space-x-2">
             <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 font-black text-xs flex items-center justify-center">
-              #${String(b.id).padStart(2, '0')}
+              ${String(b.id).padStart(2, '0')}
             </span>
             <div>
               <div class="text-xs font-extrabold text-slate-800">SĐT: ${b.parcel.phone}</div>
@@ -1641,10 +1606,10 @@
       openDoorSimulationModal({
         boxId: matchedBox.id,
         boxSize: matchedBox.size,
-        title: `Xác Thực Đúng! Mở Ngăn #${String(matchedBox.id).padStart(2, '0')}`,
+        title: `Xác Thực Đúng! Mở Ngăn ${String(matchedBox.id).padStart(2, '0')}`,
         subtitle: `Khách hàng (${matchedBox.parcel.phone}) vui lòng lấy đơn hàng [${matchedBox.parcel.trackingCode}] và đóng cửa tủ.`,
         contentEmoji: '🎁',
-        contentText: `Đơn #${matchedBox.parcel.last4}`,
+        contentText: `Đơn ${matchedBox.parcel.last4}`,
         buttonText: 'Đã Lấy Hàng & Đóng Cửa Tủ'
       });
     }
@@ -1674,7 +1639,7 @@
               </div>
               <div class="text-xs font-extrabold text-slate-900 leading-tight">${item.name}</div>
               <div class="text-[11px] font-bold text-amber-600 mt-0.5">
-                ${item.pricePerBlock.toLocaleString('vi-VN')}đ/block 3h • Ngăn #${String(item.boxId).padStart(2, '0')}
+                ${item.pricePerBlock.toLocaleString('vi-VN')}đ/block 3h • Ngăn ${String(item.boxId).padStart(2, '0')}
               </div>
             </div>
 
@@ -1713,7 +1678,7 @@
       // Điền thông tin vào header modal
       document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
       document.getElementById('rental-modal-name').textContent = item.name;
-      document.getElementById('rental-modal-box').textContent = `Ngăn #${String(item.boxId).padStart(2, '0')}`;
+      document.getElementById('rental-modal-box').textContent = `Ngăn ${String(item.boxId).padStart(2, '0')}`;
       document.getElementById('rental-modal-rate').textContent = `${item.pricePerBlock.toLocaleString('vi-VN')}đ / 1 Block (3 giờ)`;
 
       // Reset về Bước 1
@@ -1821,6 +1786,8 @@
 
       document.getElementById('payment-block-badge').textContent = `${activeRentalSession.blocks} Block (${activeRentalSession.hours} giờ)`;
       document.getElementById('payment-amount-display').textContent = `${activeRentalSession.totalPrice.toLocaleString('vi-VN')} VNĐ`;
+      const memoEl = document.getElementById('payment-memo-display');
+      if (memoEl) memoEl.textContent = `Nội dung: THUE DO NGAN ${String(activeRentalSession.item.boxId).padStart(2, '0')}`;
 
       document.getElementById('payment-spinner-overlay').classList.add('hidden');
       document.getElementById('payment-success-overlay').classList.add('hidden');
@@ -1859,10 +1826,10 @@
       showRentalStep(4);
 
       const item = activeRentalSession.item;
-      document.getElementById('rental-door-title').textContent = `Cửa Ngăn #${String(item.boxId).padStart(2, '0')} Đang Mở!`;
+      document.getElementById('rental-door-title').textContent = `Cửa Ngăn ${String(item.boxId).padStart(2, '0')} Đang Mở!`;
       document.getElementById('rental-cavity-icon').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
       document.getElementById('rental-cavity-name').textContent = item.name;
-      document.getElementById('rental-door-num').textContent = `#${String(item.boxId).padStart(2, '0')}`;
+      document.getElementById('rental-door-num').textContent = `${String(item.boxId).padStart(2, '0')}`;
 
       const door = document.getElementById('rental-animated-door');
       door.classList.remove('open');
@@ -1903,7 +1870,7 @@
           phone: phone,
           type: 'RENTAL',
           title: 'Xác Nhận Thuê Thiết Bị',
-          bodyHtml: `Bạn đã thuê thành công <b class="text-brand">${item.name}</b> (Ngăn #${String(item.boxId).padStart(2, '0')}) trong <b class="text-emerald-700">${blocks} block (${hours} giờ)</b>.<br/>Tổng thanh toán: <b>${totalPrice.toLocaleString('vi-VN')} VNĐ</b>.`,
+          bodyHtml: `Bạn đã thuê thành công <b class="text-brand">${item.name}</b> (Ngăn ${String(item.boxId).padStart(2, '0')}) trong <b class="text-emerald-700">${blocks} block (${hours} giờ)</b>.<br/>Tổng thanh toán: <b>${totalPrice.toLocaleString('vi-VN')} VNĐ</b>.`,
           highlightCode: null
         });
 
@@ -1911,7 +1878,7 @@
           confetti({ particleCount: 60, spread: 55, origin: { y: 0.6 } });
         }
 
-        showPhoneToast(`Đã đóng Ngăn #${String(item.boxId).padStart(2, '0')} & gửi xác nhận thuê ${blocks} block!`);
+        showPhoneToast(`Đã đóng Ngăn ${String(item.boxId).padStart(2, '0')} & gửi xác nhận thuê ${blocks} block!`);
         activeRentalSession = null;
       }, 600);
     }
@@ -1926,7 +1893,7 @@
       item.blocks = 0;
 
       syncAllCabinetUI();
-      showPhoneToast(`Đã mở & đóng Ngăn #${String(item.boxId).padStart(2, '0')}: Trả lại [${item.name}] thành công!`);
+      showPhoneToast(`Đã mở & đóng Ngăn ${String(item.boxId).padStart(2, '0')}: Trả lại [${item.name}] thành công!`);
     }
 
     // =========================================================================
