@@ -7,7 +7,8 @@
   <meta name="description" content="Giao diện Smart Locker kèm màn hình phụ thông báo tin nhắn khách hàng 1/2 bên cạnh">
 
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- Canvas Confetti -->
@@ -822,6 +823,85 @@
         </div>
 </div>
   </main>
+
+  <!-- ================= FLOATING LOCAL AI ASSISTANT WIDGET ================= -->
+  <div id="ai-assistant-widget" class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+    <!-- Chat Window Container (Default hidden) -->
+    <div id="ai-chat-window" class="hidden w-[340px] sm:w-[380px] h-[500px] max-h-[82vh] bg-white rounded-3xl shadow-2xl border-2 border-slate-200 flex flex-col overflow-hidden mb-3 transition-all duration-300 transform origin-bottom-right">
+      <!-- AI Header -->
+      <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-brand text-white px-4 py-3 flex items-center justify-between shadow-md">
+        <div class="flex items-center space-x-2.5">
+          <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white shadow-inner">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-1.5">
+              <h3 class="text-xs font-black tracking-tight">SmartLocker AI Guide</h3>
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <p class="text-[10px] text-blue-100 font-medium">Trợ Lý Hướng Dẫn • Local Client AI</p>
+          </div>
+        </div>
+        <button onclick="toggleAiWidget()" class="w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center text-white transition">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Messages Scroll Area -->
+      <div id="ai-messages-scroll" class="flex-1 overflow-y-auto p-3.5 space-y-3 bg-slate-50 text-xs no-scrollbar">
+        <!-- AI Welcome Message -->
+        <div class="flex items-start space-x-2">
+          <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3 text-slate-800 shadow-xs max-w-[85%] space-y-1.5">
+            <p class="font-semibold leading-relaxed">
+              Xin chào! Tôi là <b>Trợ lý AI Local</b> hướng dẫn sử dụng hệ thống SmartLocker.
+            </p>
+            <p class="text-[11px] text-slate-600">
+              Tôi có thể hướng dẫn bạn các tính năng trên web hoặc tự động dẫn đường. Hãy chọn câu hỏi gợi ý bên dưới hoặc gõ câu hỏi tự do nhé:
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="pt-1 flex flex-wrap gap-1.5" id="ai-quick-chips">
+          <button onclick="handleAiQuickAsk('gui_hang')" class="press-effect text-[11px] font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-2.5 py-1 rounded-xl flex items-center space-x-1">
+            <span>📦 Cách gửi hàng</span>
+          </button>
+          <button onclick="handleAiQuickAsk('nhan_hang')" class="press-effect text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-xl flex items-center space-x-1">
+            <span>🎁 Cách nhận hàng</span>
+          </button>
+          <button onclick="handleAiQuickAsk('thue_do')" class="press-effect text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1 rounded-xl flex items-center space-x-1">
+            <span>⚡ Cách thuê đồ & VietQR</span>
+          </button>
+          <button onclick="handleAiQuickAsk('man_hinh_phu')" class="press-effect text-[11px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-2.5 py-1 rounded-xl flex items-center space-x-1">
+            <span>📱 Màn hình 1/2 bên cạnh</span>
+          </button>
+          <button onclick="handleAiQuickAsk('auto_tour')" class="press-effect text-[11px] font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 px-2.5 py-1 rounded-xl flex items-center space-x-1 shadow-xs">
+            <span>🎯 Tự động dẫn đường (Auto-Tour)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Input Box -->
+      <div class="p-2.5 bg-white border-t border-slate-200 flex items-center space-x-2">
+        <input type="text" id="ai-user-input" onkeydown="if(event.key==='Enter') sendAiUserMessage()" placeholder="Hỏi AI về cách dùng web..." class="flex-1 bg-slate-100 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 outline-none transition">
+        <button onclick="sendAiUserMessage()" class="press-effect w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-xs shrink-0">
+          <i data-lucide="send" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Toggle Button (Floating Bubble) -->
+    <button onclick="toggleAiWidget()" id="ai-toggle-btn" class="press-effect group flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-95 text-white px-3.5 py-2.5 rounded-full shadow-2xl border-2 border-white/80 transition-transform duration-200 hover:scale-105" title="Bấm để mở Trợ Lý AI Local">
+      <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+        <i data-lucide="bot" class="w-4 h-4 text-white"></i>
+      </div>
+      <span class="text-xs font-extrabold tracking-wide" id="ai-toggle-btn-label">Trợ Lý AI Hướng Dẫn</span>
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+    </button>
+  </div>
 
   <!-- ================= FOOTER ================= -->
   <footer class="bg-white border-t border-slate-200 py-2.5 text-center text-xs text-slate-500 font-medium">
@@ -1998,6 +2078,287 @@
     syncAllCabinetUI();
     lucide.createIcons();
     setTimeout(applyFitScreen, 120);
+  
+
+// =========================================================================
+    // 11. LOCAL CLIENT-SIDE AI ASSISTANT ENGINE (SMARTLOCKER AI GUIDE)
+    // =========================================================================
+    let isAiWidgetOpen = false;
+    let isAiResponding = false;
+
+    function toggleAiWidget() {
+      AudioEngine.beep(600, 0.05);
+      const chatWin = document.getElementById('ai-chat-window');
+      const label = document.getElementById('ai-toggle-btn-label');
+      if (!chatWin) return;
+
+      isAiWidgetOpen = !isAiWidgetOpen;
+      if (isAiWidgetOpen) {
+        chatWin.classList.remove('hidden');
+        chatWin.classList.add('flex');
+        if (label) label.textContent = 'Đóng Trợ Lý AI';
+        setTimeout(() => {
+          const input = document.getElementById('ai-user-input');
+          if (input) input.focus();
+        }, 150);
+      } else {
+        chatWin.classList.add('hidden');
+        chatWin.classList.remove('flex');
+        if (label) label.textContent = 'Trợ Lý AI Hướng Dẫn';
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function removeVietnameseTones(str) {
+      if (!str) return '';
+      return str
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/Đ/g, 'D')
+        .toLowerCase()
+        .trim();
+    }
+
+    const SMARTLOCKER_AI_KNOWLEDGE = {
+      gui_hang: {
+        keywords: ['gui hang', 'gui do', 'shipper', 'dat hang', 'gui', 'kich co', 'co ngan', 'size s', 'size m', 'size l', 'ma van don'],
+        title: 'Hướng dẫn chế độ Gửi Hàng (Shipper)',
+        responseHtml: `
+          <b>Quy trình Gửi Hàng vào tủ:</b><br/>
+          <b>1. Chọn Cỡ Ngăn:</b> Chọn cỡ <b>S</b>, <b>M</b>, hoặc <b>L</b> tùy kích thước kiện hàng.<br/>
+          <b>2. Nhập SĐT Khách:</b> Nhập số điện thoại khách nhận (có 2 nút Mẫu để điền nhanh).<br/>
+          <b>3. Mã Vận Đơn:</b> Hệ thống tự sinh mã (hoặc bấm đổi mã ngẫu nhiên).<br/>
+          <b>4. Mở Tủ:</b> Bấm <i>GỬI HÀNG & MỞ TỦ NGAY</i> để bung cửa tủ 3D.<br/>
+          <b>5. Đóng Tủ:</b> Bấm <i>Đã Đặt Hàng & Đóng Cửa Tủ</i>.<br/>
+          💡 <i>Ngay khi đóng tủ, tin nhắn kèm 4 số cuối mã vận đơn sẽ tự động gửi sang màn hình phụ 1/2 bên cạnh!</i>
+        `
+      },
+      nhan_hang: {
+        keywords: ['nhan hang', 'lay do', 'lay hang', 'nhan', 'cu dan', 'khach hang', '4 so cuoi', 'ma pin', 'xac thuc'],
+        title: 'Hướng dẫn chế độ Nhận Hàng (Cư dân)',
+        responseHtml: `
+          <b>Quy trình Nhận Hàng tại tủ:</b><br/>
+          <b>1. Chuyển Tab:</b> Bấm vào mục <b>Nhận Hàng</b> ở thanh điều hướng đáy màn hình.<br/>
+          <b>2. Nhập SĐT:</b> Nhập số điện thoại của bạn.<br/>
+          <b>3. Nhập Mã Vận Đơn:</b> Nhập 4 số cuối mã vận đơn (xem trên màn hình phụ 1/2 hoặc bấm <i>Điền nhanh</i> ở danh sách đơn đang lưu).<br/>
+          <b>4. Mở Tủ:</b> Bấm <i>XÁC THỰC & MỞ TỦ NHẬN HÀNG</i>.<br/>
+          <b>5. Lấy Đồ:</b> Lấy kiện hàng và bấm đóng tủ để giải phóng ngăn tủ về trạng thái trống!
+        `
+      },
+      thue_do: {
+        keywords: ['thue do', 'thue', 'thiet bi', 'vietqr', 'napas', 'thanh toan', 'ngan hang', 'block', '3h', '3 gio', 'may cat', 'may hut bui', 'may in', 'may chieu', 'may khoan', 'rua xe'],
+        title: 'Hướng dẫn Thuê Thiết Bị & Thanh Toán VietQR',
+        responseHtml: `
+          <b>Quy trình Thuê Thiết Bị Tiện Ích:</b><br/>
+          <b>1. Chuyển Tab:</b> Bấm vào mục <b>Thuê Đồ</b> ở đáy màn hình điện thoại.<br/>
+          <b>2. Chọn Đồ:</b> Chọn 1 trong 6 thiết bị (Máy cắt tay, Máy hút bụi, Máy in, Máy chiếu, Máy khoan, Máy rửa xe).<br/>
+          <b>3. Chọn Block:</b> Quy ước <b>1 Block = 3 Giờ</b>. Chọn từ 1 đến 4 Block (3h đến 12h).<br/>
+          <b>4. Xác Thực QR:</b> Quét mã QR định danh VNeID/Zalo -> Giả lập quay quay xác thực thành công.<br/>
+          <b>5. Thanh Toán VietQR:</b> Hệ thống hiển thị mã VietQR ngân hàng (MBBank, NAPAS 247) có sẵn STK, số tiền và nội dung chuyển khoản theo số ngăn tủ.<br/>
+          <b>6. Lấy Đồ:</b> Cửa tủ bung mở, lấy thiết bị và đóng tủ. Thông tin thuê sẽ được gửi sang điện thoại phụ bên cạnh!
+        `
+      },
+      man_hinh_phu: {
+        keywords: ['man hinh phu', 'man hinh 1/2', 'ben canh', 'nho', 'dien thoai phu', 'tin nhan', 'sms', 'zalo', 'xoa trang'],
+        title: 'Ý nghĩa Màn hình phụ 1/2 bên cạnh',
+        responseHtml: `
+          <b>Vai trò của Màn hình phụ (1/2):</b><br/>
+          • Mô phỏng màn hình điện thoại cá nhân (SMS / Zalo OA) của khách hàng nhận thông báo từ tủ thông minh.<br/>
+          • <b>Khi gửi hàng:</b> Nhận thông báo kèm 4 số cuối mã vận đơn và vị trí ngăn tủ.<br/>
+          • <b>Khi thuê đồ:</b> Nhận thông báo xác nhận đã thuê thiết bị trong bao nhiêu block.<br/>
+          • <b>Cơ chế xóa trắng tự động:</b> Cứ mỗi lần người dùng bấm Gửi đồ hoặc Thuê đồ mới, màn hình này sẽ tự động xóa trắng mô phỏng như điện thoại của một khách hàng mới!
+        `
+      },
+      auto_tour: {
+        keywords: ['auto tour', 'tu dong', 'dan duong', 'huong dan tung buoc', 'chay thu', 'demo tu dong', 'tour'],
+        title: 'Tự động dẫn đường (Auto-Tour)',
+        responseHtml: `
+          <b>Đang bắt đầu chế độ Tự Động Dẫn Đường!</b><br/>
+          Tôi sẽ tự động chuyển qua các tab và thao tác mẫu trên giao diện điện thoại ngay bây giờ...
+        `
+      },
+      chao_hoi: {
+        keywords: ['chao', 'hello', 'hi', 'xin chao', 'alo', 'ban la ai'],
+        title: 'Lời chào từ Trợ lý AI',
+        responseHtml: `
+          Xin chào bạn! Tôi là <b>SmartLocker AI Guide</b> chạy local trong trình duyệt.<br/>
+          Tôi có thể giúp bạn hiểu và thao tác với 3 chế độ: <b>Gửi Hàng (Shipper)</b>, <b>Nhận Hàng (Cư dân)</b>, và <b>Thuê Đồ (VietQR)</b>. Bạn muốn tìm hiểu mục nào trước?
+        `
+      },
+      cam_on: {
+        keywords: ['cam on', 'thank', 'thanks', 'tuyet', 'hay qua', 'ok', 'oke'],
+        title: 'Phản hồi',
+        responseHtml: `
+          Rất vui được hỗ trợ bạn! Chúc bạn có một buổi trình bày đồ án SmartLocker thật thành công và ấn tượng! 🎉
+        `
+      }
+    };
+
+    function matchAiIntent(userInput) {
+      const cleanInput = removeVietnameseTones(userInput);
+      if (!cleanInput) return null;
+
+      // Check specific intents
+      for (const [intentKey, data] of Object.entries(SMARTLOCKER_AI_KNOWLEDGE)) {
+        for (const kw of data.keywords) {
+          if (cleanInput.includes(removeVietnameseTones(kw))) {
+            return intentKey;
+          }
+        }
+      }
+
+      // Check if user asks about size S, M, L
+      if (cleanInput.includes('size') || cleanInput.includes('co ngan') || cleanInput.includes('ngan tu')) {
+        return 'gui_hang';
+      }
+
+      return null;
+    }
+
+    function appendAiMessage(sender, htmlContent, isMarkdown = false) {
+      const container = document.getElementById('ai-messages-scroll');
+      if (!container) return null;
+
+      const msgDiv = document.createElement('div');
+      msgDiv.className = sender === 'user'
+        ? 'flex items-start justify-end space-x-2'
+        : 'flex items-start space-x-2';
+
+      if (sender === 'user') {
+        msgDiv.innerHTML = `
+          <div class="bg-blue-600 text-white rounded-2xl rounded-tr-xs p-3 shadow-xs max-w-[85%] text-xs font-semibold leading-relaxed">
+            ${htmlContent}
+          </div>
+          <div class="w-7 h-7 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 font-bold text-xs">
+            Bạn
+          </div>
+        `;
+      } else {
+        msgDiv.innerHTML = `
+          <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          </div>
+          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3 text-slate-800 shadow-xs max-w-[85%] space-y-1 text-xs leading-relaxed ai-bubble-content">
+            ${htmlContent}
+          </div>
+        `;
+      }
+
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+      if (window.lucide) lucide.createIcons();
+      return msgDiv;
+    }
+
+    function typeWriterAiResponse(htmlContent, onComplete = null) {
+      isAiResponding = true;
+      const container = document.getElementById('ai-messages-scroll');
+      if (!container) return;
+
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex items-start space-x-2';
+      msgDiv.innerHTML = `
+        <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        </div>
+        <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3 text-slate-800 shadow-xs max-w-[85%] text-xs leading-relaxed ai-typing-box">
+          <span class="typing-text"></span><span class="inline-block w-1.5 h-3 bg-blue-600 animate-pulse ml-0.5"></span>
+        </div>
+      `;
+
+      container.appendChild(msgDiv);
+      container.scrollTop = container.scrollHeight;
+      if (window.lucide) lucide.createIcons();
+
+      const typingSpan = msgDiv.querySelector('.typing-text');
+      const cursor = msgDiv.querySelector('.animate-pulse');
+
+      // Instant typewriter effect
+      let charIdx = 0;
+      const strippedText = htmlContent;
+      // If html tags present, render directly with quick reveal
+      setTimeout(() => {
+        if (typingSpan) typingSpan.innerHTML = htmlContent;
+        if (cursor) cursor.remove();
+        container.scrollTop = container.scrollHeight;
+        isAiResponding = false;
+        if (onComplete) onComplete();
+      }, 250);
+    }
+
+    function handleAiQuickAsk(intentKey) {
+      if (isAiResponding) return;
+      const item = SMARTLOCKER_AI_KNOWLEDGE[intentKey];
+      if (!item) return;
+
+      AudioEngine.beep(650, 0.04);
+      appendAiMessage('user', item.title);
+
+      typeWriterAiResponse(item.responseHtml, () => {
+        if (intentKey === 'auto_tour') {
+          triggerAiAutoTour();
+        }
+      });
+    }
+
+    function sendAiUserMessage() {
+      if (isAiResponding) return;
+      const input = document.getElementById('ai-user-input');
+      if (!input) return;
+
+      const userText = input.value.trim();
+      if (!userText) return;
+
+      input.value = '';
+      AudioEngine.beep(650, 0.04);
+      appendAiMessage('user', userText);
+
+      const matchedKey = matchAiIntent(userText);
+      if (matchedKey) {
+        const item = SMARTLOCKER_AI_KNOWLEDGE[matchedKey];
+        typeWriterAiResponse(item.responseHtml, () => {
+          if (matchedKey === 'auto_tour') {
+            triggerAiAutoTour();
+          }
+        });
+      } else {
+        const fallbackHtml = `
+          Tôi đã ghi nhận câu hỏi của bạn! Với web demo SmartLocker này, bạn có thể thử:<br/>
+          • <b>Gửi hàng:</b> Chọn kích cỡ S/M/L -> Nhập SĐT -> Bấm Gửi & Mở tủ.<br/>
+          • <b>Nhận hàng:</b> Nhập SĐT & 4 số cuối mã vận đơn từ màn hình 1/2.<br/>
+          • <b>Thuê đồ:</b> Chọn thiết bị -> Quét VietQR ngân hàng -> Lấy đồ.<br/>
+          Bạn có muốn tôi bấm <b>Tự Động Dẫn Đường (Auto-Tour)</b> giúp bạn không?
+        `;
+        typeWriterAiResponse(fallbackHtml);
+      }
+    }
+
+    function triggerAiAutoTour() {
+      AudioEngine.beep(750, 0.08);
+      // 1. Chuyển sang Tab Shipper
+      switchTab('shipper');
+      selectLockerSize('S');
+      quickFillShipper('0912345678');
+
+      // 2. Sau 1.8s chuyển sang Tab Nhận Hàng
+      setTimeout(() => {
+        AudioEngine.beep(700, 0.08);
+        switchTab('resident');
+        fillPickupForm('0912345678', '6829');
+
+        // 3. Sau 1.8s chuyển sang Tab Thuê Đồ
+        setTimeout(() => {
+          AudioEngine.beep(700, 0.08);
+          switchTab('rental');
+
+          // Kết thúc tour
+          setTimeout(() => {
+            appendAiMessage('ai', '✅ <b>Đã hoàn thành Auto-Tour!</b> Bạn có thể tự do bấm thử từng chức năng trên màn hình điện thoại nhé!');
+          }, 1200);
+        }, 1800);
+      }, 1800);
+    }
   </script>
 </body>
 </html>
