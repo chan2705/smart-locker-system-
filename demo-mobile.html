@@ -1160,6 +1160,14 @@
     ];
 
     let activeRentalTokens = [];
+    let customerNotifications = [];
+    let currentCustomerPhone = '0981056245';
+
+    function switchCustomerPhone(phone) {
+      currentCustomerPhone = phone;
+      renderCustomerPickupInbox();
+    }
+    window.switchCustomerPhone = switchCustomerPhone;
     let pendingDoorAction = null;
     let currentSelectedSize = 'S';
     let currentRentalItem = null;
@@ -1325,7 +1333,7 @@
     // 6. XỬ LÝ GỬI HÀNG TẠI TỦ (SHIPPER DROPOFF)
     // =========================================================================
     function selectLockerSize(size) {
-      currentSelectedSize = size;
+      currentSelectedSize = (size || 'S').toUpperCase();
       ['s', 'm', 'l'].forEach(s => {
         const btn = document.getElementById('size-btn-' + s);
         if (!btn) return;
@@ -1354,6 +1362,11 @@
       const err = document.getElementById('recipient-phone-error');
       if (err) err.classList.add('hidden');
       el.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
+
+      if (el.value.length === 10 && el.value.startsWith('0')) {
+        currentCustomerPhone = el.value;
+        renderCustomerPickupInbox();
+      }
     }
 
     function validateTrackingInputLive(el) {
@@ -1430,7 +1443,7 @@
         return;
       }
 
-      const availableBox = deliveryBoxes.find(b => b.size === currentSelectedSize && b.status === 'FREE');
+      const availableBox = deliveryBoxes.find(b => b.size.toUpperCase() === currentSelectedSize.toUpperCase() && b.status === 'FREE');
       if (!availableBox) {
         showPhoneToast('Hết ngăn cỡ ' + currentSelectedSize + ', vui lòng chọn cỡ khác!', '⚠️');
         AudioEngine.beep(280, 0.15);
@@ -1605,6 +1618,8 @@
 
     function confirmCloseSimulatedDoor() {
       if (!pendingDoorAction) return;
+      const action = pendingDoorAction;
+      pendingDoorAction = null;
       AudioEngine.doorCloseSound();
 
       const door = document.getElementById('sim-animated-door');
@@ -1622,8 +1637,8 @@
         modal.classList.add('opacity-0', 'pointer-events-none');
         card.classList.add('scale-95');
 
-        if (pendingDoorAction.type === 'dropoff') {
-          const { box, phone, tracking } = pendingDoorAction;
+        if (action.type === 'dropoff') {
+          const { box, phone, tracking } = action;
           const parcelPickupCode = tracking.slice(-4) || tracking;
           box.status = 'OCCUPIED';
           box.parcel = {
@@ -1650,8 +1665,8 @@
 
           showPhoneToast('Đã gửi kiện hàng vào Ngăn ' + box.label + ' thành công!', '✅');
           AudioEngine.successChime();
-        } else if (pendingDoorAction.type === 'resident_pickup') {
-          const { box, parcel } = pendingDoorAction;
+        } else if (action.type === 'resident_pickup') {
+          const { box, parcel } = action;
           box.status = 'FREE';
           box.parcel = null;
 
@@ -1666,8 +1681,8 @@
 
           showPhoneToast('Đã nhận kiện hàng tại Ngăn ' + box.label + ' thành công!', '🎉');
           AudioEngine.successChime();
-        } else if (pendingDoorAction.type === 'rental_pickup') {
-          const { token } = pendingDoorAction;
+        } else if (action.type === 'rental_pickup') {
+          const { token } = action;
           const tool = rentalItems.find(t => t.id === token.toolId);
           if (tool) tool.status = 'RENTED';
 
@@ -1685,7 +1700,6 @@
           AudioEngine.successChime();
         }
 
-        pendingDoorAction = null;
         syncAllCabinetUI();
       }, 700);
     }
@@ -1693,100 +1707,114 @@
     // =========================================================================
     // 9. LOGIC MÁY KHÁCH HÀNG: HỘP THƯ NHẬN ĐỒ & THÔNG BÁO SMS/ZALO
     // =========================================================================
-    function markCustomerParcelNotificationAsPicked(tracking, code) {
-      const container = document.getElementById('customer-pickup-messages-container');
-      const countBadge = document.getElementById('customer-pickup-count');
-      if (!container) return;
-
-      const cards = container.children;
-      for (let i = 0; i < cards.length; i++) {
-        const card = cards[i];
-        const cardTrack = card.getAttribute('data-tracking');
-        const cardCode = card.getAttribute('data-code');
-        if ((tracking && cardTrack === tracking) || (code && cardCode === code)) {
-          const badge = card.querySelector('.status-badge');
-          if (badge) {
-            badge.className = 'status-badge text-[10px] font-black px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200';
-            badge.textContent = 'Đã Lấy Hàng ✅';
-          }
-          const actionRow = card.querySelector('.pickup-action-row');
-          if (actionRow) {
-            actionRow.innerHTML = '<span class="text-[10px] font-bold text-emerald-700">Đã mở tủ và nhận kiện hàng an toàn</span>';
-          }
-          break;
-        }
-      }
-
-      const activeRemaining = deliveryBoxes.filter(b => b.status === 'OCCUPIED' && b.parcel).length;
-      if (countBadge) countBadge.textContent = activeRemaining;
-    }
-
-    function pushCustomerPickupNotification({ type, title, boxLabel, code, fullTracking, phone, time }) {
+    function renderCustomerPickupInbox() {
       const container = document.getElementById('customer-pickup-messages-container');
       const emptyState = document.getElementById('customer-pickup-empty-state');
       const countBadge = document.getElementById('customer-pickup-count');
       const ownerNumber = document.getElementById('mini-phone-owner-number');
 
-      if (phone && ownerNumber) {
-        ownerNumber.textContent = 'SĐT: ' + phone;
+      if (ownerNumber) {
+        ownerNumber.textContent = currentCustomerPhone ? ('SĐT: ' + currentCustomerPhone) : 'SĐT: Đang chờ...';
+      }
+
+      // Lọc danh sách thông báo chỉ của SĐT khách hàng hiện tại
+      const myNotifications = customerNotifications.filter(n => n.phone === currentCustomerPhone);
+      // Đếm số kiện còn đang chờ nhận trong tủ của khách hàng này
+      const waitingCount = myNotifications.filter(n => n.status === 'WAITING').length;
+
+      if (countBadge) countBadge.textContent = waitingCount;
+
+      if (!container) return;
+
+      if (myNotifications.length === 0) {
+        container.innerHTML = '';
+        if (emptyState) emptyState.classList.remove('hidden');
+        return;
       }
 
       if (emptyState) emptyState.classList.add('hidden');
+      container.innerHTML = '';
 
-      const card = document.createElement('div');
-      card.setAttribute('data-tracking', fullTracking || code);
-      card.setAttribute('data-code', code);
-      card.className = 'bg-white border-2 border-emerald-200 rounded-3xl p-3.5 space-y-2.5 shadow-sm transform transition-all duration-300 animate-slide-in';
-      card.innerHTML = 
-        '<div class="flex items-center justify-between border-b border-slate-100 pb-2">' +
-          '<div class="flex items-center space-x-2">' +
-            '<span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">SL</span>' +
-            '<div>' +
-              '<span class="text-xs font-black text-slate-900 block">' + title + '</span>' +
-              '<span class="text-[10px] text-slate-400 font-medium font-mono">' + time + ' • SMS/Zalo OA</span>' +
+      // Hiển thị mới nhất lên trên
+      const reversed = [...myNotifications].reverse();
+      reversed.forEach(n => {
+        const isPicked = n.status === 'PICKED';
+        const card = document.createElement('div');
+        card.setAttribute('data-tracking', n.fullTracking || n.code);
+        card.setAttribute('data-code', n.code);
+        card.className = 'bg-white border-2 ' + (isPicked ? 'border-slate-200 opacity-75' : 'border-emerald-200 shadow-sm') + ' rounded-3xl p-3.5 space-y-2.5 transform transition-all duration-300 animate-slide-in';
+        card.innerHTML = 
+          '<div class="flex items-center justify-between border-b border-slate-100 pb-2">' +
+            '<div class="flex items-center space-x-2">' +
+              '<span class="w-6 h-6 rounded-lg ' + (isPicked ? 'bg-slate-100 text-slate-500' : 'bg-emerald-100 text-emerald-700') + ' flex items-center justify-center font-bold text-xs">SL</span>' +
+              '<div>' +
+                '<span class="text-xs font-black text-slate-900 block">' + n.title + '</span>' +
+                '<span class="text-[10px] text-slate-400 font-medium font-mono">' + n.time + ' • SMS/Zalo OA</span>' +
+              '</div>' +
             '</div>' +
+            '<span class="status-badge text-[10px] font-black px-2 py-0.5 rounded-full ' + 
+              (isPicked ? 'bg-slate-100 text-slate-600 border border-slate-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200') + '">' +
+              (isPicked ? 'Đã Lấy Hàng ✅' : 'Chờ Lấy Hàng') +
+            '</span>' +
           '</div>' +
-          '<span class="status-badge text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Chờ Lấy Hàng</span>' +
-        '</div>' +
-        '<div class="bg-slate-50 rounded-2xl p-2.5 space-y-1 border border-slate-100">' +
-          '<div class="flex justify-between items-center text-xs">' +
-            '<span class="text-slate-500 font-semibold">Ngăn tủ lưu trữ:</span>' +
-            '<span class="font-black text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-200">Ngăn ' + boxLabel + '</span>' +
+          '<div class="bg-slate-50 rounded-2xl p-2.5 space-y-1 border border-slate-100">' +
+            '<div class="flex justify-between items-center text-xs">' +
+              '<span class="text-slate-500 font-semibold">Ngăn tủ lưu trữ:</span>' +
+              '<span class="font-black text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-200">Ngăn ' + n.boxLabel + '</span>' +
+            '</div>' +
+            '<div class="flex justify-between items-center text-xs">' +
+              '<span class="text-slate-500 font-semibold">Mã nhận đồ:</span>' +
+              '<span class="font-mono font-black text-emerald-600 text-sm tracking-wider">' + n.code + '</span>' +
+            '</div>' +
+            (n.fullTracking ? '<div class="flex justify-between items-center text-[10px] text-slate-400 font-mono"><span>Vận đơn:</span><span>' + n.fullTracking + '</span></div>' : '') +
           '</div>' +
-          '<div class="flex justify-between items-center text-xs">' +
-            '<span class="text-slate-500 font-semibold">Mã nhận đồ:</span>' +
-            '<span class="font-mono font-black text-emerald-600 text-sm tracking-wider">' + code + '</span>' +
-          '</div>' +
-          (fullTracking ? '<div class="flex justify-between items-center text-[10px] text-slate-400 font-mono"><span>Vận đơn:</span><span>' + fullTracking + '</span></div>' : '') +
-        '</div>' +
-        '<p class="text-[11px] text-slate-600 font-medium leading-relaxed">' +
-          'Quý khách vui lòng ra tủ SmartLocker và nhập mã nhận đồ trên để nhận kiện hàng.' +
-        '</p>';
-
-      if (container) {
-        container.prepend(card);
-        const total = container.children.length;
-        if (countBadge) countBadge.textContent = total;
-      }
+          '<p class="text-[11px] text-slate-600 font-medium leading-relaxed">' +
+            (isPicked ? 'Kiện hàng đã được mở tủ và nhận thành công.' : 'Quý khách vui lòng ra tủ SmartLocker và nhập mã nhận đồ trên để nhận kiện hàng.') +
+          '</p>';
+        container.appendChild(card);
+      });
 
       if (window.lucide) window.lucide.createIcons();
     }
 
+    function markCustomerParcelNotificationAsPicked(tracking, code) {
+      for (const notif of customerNotifications) {
+        if ((tracking && notif.fullTracking === tracking) || (code && notif.code === code)) {
+          notif.status = 'PICKED';
+          break;
+        }
+      }
+      renderCustomerPickupInbox();
+    }
+
+    function pushCustomerPickupNotification({ type, title, boxLabel, code, fullTracking, phone, time }) {
+      if (phone) {
+        currentCustomerPhone = phone;
+      }
+      customerNotifications.push({
+        id: Date.now() + '-' + Math.random(),
+        type: type || 'dropoff',
+        title: title || 'Kiện Hàng Mới Tại Tủ SmartLocker',
+        boxLabel: boxLabel,
+        code: code,
+        fullTracking: fullTracking,
+        phone: phone || currentCustomerPhone,
+        time: time || new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }),
+        status: 'WAITING'
+      });
+      renderCustomerPickupInbox();
+    }
+
     function clearCustomerMiniPhone(reason = 'Làm mới') {
       AudioEngine.beep(420, 0.05);
-      const container = document.getElementById('customer-pickup-messages-container');
-      const emptyState = document.getElementById('customer-pickup-empty-state');
-      const countBadge = document.getElementById('customer-pickup-count');
+      customerNotifications = customerNotifications.filter(n => n.phone !== currentCustomerPhone);
+      activeRentalTokens = activeRentalTokens.filter(t => t.phone !== currentCustomerPhone);
       const aiScroll = document.getElementById('ai-messages-scroll');
-
-      if (container) container.innerHTML = '';
-      if (emptyState) emptyState.classList.remove('hidden');
-      if (countBadge) countBadge.textContent = '0';
       if (aiScroll) aiScroll.innerHTML = '';
 
-      activeRentalTokens = [];
+      renderCustomerPickupInbox();
       updateRentalPickupHint();
-      showPhoneToast('Đã làm mới màn hình khách hàng', '✨');
+      showPhoneToast('Đã làm mới thông báo cho ' + (currentCustomerPhone || 'khách hàng'), '✨');
     }
 
     // =========================================================================
@@ -2189,6 +2217,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       setColorTheme('blue');
       syncAllCabinetUI();
+      renderCustomerPickupInbox();
       updateClocks();
       setInterval(updateClocks, 10000);
       if (window.lucide) window.lucide.createIcons();
