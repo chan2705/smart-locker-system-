@@ -645,6 +645,12 @@
                     <button onclick="handleAiQuickAsk('nhap_ma')" class="press-effect text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
                       <span>🔑 Nhập mã tại tủ</span>
                     </button>
+                    <button onclick="handleAiQuickAsk('su_co')" class="press-effect text-[11px] font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
+                      <span>🚨 Kẹt tủ / Mất điện</span>
+                    </button>
+                    <button onclick="handleAiQuickAsk('tong_dai')" class="press-effect text-[11px] font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
+                      <span>📞 Tổng đài 1900 6868</span>
+                    </button>
                   </div>
                 </div>
 
@@ -1687,20 +1693,64 @@
     // =========================================================================
     const aiIntents = [
       {
-        keywords: ['gui hang', 'gui do', 'gui', 'shipper', 'dat hang', 'bo hang'],
+        id: 'mat_dien',
+        keywords: ['mat dien', 'cup dien', 'het dien', 'khong co dien', 'sap nguon', 'mat nguon', 'dien yeu', 'chay dien', 'ngat dien'],
+        response: 'Về sự cố mất điện: Hệ thống tủ được trang bị **bộ lưu điện dự phòng (UPS)** duy trì hoạt động trong 4-8 giờ. Khi mất điện lưới, khóa điện từ Solenoid ở chế độ **Fail-Secure** (giữ khóa an toàn để bảo vệ hàng hóa bên trong). Nếu tủ hết sạch pin lưu điện hoặc cần mở gấp, quý khách vui lòng liên hệ ngay **Tổng đài Hỗ trợ Kỹ thuật 24/7: 1900 6868** (hoặc 1900 8888) để nhân viên kỹ thuật cấp nguồn cứu hộ khẩn cấp qua cổng Type-C hoặc dùng **chìa cơ Master Key** mở tủ trực tiếp!'
+      },
+      {
+        id: 'ket_tu',
+        keywords: ['ket tu', 'ket cua', 'khong mo duoc', 'khong mo', 'chot khong nha', 'khong bung cua', 'ket hang', 'bi ket', 'ket do', 'loi cua', 'khong mo tu'],
+        response: 'Thành thật xin lỗi quý khách vì sự cố kẹt cửa tủ! Khi chốt Solenoid chưa kịp bung do kiện hàng lớn tì vào mép cửa, quý khách vui lòng **ấn nhẹ tay vào cánh cửa tủ một chút rồi bấm lại nút mở**. Nếu cửa vẫn kẹt, quý khách hãy gọi ngay **Tổng đài Hỗ trợ Khẩn cấp: 1900 6868**, đọc số tủ và số ngăn để kỹ thuật viên kích hoạt lệnh xung điện mở từ xa qua kênh MQTT hoặc cử nhân viên kỹ thuật đến hỗ trợ ngay lập tức!'
+      },
+      {
+        id: 'quen_ma',
+        keywords: ['quen ma', 'sai ma', 'mat ma', 'khong co ma', 'quen pin', 'sai pin', 'lay lai ma', 'gui lai ma', 'nhap sai ma'],
+        response: 'Nếu quý khách quên hoặc nhập sai mã: Quý khách hãy kiểm tra lại thông báo tại tab **Nhận Đồ** trên ứng dụng điện thoại. Nếu vẫn không thấy mã, vui lòng liên hệ **Tổng đài 1900 6868** và đọc số điện thoại nhận hàng. Hệ thống sẽ xác thực eKYC và gửi lại mã mở tủ mới qua SMS/Zalo ngay cho bạn.'
+      },
+      {
+        id: 'tong_dai',
+        keywords: ['tong dai', 'hotline', 'so dien thoai', 'nhan vien', 'cskh', 'gap nguoi', 'so tong dai', 'lien he', 'so hot line', 'cham soc khach hang'],
+        response: 'Quý khách có thể liên hệ ngay **Tổng đài Hỗ trợ SmartLocker 24/7**: **1900 6868** (Hotline kỹ thuật: **1900 8888**). Đội ngũ chăm sóc khách hàng và kỹ thuật viên luôn thường trực để hỗ trợ xử lý sự cố kẹt tủ, mất điện, kiểm tra mã vận đơn và mở tủ khẩn cấp từ xa!'
+      },
+      {
+        id: 'co_che_code',
+        keywords: ['co che', 'kien truc', 'phan cung', 'esp32', 'vi dieu khien', 'solenoid', 'mqtt', 'cam bien', 'limit switch', 'relay', 'code', 'ma nguon', 'backend'],
+        response: 'Hệ thống SmartLocker được phát triển theo kiến trúc IoT thương mại: Vi điều khiển trung tâm **ESP32-S3** kết nối với Backend Node.js/TypeScript qua giao thức **MQTT bảo mật**. Khóa chốt điện từ **Solenoid 12V** điều khiển qua mạch Relay/MOSFET. Mỗi ngăn đều có **công tắc hành trình Limit Switch** và **cảm biến hồng ngoại** giám sát trạng thái đóng mở cửa và phát hiện hàng trong tủ thời gian thực.'
+      },
+      {
+        id: 'bao_mat',
+        keywords: ['bao mat', 'chong trom', 'cay cua', 'cay pha', 'chong hack', 'ma hoa', 'hmac', 'coi hu', 'bao dong', 'tamper', 'efuse', 'anti replay'],
+        response: 'Hệ thống đạt chuẩn an toàn cao cấp: Khóa bảo mật lưu trong phân vùng phần cứng **eFuse HMAC** của ESP32-S3 chống đọc trộm firmware. Thuật toán QR động & PIN tích hợp **Anti-Replay Attack** với Nonce đếm tăng dần chống tấn công phát lại. Đặc biệt, nếu phát hiện cậy cửa trái phép, cảm biến **Tamper Watchdog** sẽ kích hoạt **còi hú báo động tại chỗ (GPIO 22) trong 15s** và gửi cảnh báo khẩn cấp lên Dashboard.'
+      },
+      {
+        id: 'greeting',
+        keywords: ['chao', 'xin chao', 'hello', 'hi', 'halo', 'hey', 'alo', 'co ai khong', 'ai do', 'chao ong', 'chao ban', 'bot oi', 'chao ad'],
+        response: 'Dạ chào bạn! Rất vui được hỗ trợ bạn. Tôi là **Trợ lý AI SmartLocker**. Tôi có thể hỗ trợ bạn về quy trình gửi hàng, nhận đồ, thuê thiết bị qua VietQR, hoặc hướng dẫn xử lý các sự cố kỹ thuật (mất điện, kẹt tủ). Bạn cần tôi giúp gì ạ?'
+      },
+      {
+        id: 'gui_hang',
+        keywords: ['gui hang', 'gui do', 'gui', 'shipper', 'dat hang', 'bo hang', 'giao hang'],
         response: 'Để gửi hàng vào tủ: Tại màn hình tủ (bên trái), chọn tab **Gửi Hàng**, chọn cỡ ngăn S/M/L, nhập SĐT khách và mã vận đơn, bấm nút mở tủ. Sau khi đóng tủ, thông báo kèm mã mở tủ sẽ tự động gửi sang điện thoại khách hàng!'
       },
       {
-        keywords: ['nhan hang', 'nhan do', 'lay hang', 'lay do'],
+        id: 'nhan_hang',
+        keywords: ['nhan hang', 'nhan do', 'lay hang', 'lay do', 'nhan don'],
         response: 'Để nhận hàng: Khách hàng xem mã nhận hàng (4 số cuối) trong tab **Nhận Đồ** trên điện thoại. Khi có kiện hàng, hệ thống sẽ hiển thị rõ số ngăn tủ và mã lấy đồ!'
       },
       {
-        keywords: ['thue do', 'thue', 'vietqr', 'napas', 'thanh toan', 'ngan hang'],
+        id: 'thue_do',
+        keywords: ['thue do', 'thue', 'vietqr', 'napas', 'thanh toan', 'ngan hang', 'mbbank', 'block', 'gia thue'],
         response: 'Để thuê thiết bị: Trên điện thoại (máy khách bên phải), chuyển sang tab **Thuê Đồ**, chọn món cần thuê (Bộ Dụng Cụ, Máy Cắt, Máy Hút Bụi...) bấm Thuê Ngay, chọn thời gian và quét mã **VietQR ngân hàng**. Sau khi thanh toán, hệ thống sẽ cấp mã mở tủ 4 số!'
       },
       {
-        keywords: ['nhap ma', 'ma mo tu', 'pin', 'lay thiet bi', 'tu thue'],
+        id: 'nhap_ma',
+        keywords: ['nhap ma', 'ma mo tu', 'pin', 'lay thiet bi', 'tu thue', 'numpad'],
         response: 'Để lấy thiết bị đã thuê: Khách mang mã 4 số vừa nhận được, sang màn hình tủ (bên trái), chọn tab **Nhập Mã Thuê Đồ**, bấm số trên bàn phím cảm ứng (hoặc bấm Điền Nhanh) rồi nhấn Mở Ngăn Tủ!'
+      },
+      {
+        id: 'cam_on',
+        keywords: ['cam on', 'thanks', 'thank you', 'ok', 'tuyet voi', 'gioi qua', 'tot lam'],
+        response: 'Rất hân hạnh được hỗ trợ bạn! Nếu cần thêm bất kỳ thông tin nào về tủ SmartLocker hoặc cần hỗ trợ sự cố, bạn cứ nhắn cho tôi nhé. Chúc bạn một ngày tốt lành!'
       }
     ];
 
@@ -1712,14 +1762,25 @@
         .toLowerCase().trim();
     }
 
+    function hasKeyword(text, keyword) {
+      if (keyword.length <= 3) {
+        const regex = new RegExp('(^|\\s|[.,!?;:])' + keyword + '($|\\s|[.,!?;:])', 'i');
+        return regex.test(text);
+      }
+      return text.includes(keyword);
+    }
+
     function matchAiIntent(query) {
       const clean = removeVietnameseTones(query);
       for (const item of aiIntents) {
-        if (item.keywords.some(k => clean.includes(k))) {
-          return item.response;
+        for (const k of item.keywords) {
+          const cleanKey = removeVietnameseTones(k);
+          if (hasKeyword(clean, cleanKey)) {
+            return item.response;
+          }
         }
       }
-      return 'Tôi có thể hỗ trợ bạn về: Cách gửi hàng cho shipper, Xem thông báo nhận đồ, Thuê thiết bị qua VietQR ngân hàng, hoặc Nhập mã mở tủ lấy thiết bị. Bạn muốn tìm hiểu mục nào?';
+      return 'Tôi có thể hỗ trợ bạn về: Cách gửi hàng cho shipper, Xem thông báo nhận đồ, Thuê thiết bị qua VietQR ngân hàng, Nhập mã mở tủ lấy thiết bị, hoặc xử lý các sự cố (mất điện, kẹt tủ qua **Tổng đài 1900 6868**). Bạn muốn tìm hiểu mục nào?';
     }
 
     function handleAiQuickAsk(type) {
@@ -1729,6 +1790,8 @@
       else if (type === 'nhan_hang') text = 'Làm sao để nhận kiện hàng?';
       else if (type === 'thue_do') text = 'Cách thuê thiết bị và quét VietQR?';
       else if (type === 'nhap_ma') text = 'Cách nhập mã tại tủ để lấy thiết bị?';
+      else if (type === 'su_co') text = 'Xử lý thế nào khi bị kẹt tủ hoặc mất điện?';
+      else if (type === 'tong_dai') text = 'Số điện thoại tổng đài hỗ trợ kỹ thuật là gì?';
 
       appendAiMessage('user', text);
       const reply = matchAiIntent(text);
