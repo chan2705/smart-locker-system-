@@ -3,70 +3,105 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Locker - Interactive Presentation Demo (Faculty Review)</title>
-  
+  <title>Smart Locker - Bản Trình Bày Đầy Đủ (Giao Diện Chính + Popup 1/2 + Tủ 12 Ngăn)</title>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: '#0068FF',
-            brandDark: '#0052CC',
-            brandLight: '#E8F2FF',
-            emeraldCustom: '#10B981',
-            amberCustom: '#F59E0B',
-            roseCustom: '#EF4444',
-          },
-          fontFamily: {
-            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-          },
-          boxShadow: {
-            'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-            'subtle': '0 12px 32px -4px rgba(15, 23, 42, 0.08)',
-            'phone': '0 25px 60px -15px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8)',
+            brand: 'var(--brand)',
+            brandDark: 'var(--brand-dark)',
+            brandLight: 'var(--brand-light)',
+            brandBorder: 'var(--brand-border)',
+            surface: 'var(--surface-bg)',
           }
         }
       }
     }
   </script>
 
-  <!-- Google Font: Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Canvas Confetti -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #F8FAFC;
-      color: #0F172A;
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700;800&display=swap');
+
+    :root {
+      --brand: #2563EB;
+      --brand-dark: #1D4ED8;
+      --brand-light: #EFF6FF;
+      --brand-border: #BFDBFE;
+      --surface-bg: #F1F5F9;
+      --phone-screen-bg: #F8FAFC;
     }
 
-    /* 3D Door Perspective */
+    body[data-theme="emerald"] {
+      --brand: #059669;
+      --brand-dark: #047857;
+      --brand-light: #ECFDF5;
+      --brand-border: #A7F3D0;
+      --surface-bg: #ECFDF5;
+      --phone-screen-bg: #F0FDF4;
+    }
+
+    body[data-theme="violet"] {
+      --brand: #7C3AED;
+      --brand-dark: #6D28D9;
+      --brand-light: #F5F3FF;
+      --brand-border: #DDD6FE;
+      --surface-bg: #F3E8FF;
+      --phone-screen-bg: #FAF5FF;
+    }
+
+    body[data-theme="orange"] {
+      --brand: #EA580C;
+      --brand-dark: #C2410C;
+      --brand-light: #FFF7ED;
+      --brand-border: #FED7AA;
+      --surface-bg: #FFEDD5;
+      --phone-screen-bg: #FFFBEB;
+    }
+
+    body[data-surface="dark"] {
+      --surface-bg: #0F172A;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--surface-bg);
+      transition: background-color 0.3s ease;
+    }
+
     .locker-box-perspective {
       perspective: 800px;
     }
-    
     .locker-door {
       transform-origin: left center;
       transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
       transform-style: preserve-3d;
     }
-
     .locker-door.door-open {
       transform: rotateY(-95deg);
-      box-shadow: 12px 0 25px -5px rgba(0, 0, 0, 0.15);
+      box-shadow: 12px 0 25px -5px rgba(0, 0, 0, 0.2);
     }
 
-    /* Custom Scrollbar for phone inside */
+    .door-perspective {
+      perspective: 700px;
+    }
+    .sim-door {
+      transform-origin: left center;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+    }
+    .sim-door.open {
+      transform: rotateY(-100deg);
+    }
+
     .no-scrollbar::-webkit-scrollbar {
       display: none;
     }
@@ -75,25 +110,21 @@
       scrollbar-width: none;
     }
 
-    /* Ripple Button Press Effect */
     .press-effect {
-      transition: transform 0.1s ease, filter 0.15s ease;
+      transition: transform 0.12s ease-out, filter 0.12s ease-out;
     }
     .press-effect:active {
       transform: scale(0.96);
     }
 
-    /* Solenoid Flash */
-    @keyframes solenoidPulse {
-      0% { border-color: #10B981; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.3); }
-      50% { border-color: #0068FF; box-shadow: 0 0 0 6px rgba(0, 104, 255, 0.4); }
-      100% { border-color: #CBD5E1; box-shadow: none; }
+    @keyframes popInMsg {
+      0% { opacity: 0; transform: translateY(14px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
-    .solenoid-active {
-      animation: solenoidPulse 0.8s ease-out;
+    .msg-pop {
+      animation: popInMsg 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Alarm Flash */
     @keyframes alarmBlink {
       0%, 100% { background-color: #FEE2E2; border-color: #EF4444; }
       50% { background-color: #FFFFFF; border-color: #FCA5A5; }
@@ -103,595 +134,677 @@
     }
   </style>
 </head>
-<body class="min-h-screen bg-slate-50 text-slate-900 select-none antialiased flex flex-col justify-between">
+<body data-theme="blue" data-surface="light" class="min-h-screen text-slate-900 select-none antialiased flex flex-col justify-between">
 
-  <!-- ================= TOP APP BAR ================= -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+  <!-- ================= TOP APP BAR (CÓ NÚT CHUYỂN ĐỔI MÀU GIAO DIỆN) ================= -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+    <div class="max-w-[1440px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl bg-brand text-white flex items-center justify-center font-bold text-xl shadow-md shadow-brand/20">
-          <i data-lucide="package-check" class="w-6 h-6"></i>
+        <div class="w-9 h-9 rounded-xl bg-brand text-white flex items-center justify-center font-bold text-lg shadow-md transition-colors">
+          <i data-lucide="package-check" class="w-5 h-5"></i>
         </div>
         <div>
           <div class="flex items-center space-x-2">
-            <h1 class="text-base font-extrabold text-slate-900 tracking-tight">SMART LOCKER SYSTEM</h1>
-            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+            <h1 class="text-sm sm:text-base font-extrabold text-slate-900 tracking-tight">SMART LOCKER SYSTEM • FULL PRESENTATION</h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-              Live Presentation
+              Live Sync 100%
             </span>
           </div>
-          <p class="text-xs text-slate-500 font-medium">Bản Demo Tương Tác Trực Tiếp • Hội Đồng Giảng Viên Chấm Duyệt</p>
+          <p class="text-[11px] text-slate-500 font-medium">Giao Diện Chính + Popup Tin Nhắn Khách Hàng (1/2) + Mô Hình Tủ Vật Lý 12 Ngăn</p>
         </div>
       </div>
 
-      <!-- Quick Cabinet Info & Control Actions -->
-      <div class="hidden md:flex items-center space-x-3">
-        <!-- Switch to Mobile-only Version -->
-        <a href="demo-mobile.html" class="press-effect text-xs font-bold text-brand bg-brandLight hover:bg-blue-100 px-3 py-1.5 rounded-xl border border-blue-200 flex items-center space-x-1.5 shadow-xs">
-          <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
-          <span>Chỉ Xem Điện Thoại</span>
-        </a>
+      <!-- Các nút điều khiển & đổi màu giao diện -->
+      <div class="flex items-center flex-wrap gap-2">
+        <!-- Nút 1: Đổi màu chủ đạo -->
+        <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 space-x-1">
+          <button onclick="cycleColorTheme()" class="press-effect text-xs font-extrabold text-white bg-brand px-3 py-1.5 rounded-lg flex items-center space-x-1.5 shadow-xs">
+            <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+            <span id="theme-label-text">Đổi Màu: Xanh Zalo</span>
+          </button>
+          <button onclick="setColorTheme('blue')" class="w-6 h-6 rounded-lg bg-blue-600 border-2 border-white shadow-xs hover:scale-110 transition" title="Xanh Zalo"></button>
+          <button onclick="setColorTheme('emerald')" class="w-6 h-6 rounded-lg bg-emerald-600 border-2 border-white shadow-xs hover:scale-110 transition" title="Xanh Ngọc Eco"></button>
+          <button onclick="setColorTheme('violet')" class="w-6 h-6 rounded-lg bg-violet-600 border-2 border-white shadow-xs hover:scale-110 transition" title="Tím Công Nghệ"></button>
+          <button onclick="setColorTheme('orange')" class="w-6 h-6 rounded-lg bg-orange-600 border-2 border-white shadow-xs hover:scale-110 transition" title="Cam Năng Động"></button>
+        </div>
 
-        <!-- Screen Fit Toggle -->
+        <!-- Nút 2: Đổi nền Sáng / Tối -->
+        <button onclick="toggleSurfaceMode()" class="press-effect text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center space-x-1.5 shadow-xs">
+          <i data-lucide="sun-moon" class="w-3.5 h-3.5 text-brand"></i>
+          <span id="surface-mode-text">Nền Sáng</span>
+        </button>
+
         <button onclick="toggleFitScreen()" id="btn-fit-screen" class="press-effect text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center space-x-1.5 shadow-xs">
           <i data-lucide="maximize" class="w-3.5 h-3.5"></i>
           <span>Vừa Màn Hình</span>
         </button>
 
-        <div class="bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 flex items-center space-x-2">
-          <i data-lucide="map-pin" class="w-4 h-4 text-brand"></i>
-          <span>Tủ #CAB_01 (Vinhomes)</span>
-        </div>
-
-        <button onclick="resetAllDemo()" class="press-effect text-xs font-semibold text-slate-600 bg-white hover:bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center space-x-1.5">
+        <button onclick="resetAllDemo()" class="press-effect text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center space-x-1.5 shadow-xs">
           <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
           <span>Khôi Phục</span>
         </button>
+
+        <a href="demo-mobile.html" class="press-effect text-xs font-bold text-brand bg-brandLight hover:opacity-90 px-3 py-1.5 rounded-xl border border-brandBorder flex items-center space-x-1.5 shadow-xs">
+          <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+          <span>Bản Gọn (2 Điện Thoại)</span>
+        </a>
       </div>
     </div>
   </header>
 
-  <!-- ================= MAIN 2-COLUMN VIEWPORT ================= -->
-  <main id="main-presentation-viewport" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start transition-transform duration-200">
+  <!-- ================= MAIN 3-PANEL VIEWPORT ================= -->
+  <main class="flex-1 w-full flex items-center justify-center p-3 sm:p-4 overflow-x-hidden">
+    <div id="main-presentation-viewport" class="max-w-[1440px] w-full flex flex-col xl:flex-row items-center xl:items-start justify-center gap-6 transition-transform duration-200">
 
-    <!-- ================= CỘT TRÁI: KHUNG ĐIỆN THOẠI IPHONE (420PX) ================= -->
-    <div class="lg:col-span-5 flex flex-col items-center">
-      <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 flex items-center space-x-1.5">
-        <i data-lucide="smartphone" class="w-4 h-4 text-brand"></i>
-        <span>Giao Diện Zalo Mini App (Khách Hàng & Shipper)</span>
+      <!-- ========================================================================= -->
+      <!-- CỤM TRÁI: GIAO DIỆN CHÍNH (400x844) + POPUP 1/2 KHÁCH HÀNG BÊN CẠNH       -->
+      <!-- ========================================================================= -->
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-5 shrink-0">
+
+        <!-- 1. GIAO DIỆN CHÍNH (THAO TÁC TẠI TỦ - 396x844px) -->
+        <div class="flex flex-col items-center">
+          <div class="mb-2 flex items-center space-x-2 bg-white/90 backdrop-blur px-3.5 py-1 rounded-full border border-slate-200 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-brand animate-ping"></span>
+            <span class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Giao Diện Chính (Tại Tủ)</span>
+          </div>
+
+          <div class="w-[396px] h-[844px] bg-slate-900 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700">
+            <div class="absolute -left-[3px] top-28 w-[4px] h-10 bg-slate-600 rounded-l-sm"></div>
+            <div class="absolute -left-[3px] top-42 w-[4px] h-12 bg-slate-600 rounded-l-sm"></div>
+            <div class="absolute -right-[3px] top-32 w-[4px] h-16 bg-slate-600 rounded-r-sm"></div>
+
+            <div class="w-full h-full rounded-[46px] flex flex-col overflow-hidden relative border border-slate-200" style="background-color: var(--phone-screen-bg);">
+              <!-- Dynamic Island -->
+              <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-50 flex items-center justify-between px-3">
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800"></div>
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+              </div>
+
+              <!-- Status Bar -->
+              <div class="pt-3.5 px-6 pb-1 flex justify-between items-center text-xs font-bold text-slate-800 z-40 bg-white">
+                <span class="live-clock">09:41</span>
+                <div class="flex items-center space-x-1.5 text-slate-800">
+                  <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+                  <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+                  <i data-lucide="battery" class="w-4 h-4"></i>
+                </div>
+              </div>
+
+              <!-- Header -->
+              <div class="bg-white border-b border-slate-200 px-4 py-2.5 flex items-center justify-between z-40">
+                <div class="flex items-center space-x-2.5">
+                  <div class="w-8 h-8 rounded-xl bg-brand text-white flex items-center justify-center font-black text-xs shadow-xs">
+                    SL
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-extrabold text-slate-900 leading-tight">SmartLocker System</h3>
+                    <p class="text-[11px] font-medium text-slate-500 flex items-center">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span>
+                      <span id="header-summary-status">Trống 6/6 ngăn gửi • Sẵn sàng 6/6 đồ thuê</span>
+                    </p>
+                  </div>
+                </div>
+                <button onclick="cycleColorTheme()" class="press-effect bg-brandLight border border-brandBorder text-brand rounded-full p-1.5 flex items-center justify-center" title="Đổi màu giao diện">
+                  <i data-lucide="paintbrush" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+              <!-- Scrollable Content -->
+              <div class="flex-1 overflow-y-auto p-3.5 no-scrollbar pb-24" id="phone-content-viewport">
+
+                <!-- ================= TAB 1: GỬI HÀNG (SHIPPER) ================= -->
+                <div id="tab-content-shipper" class="space-y-3.5">
+                  <div class="bg-brandLight border border-brandBorder rounded-2xl p-3 flex justify-between items-center">
+                    <div>
+                      <div class="text-[10px] font-extrabold uppercase text-brand tracking-wider">Chế Độ Shipper</div>
+                      <div class="text-sm font-extrabold text-slate-900 mt-0.5">Gửi Hàng Vào Tủ</div>
+                    </div>
+                    <div class="flex items-center space-x-3 text-right">
+                      <div>
+                        <span class="text-base font-black text-brand" id="shipper-free-boxes-text">6</span>
+                        <span class="text-[10px] font-bold text-slate-500 block -mt-1">ô trống</span>
+                      </div>
+                      <div class="w-px h-6 bg-slate-300"></div>
+                      <div>
+                        <span class="text-base font-black text-amber-600" id="shipper-occupied-boxes-text">0</span>
+                        <span class="text-[10px] font-bold text-slate-500 block -mt-1">đang gửi</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 1. Chọn Cỡ Ngăn -->
+                  <div>
+                    <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center justify-between mb-1.5">
+                      <span>1. Chọn cỡ ngăn tủ gửi hàng</span>
+                      <span class="text-[10px] font-semibold text-slate-400">Ngăn #01 - #06</span>
+                    </label>
+                    <div class="grid grid-cols-3 gap-2">
+                      <button onclick="selectLockerSize('S')" id="size-btn-S" class="press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all">
+                        <div class="w-7 h-7 mx-auto rounded-xl bg-white text-brand border border-brandBorder flex items-center justify-center font-black text-xs mb-1">S</div>
+                        <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
+                        <div class="text-[10px] text-slate-500 font-medium">Ngăn #01, #02</div>
+                        <div class="text-xs font-extrabold text-brand mt-1" id="count-size-S">Trống: 2</div>
+                      </button>
+                      <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
+                        <div class="w-7 h-7 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-xs mb-1">M</div>
+                        <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
+                        <div class="text-[10px] text-slate-500 font-medium">Ngăn #03, #04</div>
+                        <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-M">Trống: 2</div>
+                      </button>
+                      <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
+                        <div class="w-7 h-7 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-xs mb-1">L</div>
+                        <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
+                        <div class="text-[10px] text-slate-500 font-medium">Ngăn #05, #06</div>
+                        <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-L">Trống: 2</div>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- 2. SĐT Khách Hàng -->
+                  <div>
+                    <div class="flex justify-between items-center mb-1">
+                      <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide">2. SĐT Khách Hàng</label>
+                      <div class="flex space-x-1">
+                        <button onclick="quickFillShipper('0912345678')" class="text-[10px] font-bold text-brand bg-brandLight px-2 py-0.5 rounded-md border border-brandBorder">0912345678</button>
+                        <button onclick="quickFillShipper('0988777666')" class="text-[10px] font-bold text-brand bg-brandLight px-2 py-0.5 rounded-md border border-brandBorder">0988777666</button>
+                      </div>
+                    </div>
+                    <div class="relative">
+                      <input type="tel" id="recipient-phone-input" maxlength="11" oninput="validatePhoneInputLive(this)" placeholder="Nhập SĐT khách hàng (vd: 0912345678)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-2.5 text-sm font-bold text-slate-900 outline-none transition-all shadow-xs">
+                      <div class="absolute right-3.5 top-3 text-slate-400" id="recipient-phone-status-icon">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                      </div>
+                    </div>
+                    <p id="recipient-phone-error" class="hidden text-xs font-bold text-rose-600 mt-1 flex items-center space-x-1">
+                      <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
+                      <span id="recipient-phone-error-text">Vui lòng nhập đủ 10-11 chữ số.</span>
+                    </p>
+                  </div>
+
+                  <!-- 3. Mã Vận Đơn -->
+                  <div>
+                    <div class="flex justify-between items-center mb-1">
+                      <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide">3. Mã Vận Đơn Shopper</label>
+                      <button onclick="generateRandomTracking()" class="text-[10px] font-bold text-slate-600 hover:text-brand flex items-center space-x-1">
+                        <i data-lucide="shuffle" class="w-3 h-3"></i>
+                        <span>Đổi mã khác</span>
+                      </button>
+                    </div>
+                    <div class="relative">
+                      <input type="text" id="tracking-code-input" value="SPX-6829" placeholder="Tự sinh nếu để trống (vd: SPX-6829)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-2.5 text-sm font-bold text-slate-900 font-mono outline-none transition-all shadow-xs">
+                      <div class="absolute right-3.5 top-3 text-slate-400">
+                        <i data-lucide="barcode" class="w-4 h-4"></i>
+                      </div>
+                    </div>
+                    <p class="text-[10px] text-slate-500 font-semibold mt-1">
+                      💡 Đóng tủ xong sẽ nhắn <span class="text-brand font-bold">4 số cuối mã vận đơn</span> qua màn hình phụ 1/2 bên cạnh.
+                    </p>
+                  </div>
+
+                  <button onclick="executeShipperDropoff()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                    <i data-lucide="unlock" class="w-4 h-4"></i>
+                    <span>GỬI HÀNG & MỞ TỦ NGAY</span>
+                  </button>
+                </div>
+
+                <!-- ================= TAB 2: NHẬN HÀNG (KHÁCH HÀNG) ================= -->
+                <div id="tab-content-resident" class="space-y-3.5 hidden">
+                  <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 flex justify-between items-center">
+                    <div>
+                      <div class="text-[10px] font-extrabold uppercase text-emerald-700 tracking-wider">Khách Hàng Ra Tủ</div>
+                      <div class="text-sm font-extrabold text-slate-900 mt-0.5">Xác Thực & Nhận Hàng</div>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-base font-black text-emerald-600" id="resident-waiting-count">0</span>
+                      <span class="text-[10px] font-bold text-slate-500 block -mt-1">đơn trong tủ</span>
+                    </div>
+                  </div>
+
+                  <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 space-y-3.5 shadow-xs">
+                    <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-2.5">
+                      <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <i data-lucide="package-check" class="w-5 h-5"></i>
+                      </div>
+                      <div>
+                        <h4 class="text-xs font-extrabold text-slate-900 uppercase">Nhập SĐT & Mã Vận Đơn</h4>
+                        <p class="text-[11px] text-slate-500 font-medium">Lấy 4 số cuối MVĐ từ màn hình phụ 1/2 bên cạnh</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label class="text-xs font-extrabold text-slate-700 block mb-1">1. Số điện thoại của bạn</label>
+                      <input type="tel" id="pickup-phone-input" maxlength="11" placeholder="Nhập SĐT nhận hàng (vd: 0912345678)" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-emerald-600 focus:bg-white rounded-2xl px-3.5 py-2.5 text-sm font-bold text-slate-900 outline-none transition-all">
+                    </div>
+
+                    <div>
+                      <label class="text-xs font-extrabold text-slate-700 block mb-1">2. Mã vận đơn (4 số cuối)</label>
+                      <input type="text" id="pickup-tracking-input" placeholder="Nhập 4 số cuối mã vận đơn (vd: 6829)" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-emerald-600 focus:bg-white rounded-2xl px-3.5 py-2.5 text-base font-black text-emerald-700 tracking-widest font-mono outline-none transition-all">
+                    </div>
+
+                    <p id="pickup-error-msg" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-xl flex items-center space-x-1.5">
+                      <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
+                      <span id="pickup-error-text">Thông tin chưa chính xác!</span>
+                    </p>
+
+                    <button onclick="executeResidentPickupByForm()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center space-x-2">
+                      <i data-lucide="unlock" class="w-4 h-4"></i>
+                      <span>XÁC THỰC & MỞ TỦ NHẬN HÀNG</span>
+                    </button>
+                  </div>
+
+                  <div class="bg-white border border-slate-200 rounded-2xl p-3 space-y-2">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] font-extrabold text-slate-700 uppercase">Đơn đang lưu trong tủ</span>
+                      <span class="text-[10px] text-slate-400 font-semibold">Bấm để điền nhanh</span>
+                    </div>
+                    <div id="active-parcels-list" class="space-y-1.5"></div>
+                  </div>
+                </div>
+
+                <!-- ================= TAB 3: THUÊ ĐỒ (RENTAL) ================= -->
+                <div id="tab-content-rental" class="space-y-3 hidden">
+                  <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex justify-between items-center">
+                    <div>
+                      <div class="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider">Tiện Ích Dùng Chung</div>
+                      <div class="text-sm font-extrabold text-slate-900 mt-0.5">Thuê Thiết Bị (1 Block = 3 Giờ)</div>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-base font-black text-amber-600" id="rental-available-count">6/6</span>
+                      <span class="text-[10px] font-bold text-slate-500 block -mt-1">có sẵn</span>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-2 gap-2.5" id="rental-catalog-grid"></div>
+                </div>
+
+              </div>
+
+              <!-- Bottom Nav -->
+              <div class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 flex flex-col px-3 pt-1 pb-1.5 z-40 shadow-sm">
+                <div class="flex items-center justify-around h-14">
+                  <button onclick="switchTab('shipper')" id="nav-btn-shipper" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-brand">
+                    <i data-lucide="package-plus" class="w-5 h-5"></i>
+                    <span class="text-[11px] font-extrabold mt-0.5">Gửi Hàng</span>
+                  </button>
+                  <button onclick="switchTab('resident')" id="nav-btn-resident" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400 relative">
+                    <span class="hidden absolute top-0.5 right-7 min-w-[16px] h-4 px-1 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center" id="nav-badge-resident">0</span>
+                    <i data-lucide="package-check" class="w-5 h-5"></i>
+                    <span class="text-[11px] font-extrabold mt-0.5">Nhận Hàng</span>
+                  </button>
+                  <button onclick="switchTab('rental')" id="nav-btn-rental" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
+                    <i data-lucide="wrench" class="w-5 h-5"></i>
+                    <span class="text-[11px] font-extrabold mt-0.5">Thuê Đồ</span>
+                  </button>
+                </div>
+                <div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mb-0.5"></div>
+              </div>
+
+              <!-- MODAL 1: GIẢ LẬP MỞ & ĐÓNG TỦ (GỬI / NHẬN HÀNG) -->
+              <div id="locker-door-sim-modal" class="absolute inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+                <div class="bg-white rounded-3xl p-5 w-full max-w-[345px] text-center space-y-4 shadow-2xl">
+                  <div id="sim-status-badge" class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 uppercase tracking-wide">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span>Cửa Tủ Đang Mở</span>
+                  </div>
+
+                  <h3 class="text-lg font-black text-slate-900" id="sim-modal-title">Ngăn #01 Đã Mở!</h3>
+                  <p class="text-xs text-slate-500 font-medium" id="sim-modal-subtitle">Vui lòng thao tác và đóng cửa tủ.</p>
+
+                  <div class="w-36 h-36 mx-auto door-perspective relative">
+                    <div class="w-full h-full bg-slate-800 rounded-2xl border-4 border-slate-700 flex flex-col items-center justify-between p-3 shadow-inner">
+                      <div class="w-full flex justify-between text-[10px] font-mono text-emerald-400 font-bold">
+                        <span id="sim-cavity-box-label">BOX #01</span>
+                        <span id="sim-sensor-text">OPEN</span>
+                      </div>
+                      <div class="my-auto flex flex-col items-center" id="sim-cavity-content"></div>
+                      <div class="text-[9px] text-slate-400 font-mono">SOLENOID LOCK</div>
+                    </div>
+                    <div id="sim-animated-door" class="sim-door absolute inset-0 bg-gradient-to-br from-white to-slate-100 rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-3">
+                      <div class="flex justify-between items-center">
+                        <span class="font-black text-sm text-slate-800" id="sim-door-box-num">#01</span>
+                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brandLight text-brand" id="sim-door-size">S</span>
+                      </div>
+                      <div class="w-9 h-9 mx-auto rounded-xl bg-slate-200 flex items-center justify-center text-slate-600 font-bold">🔒</div>
+                      <div class="text-[10px] font-bold text-slate-500">SMART LOCKER</div>
+                    </div>
+                  </div>
+
+                  <button id="btn-confirm-close-door" onclick="confirmCloseSimulatedDoor()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    <span id="btn-close-door-label">Đóng Cửa Tủ</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- MODAL 2: LUỒNG THUÊ ĐỒ -->
+              <div id="rental-flow-modal" class="absolute inset-0 bg-slate-900/65 backdrop-blur-xs z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
+                <div id="rental-flow-panel" class="bg-white rounded-t-[34px] p-5 space-y-4 max-h-[88%] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl">
+                  <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
+                      <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500" id="rental-step-indicator">Bước 1/4</span>
+                    </div>
+                    <button onclick="closeRentalModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
+                      <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+
+                  <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                    <div class="w-14 h-14 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1.5 shrink-0" id="rental-modal-svg"></div>
+                    <div class="flex-1">
+                      <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-extrabold text-slate-900" id="rental-modal-name">Máy Cắt Tay</h4>
+                        <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn #07</span>
+                      </div>
+                      <p class="text-xs font-bold text-amber-600 mt-0.5" id="rental-modal-rate">30.000đ / 1 Block (3 giờ)</p>
+                    </div>
+                  </div>
+
+                  <!-- Step 1 -->
+                  <div id="rental-step-1-blocks" class="space-y-3.5">
+                    <div>
+                      <label class="text-xs font-extrabold text-slate-700 uppercase block mb-1">SĐT khách hàng thuê đồ</label>
+                      <input type="tel" id="rental-customer-phone" maxlength="11" value="0912345678" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-brand focus:bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-900 outline-none">
+                    </div>
+
+                    <div>
+                      <div class="flex justify-between items-center mb-1.5">
+                        <label class="text-xs font-extrabold text-slate-700 uppercase">Chọn Số Block Giờ Thuê</label>
+                        <span class="text-[11px] font-extrabold text-brand bg-brandLight px-2 py-0.5 rounded-md">1 Block = 3 Giờ</span>
+                      </div>
+                      <div class="grid grid-cols-4 gap-2">
+                        <button onclick="selectRentalBlocks(1)" id="block-btn-1" class="press-effect border-2 border-brand bg-brandLight rounded-xl p-2.5 text-center">
+                          <div class="text-sm font-black text-slate-900">1 Block</div>
+                          <div class="text-[10px] font-bold text-brand">3 Giờ</div>
+                        </button>
+                        <button onclick="selectRentalBlocks(2)" id="block-btn-2" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
+                          <div class="text-sm font-black text-slate-900">2 Block</div>
+                          <div class="text-[10px] font-bold text-slate-500">6 Giờ</div>
+                        </button>
+                        <button onclick="selectRentalBlocks(3)" id="block-btn-3" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
+                          <div class="text-sm font-black text-slate-900">3 Block</div>
+                          <div class="text-[10px] font-bold text-slate-500">9 Giờ</div>
+                        </button>
+                        <button onclick="selectRentalBlocks(4)" id="block-btn-4" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
+                          <div class="text-sm font-black text-slate-900">4 Block</div>
+                          <div class="text-[10px] font-bold text-slate-500">12 Giờ</div>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3 flex justify-between items-center">
+                      <div>
+                        <div class="text-[11px] font-bold text-slate-600">Thời lượng thuê:</div>
+                        <div class="text-sm font-black text-slate-900" id="rental-summary-hours">1 Block (3 giờ)</div>
+                      </div>
+                      <div class="text-right">
+                        <div class="text-[11px] font-bold text-slate-600">Thành tiền:</div>
+                        <div class="text-base font-black text-amber-700" id="rental-summary-price">30.000đ</div>
+                      </div>
+                    </div>
+
+                    <button onclick="goToRentalStep2AuthQr()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                      <i data-lucide="qr-code" class="w-4 h-4"></i>
+                      <span>TIẾP TỤC • HIỆN QR XÁC THỰC</span>
+                    </button>
+                  </div>
+
+                  <!-- Step 2: QR Auth -->
+                  <div id="rental-step-2-auth" class="hidden space-y-3.5 text-center">
+                    <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 space-y-3">
+                      <div class="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full bg-brandLight text-brand text-[11px] font-extrabold">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                        <span>Mã QR Xác Thực Định Danh</span>
+                      </div>
+
+                      <div class="w-36 h-36 mx-auto bg-white border-2 border-slate-200 rounded-2xl p-3 shadow-xs relative flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="w-full h-full fill-slate-900">
+                          <rect x="0" y="0" width="30" height="30" />
+                          <rect x="5" y="5" width="20" height="20" fill="#fff" />
+                          <rect x="10" y="10" width="10" height="10" />
+                          <rect x="70" y="0" width="30" height="30" />
+                          <rect x="75" y="5" width="20" height="20" fill="#fff" />
+                          <rect x="80" y="10" width="10" height="10" />
+                          <rect x="0" y="70" width="30" height="30" />
+                          <rect x="5" y="75" width="20" height="20" fill="#fff" />
+                          <rect x="10" y="80" width="10" height="10" />
+                          <rect x="36" y="36" width="28" height="28" rx="4" fill="#2563EB" />
+                          <rect x="44" y="44" width="12" height="12" fill="#fff" />
+                          <rect x="40" y="74" width="22" height="18" />
+                        </svg>
+
+                        <div id="auth-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-2">
+                          <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-brand animate-spin mb-2"></div>
+                          <span class="text-[11px] font-extrabold text-brand">Đang xác thực...</span>
+                        </div>
+
+                        <div id="auth-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-2xl flex flex-col items-center justify-center p-2">
+                          <div class="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1.5 shadow-md">
+                            <i data-lucide="check" class="w-7 h-7"></i>
+                          </div>
+                          <span class="text-xs font-black text-emerald-800">Xác Thực Thành Công!</span>
+                        </div>
+                      </div>
+                      <p class="text-xs text-slate-600 font-semibold">Quét mã QR để xác thực danh tính thuê thiết bị</p>
+                    </div>
+
+                    <button id="btn-simulate-auth" onclick="triggerSimulateAuthSpinner()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                      <i data-lucide="scan-line" class="w-4 h-4"></i>
+                      <span>GIẢ LẬP QUÉT QR & XÁC THỰC</span>
+                    </button>
+                  </div>
+
+                  <!-- Step 3: QR Payment -->
+                  <div id="rental-step-3-payment" class="hidden space-y-3.5 text-center">
+                    <div class="bg-emerald-50/60 border-2 border-emerald-200 rounded-2xl p-4 space-y-3">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[11px] font-black text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">VIETQR • THANH TOÁN</span>
+                        <span class="text-[11px] font-bold text-slate-500" id="payment-block-badge">1 Block (3 giờ)</span>
+                      </div>
+
+                      <div class="bg-white rounded-xl py-2 px-3 border border-emerald-200">
+                        <div class="text-[10px] font-bold text-slate-400 uppercase">Số tiền thanh toán</div>
+                        <div class="text-2xl font-black text-emerald-600" id="payment-amount-display">30.000 VNĐ</div>
+                      </div>
+
+                      <div class="w-36 h-36 mx-auto bg-white border-2 border-emerald-300 rounded-2xl p-3 shadow-xs relative flex items-center justify-center">
+                        <svg viewBox="0 0 100 100" class="w-full h-full fill-slate-900">
+                          <rect x="0" y="0" width="30" height="30" />
+                          <rect x="5" y="5" width="20" height="20" fill="#fff" />
+                          <rect x="10" y="10" width="10" height="10" />
+                          <rect x="70" y="0" width="30" height="30" />
+                          <rect x="75" y="5" width="20" height="20" fill="#fff" />
+                          <rect x="80" y="10" width="10" height="10" />
+                          <rect x="0" y="70" width="30" height="30" />
+                          <rect x="5" y="75" width="20" height="20" fill="#fff" />
+                          <rect x="10" y="80" width="10" height="10" />
+                          <rect x="38" y="38" width="24" height="24" rx="4" fill="#059669" />
+                          <rect x="45" y="45" width="10" height="10" fill="#fff" />
+                          <rect x="36" y="70" width="26" height="20" />
+                        </svg>
+
+                        <div id="payment-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-2xl flex flex-col items-center justify-center p-2">
+                          <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-emerald-600 animate-spin mb-2"></div>
+                          <span class="text-[11px] font-extrabold text-emerald-700">Đang xử lý thanh toán...</span>
+                        </div>
+
+                        <div id="payment-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-2xl flex flex-col items-center justify-center p-2">
+                          <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center mb-1.5 shadow-md">
+                            <i data-lucide="check-check" class="w-7 h-7"></i>
+                          </div>
+                          <span class="text-xs font-black text-emerald-800">Đã Thanh Toán Xong!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button id="btn-simulate-payment" onclick="triggerSimulatePaymentSpinner()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                      <i data-lucide="credit-card" class="w-4 h-4"></i>
+                      <span>GIẢ LẬP ĐÃ THANH TOÁN XONG</span>
+                    </button>
+                  </div>
+
+                  <!-- Step 4: Door Open/Close -->
+                  <div id="rental-step-4-door" class="hidden space-y-3.5 text-center">
+                    <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 uppercase">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                      <span>Cửa Tủ Đã Mở</span>
+                    </div>
+                    <h4 class="text-base font-black text-slate-900" id="rental-door-title">Mời Lấy Thiết Bị</h4>
+
+                    <div class="w-36 h-36 mx-auto door-perspective relative">
+                      <div class="w-full h-full bg-slate-800 rounded-2xl border-4 border-slate-700 flex flex-col items-center justify-center p-2 shadow-inner">
+                        <div class="w-14 h-14 bg-white/10 rounded-xl p-2 flex items-center justify-center mb-1" id="rental-cavity-icon"></div>
+                        <span class="text-[10px] font-bold text-emerald-400" id="rental-cavity-name">Máy Cắt Tay</span>
+                      </div>
+                      <div id="rental-animated-door" class="sim-door open absolute inset-0 bg-white rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-2.5">
+                        <span class="font-black text-xs text-slate-800 text-left" id="rental-door-num">#07</span>
+                        <div class="text-xl">🔓</div>
+                        <span class="text-[9px] font-bold text-slate-400">RENTAL BOX</span>
+                      </div>
+                    </div>
+
+                    <button id="btn-close-rental-door" onclick="confirmCloseRentalDoor()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                      <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                      <span>ĐÃ LẤY ĐỒ & ĐÓNG CỬA TỦ</span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Toast -->
+              <div id="phone-toast" class="absolute top-16 left-4 right-4 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-xl z-50 text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
+                <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                <span id="phone-toast-text">Thông báo</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. POPUP BE BÉ = 1/2 MÀN HÌNH ĐIỆN THOẠI BÊN CẠNH (TIN NHẮN KHÁCH HÀNG) -->
+        <div class="flex flex-col items-center md:mt-12">
+          <div class="mb-2 flex items-center space-x-2 bg-white/90 backdrop-blur px-3 py-1 rounded-full border border-slate-200 shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span class="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider">Màn Hình Phụ Khách Hàng (1/2)</span>
+          </div>
+
+          <div id="customer-mini-phone" class="w-[270px] h-[450px] bg-slate-800 rounded-[40px] p-2 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-600 transition-all duration-300">
+            <div class="absolute top-2 left-1/2 -translate-x-1/2 w-20 h-4 bg-black rounded-full z-40 flex items-center justify-between px-2">
+              <div class="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+              <div class="w-1.5 h-1.5 rounded-full bg-emerald-400" id="mini-phone-led"></div>
+            </div>
+
+            <div class="w-full h-full bg-white rounded-[32px] flex flex-col overflow-hidden relative border border-slate-200">
+              <div class="pt-2.5 px-4 pb-1 flex justify-between items-center text-[10px] font-bold text-slate-700 bg-slate-50">
+                <span class="live-clock">09:41</span>
+                <div class="flex items-center space-x-1">
+                  <i data-lucide="wifi" class="w-3 h-3"></i>
+                  <i data-lucide="battery-charging" class="w-3.5 h-3.5 text-emerald-600"></i>
+                </div>
+              </div>
+
+              <div class="bg-slate-50 border-b border-slate-200 px-3 py-2 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-7 h-7 rounded-full bg-brand text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                    <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div>
+                    <div class="text-[11px] font-extrabold text-slate-900 leading-tight">Tin Nhắn Khách Hàng</div>
+                    <div class="text-[10px] font-bold text-brand font-mono" id="mini-phone-owner-number">SĐT: Chưa xác định</div>
+                  </div>
+                </div>
+                <button onclick="clearCustomerMiniPhone('Làm mới thủ công')" class="press-effect text-[10px] font-bold text-slate-500 hover:text-rose-600 bg-white px-2 py-1 rounded-lg border border-slate-200">
+                  Xóa trắng
+                </button>
+              </div>
+
+              <div id="mini-phone-messages-area" class="flex-1 overflow-y-auto p-3 space-y-2.5 bg-slate-100/70 flex flex-col justify-center items-center text-center">
+                <div class="space-y-2 p-2">
+                  <div class="w-10 h-10 mx-auto rounded-2xl bg-white border border-slate-200 text-slate-400 flex items-center justify-center">
+                    <i data-lucide="bell-ring" class="w-5 h-5"></i>
+                  </div>
+                  <div class="text-xs font-extrabold text-slate-700">Thông Báo Khách Hàng</div>
+                  <p class="text-[10px] text-slate-500 leading-relaxed">
+                    Mỗi lần bấm <b>Gửi Hàng</b> hoặc <b>Thuê Đồ</b>, màn hình này sẽ tự động xóa trắng và nhận tin nhắn mới ngay khi tủ đóng xong.
+                  </p>
+                </div>
+              </div>
+
+              <div class="bg-white border-t border-slate-200 px-3 py-1.5 flex items-center justify-between text-[10px] text-slate-400 font-semibold">
+                <span>SMS / Zalo SmartLocker</span>
+                <span class="text-emerald-600 font-bold">● Online</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- iPhone 16 Pro Frame (Pure Light Mode - Elongated 19.5:9 Modern Proportions) -->
-      <div class="w-full max-w-[396px] h-[844px] bg-slate-800 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700">
-        
-        <!-- Hardware Side Buttons (Titanium Aesthetic) -->
-        <div class="absolute -left-[3px] top-28 w-[4px] h-10 bg-slate-600 rounded-l-sm"></div>
-        <div class="absolute -left-[3px] top-42 w-[4px] h-12 bg-slate-600 rounded-l-sm"></div>
-        <div class="absolute -right-[3px] top-32 w-[4px] h-16 bg-slate-600 rounded-r-sm"></div>
-
-        <!-- Outer Screen Bezel Container -->
-        <div class="w-full h-full bg-slate-50 rounded-[46px] flex flex-col overflow-hidden relative border border-slate-200">
-          
-          <!-- Dynamic Island -->
-          <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-50 flex items-center justify-between px-3">
-            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800"></div>
-            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
+      <!-- ========================================================================= -->
+      <!-- CỤM PHẢI: MÔ HÌNH TỦ VẬT LÝ 12 NGĂN ĐỒNG BỘ TRỰC TIẾP                     -->
+      <!-- ========================================================================= -->
+      <div class="flex-1 w-full max-w-[640px] flex flex-col items-center">
+        <div class="w-full flex flex-wrap justify-between items-center mb-2 gap-2">
+          <div class="text-xs font-extrabold uppercase tracking-wider text-slate-700 bg-white/90 px-3.5 py-1 rounded-full border border-slate-200 flex items-center space-x-1.5">
+            <i data-lucide="layout-grid" class="w-4 h-4 text-brand"></i>
+            <span>Mô Hình Tủ Vật Lý 12 Ngăn (#01-#06 Giao Nhận • #07-#12 Thuê Đồ)</span>
           </div>
-
-          <!-- Status Bar -->
-          <div class="pt-3.5 px-6 pb-1 flex justify-between items-center text-xs font-bold text-slate-800 z-40 bg-white">
-            <span>9:41</span>
-            <div class="flex items-center space-x-1.5 text-slate-800">
-              <i data-lucide="signal" class="w-3.5 h-3.5"></i>
-              <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
-              <i data-lucide="battery" class="w-4 h-4"></i>
-            </div>
+          <div class="flex space-x-3 text-xs font-bold text-slate-700 bg-white/90 px-3 py-1 rounded-full border border-slate-200">
+            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1"></span> Trống</span>
+            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block mr-1"></span> Có hàng</span>
+            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block mr-1"></span> Đồ thuê</span>
           </div>
+        </div>
 
-          <!-- Zalo Mini App Navigation Header -->
-          <div class="bg-white border-b border-slate-200 px-4 py-2.5 flex items-center justify-between z-40">
-            <div class="flex items-center space-x-2.5">
-              <div class="w-8 h-8 rounded-lg bg-brand text-white flex items-center justify-center font-bold text-sm shadow-sm">
-                ZL
-              </div>
-              <div>
-                <h3 class="text-sm font-extrabold text-slate-900 leading-tight">SmartLocker</h3>
-                <p class="text-[11px] font-medium text-slate-500 flex items-center">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1"></span> Sảnh A • Đã kết nối
-                </p>
-              </div>
+        <div class="w-full bg-gradient-to-b from-slate-200 via-slate-100 to-slate-200 border-4 border-slate-300 rounded-[36px] p-5 shadow-2xl relative">
+          <!-- Roof Bar -->
+          <div class="bg-white rounded-2xl p-3 border border-slate-300 shadow-xs flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+              <span class="text-xs font-extrabold text-slate-800 uppercase tracking-widest">SMART LOCKER • CAB_01</span>
             </div>
-            <!-- Zalo Action Capsule -->
-            <div class="bg-slate-100 border border-slate-200 rounded-full px-2.5 py-1 flex items-center space-x-2 text-slate-600 text-xs font-bold">
-              <span>•••</span>
-              <span class="text-slate-300">|</span>
-              <i data-lucide="x" class="w-3.5 h-3.5 cursor-pointer"></i>
+            <div class="text-xs font-extrabold text-brand bg-brandLight px-3 py-1 rounded-xl border border-brandBorder" id="cabinet-3d-summary">
+              6/6 Ngăn Gửi Trống • 6/6 Đồ Thuê Sẵn Sàng
             </div>
           </div>
 
-          <!-- Phone Scrollable Body -->
-          <div class="flex-1 overflow-y-auto p-4 no-scrollbar pb-24" id="phone-content-viewport">
+          <!-- 12-Box Grid -->
+          <div class="grid grid-cols-3 gap-3.5" id="cabinet-grid-container"></div>
 
-            <!-- ================= TAB 1: GỬI ĐỒ (SHIPPER) ================= -->
-            <div id="tab-content-shipper" class="space-y-4">
-              <!-- Banner Card (Cập nhật đúng số lượng ô trống và ô đã có đồ) -->
-              <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-3 flex justify-between items-center">
-                <div>
-                  <div class="text-[11px] font-bold uppercase text-brand tracking-wider">Shipper Gửi Đồ</div>
-                  <div class="text-sm font-extrabold text-slate-900 mt-0.5">Mở Ngăn Tủ Nhanh</div>
-                </div>
-                <div class="flex items-center space-x-3 text-right">
-                  <div>
-                    <span class="text-base font-black text-brand" id="shipper-free-boxes-text">6</span>
-                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">trống</span>
-                  </div>
-                  <div class="w-px h-6 bg-blue-200"></div>
-                  <div>
-                    <span class="text-base font-black text-amber-600" id="shipper-occupied-boxes-text">2</span>
-                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">có đồ</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 1. Chọn Cỡ Ngăn (Đếm chính xác từng cỡ) -->
-              <div>
-                <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center space-x-1.5 mb-2">
-                  <span>1. Chọn cỡ ngăn tủ</span>
-                </label>
-                <div class="grid grid-cols-3 gap-2.5" id="size-selector-group">
-                  <button onclick="selectLockerSize('S')" id="size-btn-S" class="press-effect border-2 border-brand bg-brandLight/60 rounded-2xl p-3 text-center transition-all">
-                    <div class="w-8 h-8 mx-auto rounded-xl bg-blue-100 text-brand flex items-center justify-center font-bold text-sm mb-1.5">
-                      S
-                    </div>
-                    <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
-                    <div class="text-[10px] text-slate-500 font-medium">Tài liệu, ví</div>
-                    <div class="text-xs font-bold text-brand mt-1" id="count-size-S">Trống: 2</div>
-                  </button>
-                  <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all">
-                    <div class="w-8 h-8 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm mb-1.5">
-                      M
-                    </div>
-                    <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
-                    <div class="text-[10px] text-slate-500 font-medium">Hộp giày, áo</div>
-                    <div class="text-xs font-bold text-slate-600 mt-1" id="count-size-M">Trống: 0</div>
-                  </button>
-                  <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all">
-                    <div class="w-8 h-8 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold text-sm mb-1.5">
-                      L
-                    </div>
-                    <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
-                    <div class="text-[10px] text-slate-500 font-medium">Thùng lớn</div>
-                    <div class="text-xs font-bold text-slate-600 mt-1" id="count-size-L">Trống: 4</div>
-                  </button>
-                </div>
-              </div>
-
-              <!-- 2. SĐT Người Nhận (Validation 10 - 11 số) -->
-              <div>
-                <div class="flex justify-between items-center mb-1.5">
-                  <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide">
-                    2. SĐT Người Nhận
-                  </label>
-                  <span class="text-[11px] font-semibold text-slate-400">Yêu cầu 10 - 11 chữ số</span>
-                </div>
-                <div class="relative">
-                  <input type="tel" id="recipient-phone-input" maxlength="11" oninput="validatePhoneInputLive(this)" placeholder="Nhập số điện thoại (vd: 0912345678)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-3 text-sm font-bold text-slate-900 outline-none transition-all shadow-sm">
-                  <div class="absolute right-3.5 top-3.5 text-slate-400" id="recipient-phone-status-icon">
-                    <i data-lucide="phone" class="w-4 h-4"></i>
-                  </div>
-                </div>
-                <p id="recipient-phone-error" class="hidden text-xs font-bold text-rose-600 mt-1.5 flex items-center space-x-1">
-                  <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
-                  <span id="recipient-phone-error-text">Vui lòng nhập đủ 10 hoặc 11 chữ số (bắt đầu bằng số 0).</span>
-                </p>
-              </div>
-
-              <!-- CTA BUTTON TO ĐÙNG MÀU XANH -->
-              <button onclick="executeShipperDropoff()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-4 px-6 rounded-2xl font-black text-base shadow-lg shadow-brand/25 flex items-center justify-center space-x-2 mt-4">
-                <i data-lucide="unlock" class="w-5 h-5"></i>
-                <span>MỞ TỦ NGAY</span>
-              </button>
-
-              <div class="text-[11px] text-center text-slate-600 font-medium pt-1">
-                ⏱️ Thao tác 3 giây • Tự động gửi thông báo Zalo cho cư dân
-              </div>
+          <!-- Alarm Strip -->
+          <div id="alarm-warning-banner" class="hidden mt-4 bg-rose-600 text-white rounded-2xl p-3 flex items-center justify-between animate-pulse">
+            <div class="flex items-center space-x-2 text-xs font-black">
+              <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+              <span>CẢNH BÁO AN NINH: PHÁT HIỆN CẠY CỬA TRÁI PHÉP TẠI NGĂN #04!</span>
             </div>
-
-            <!-- ================= TAB 2: NHẬN ĐỒ (CƯ DÂN) ================= -->
-            <div id="tab-content-resident" class="space-y-4 hidden">
-              <!-- Parcel Card Ready for Pickup -->
-              <div id="resident-parcel-card" class="bg-white border-2 border-slate-200 rounded-3xl p-5 shadow-sm text-center relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-28 h-28 bg-emerald-50 rounded-full z-0"></div>
-                <div class="relative z-10">
-                  <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-inner mb-3">
-                    <i data-lucide="gift" class="w-9 h-9"></i>
-                  </div>
-                  <span class="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-extrabold uppercase tracking-wide">
-                    Đang Chờ Nhận
-                  </span>
-                  <h3 class="text-xl font-black text-slate-900 mt-2">Ngăn #03 Đang Chờ Bạn</h3>
-                  <p class="text-xs text-slate-500 font-medium mt-1">Từ Shipper Nam • Kiện hàng Shopee</p>
-                  
-                  <div class="my-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Mã PIN dự phòng</div>
-                    <div class="text-2xl font-black text-slate-800 tracking-widest mt-0.5">682910</div>
-                  </div>
-
-                  <!-- 1-CHẠM MỞ TỦ BUTTON -->
-                  <button onclick="executeResidentPickup()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-4 px-6 rounded-2xl font-black text-base shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
-                    <i data-lucide="key-round" class="w-5 h-5"></i>
-                    <span>CHẠM ĐỂ MỞ TỦ</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Empty state (Hidden initially) -->
-              <div id="resident-empty-state" class="bg-white border border-slate-200 rounded-3xl p-8 text-center hidden">
-                <div class="w-14 h-14 mx-auto rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mb-3">
-                  <i data-lucide="inbox" class="w-7 h-7"></i>
-                </div>
-                <div class="text-base font-extrabold text-slate-800">Không có bưu kiện nào</div>
-                <p class="text-xs text-slate-500 font-medium mt-1">Khi có hàng gửi vào tủ, bưu kiện sẽ hiện tại đây</p>
-                <button onclick="fillSampleParcel()" class="press-effect mt-4 text-xs font-bold text-brand bg-blue-50 px-3.5 py-2 rounded-xl">
-                  + Giả lập Shipper gửi kiện mới
-                </button>
-              </div>
-            </div>
-
-            <!-- ================= TAB 3: THUÊ ĐỒ (eKYC & VIETQR) ================= -->
-            <div id="tab-content-rental" class="space-y-4 hidden">
-              <div class="flex justify-between items-center">
-                <div>
-                  <h3 class="text-base font-extrabold text-slate-900">Thiết Bị Tiện Ích</h3>
-                  <p class="text-xs text-slate-500 font-medium">Thuê nhanh • Đặt cọc tự động qua VietQR</p>
-                </div>
-                <span class="text-xs font-bold text-brand bg-brandLight px-2.5 py-1 rounded-lg">4 món</span>
-              </div>
-
-              <!-- 2x2 Grid Tools -->
-              <div class="grid grid-cols-2 gap-3" id="rental-items-grid">
-                
-                <!-- Tool 1: Máy khoan Bosch -->
-                <div id="rental-card-1" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
-                  <div>
-                    <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold text-2xl mb-2">
-                      🪛
-                    </div>
-                    <div class="text-sm font-extrabold text-slate-900 leading-tight">Máy khoan Bosch</div>
-                    <div class="text-xs font-bold text-amber-600 mt-0.5">15k/h • Ngăn #05</div>
-                  </div>
-                  <button id="btn-rent-1" onclick="openRentalProcess(1, 'Máy khoan Bosch', 'Ngăn #05', 5, 200000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
-                    <span>Thuê Ngay</span>
-                  </button>
-                </div>
-
-                <!-- Tool 2: Vợt Pickleball -->
-                <div id="rental-card-2" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
-                  <div>
-                    <div class="w-12 h-12 rounded-xl bg-green-100 text-green-600 flex items-center justify-center font-bold text-2xl mb-2">
-                      🏓
-                    </div>
-                    <div class="text-sm font-extrabold text-slate-900 leading-tight">Vợt Pickleball</div>
-                    <div class="text-xs font-bold text-amber-600 mt-0.5">20k/h • Ngăn #06</div>
-                  </div>
-                  <button id="btn-rent-2" onclick="openRentalProcess(2, 'Vợt Pickleball', 'Ngăn #06', 6, 200000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
-                    <span>Thuê Ngay</span>
-                  </button>
-                </div>
-
-                <!-- Tool 3: Máy rửa xe Mini -->
-                <div id="rental-card-3" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
-                  <div>
-                    <div class="w-12 h-12 rounded-xl bg-cyan-100 text-cyan-600 flex items-center justify-center font-bold text-2xl mb-2">
-                      🚗
-                    </div>
-                    <div class="text-sm font-extrabold text-slate-900 leading-tight">Máy rửa xe Mini</div>
-                    <div class="text-xs font-bold text-amber-600 mt-0.5">25k/h • Ngăn #07</div>
-                  </div>
-                  <button id="btn-rent-3" onclick="openRentalProcess(3, 'Máy rửa xe Mini', 'Ngăn #07', 7, 200000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
-                    <span>Thuê Ngay</span>
-                  </button>
-                </div>
-
-                <!-- Tool 4: Trạm sạc dự phòng -->
-                <div id="rental-card-4" class="bg-white border-2 border-slate-200 rounded-2xl p-3.5 flex flex-col justify-between transition-all shadow-sm">
-                  <div>
-                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-2xl mb-2">
-                      🔋
-                    </div>
-                    <div class="text-sm font-extrabold text-slate-900 leading-tight">Trạm sạc dự phòng</div>
-                    <div class="text-xs font-bold text-amber-600 mt-0.5">10k/h • Ngăn #08</div>
-                  </div>
-                  <button id="btn-rent-4" onclick="openRentalProcess(4, 'Trạm sạc dự phòng', 'Ngăn #08', 8, 200000)" class="press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1">
-                    <span>Thuê Ngay</span>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Bottom Navigation Bar (3 Tabs + iOS Home Indicator) -->
-          <div class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 flex flex-col px-3 pt-1 pb-1.5 z-40 shadow-sm">
-            <div class="flex items-center justify-around h-14">
-              <button onclick="switchTab('shipper')" id="nav-btn-shipper" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-brand">
-                <i data-lucide="package" class="w-5 h-5"></i>
-                <span class="text-[11px] font-extrabold mt-0.5">Gửi Đồ</span>
-              </button>
-              <button onclick="switchTab('resident')" id="nav-btn-resident" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400 relative">
-                <span class="absolute top-0 right-7 w-2 h-2 rounded-full bg-red-500" id="nav-badge-resident"></span>
-                <i data-lucide="key" class="w-5 h-5"></i>
-                <span class="text-[11px] font-extrabold mt-0.5">Nhận Đồ</span>
-              </button>
-              <button onclick="switchTab('rental')" id="nav-btn-rental" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
-                <i data-lucide="wrench" class="w-5 h-5"></i>
-                <span class="text-[11px] font-extrabold mt-0.5">Thuê Đồ</span>
-              </button>
-            </div>
-            <!-- iOS Home Indicator -->
-            <div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mb-0.5"></div>
-          </div>
-
-          <!-- ================= BOTTOM SHEET POPUP: THUÊ ĐỒ (eKYC & CỌC) ================= -->
-          <div id="rental-bottom-sheet" class="absolute inset-0 bg-slate-900/50 backdrop-blur-xs z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-            <div id="rental-sheet-panel" class="bg-white rounded-t-[32px] p-5 space-y-4 max-h-[85%] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl">
-              
-              <!-- Sheet Handle & Close -->
-              <div class="flex justify-between items-center">
-                <div class="w-12 h-1.5 bg-slate-200 rounded-full mx-auto -ml-3"></div>
-                <button onclick="closeRentalSheet()" class="w-7 h-7 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center">
-                  <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <!-- Header Item Info -->
-              <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-                <div class="text-3xl" id="sheet-item-icon">🪛</div>
-                <div>
-                  <h4 class="text-sm font-extrabold text-slate-900" id="sheet-item-name">Máy khoan Bosch</h4>
-                  <p class="text-xs font-bold text-amber-600" id="sheet-item-box">Ngăn #05 • Tiền cọc: 200.000đ</p>
-                </div>
-              </div>
-
-              <!-- BƯỚC 1: XÁC THỰC SĐT & CCCD (eKYC AI MỨC 2) -->
-              <div id="sheet-step-1" class="border-2 border-slate-200 rounded-2xl p-4 space-y-3">
-                <div class="flex items-center justify-between">
-                  <div class="text-xs font-extrabold uppercase text-slate-700 tracking-wider flex items-center space-x-1.5">
-                    <span class="w-5 h-5 rounded-full bg-brand text-white flex items-center justify-center text-[10px]">1</span>
-                    <span>Xác Thực SĐT & CCCD Gắn Chip</span>
-                  </div>
-                  <span class="text-[10px] font-bold text-brand bg-brandLight px-2 py-0.5 rounded-md">VNeID Mức 2</span>
-                </div>
-
-                <!-- Input SĐT Người Thuê -->
-                <div>
-                  <label class="text-[11px] font-bold text-slate-600 block mb-1">Số điện thoại liên hệ (10 - 11 số)</label>
-                  <div class="relative">
-                    <input type="tel" id="rental-phone-input" maxlength="11" value="0988777666" placeholder="Ví dụ: 0988777666" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none transition-all">
-                    <div class="absolute right-3 top-2.5 text-slate-400">
-                      <i data-lucide="phone" class="w-3.5 h-3.5"></i>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Input CCCD Gắn Chip (12 số) -->
-                <div>
-                  <label class="text-[11px] font-bold text-slate-600 block mb-1">Số CCCD gắn chip (12 chữ số)</label>
-                  <div class="relative">
-                    <input type="text" id="rental-cccd-input" maxlength="12" value="001202008921" placeholder="12 số trên thẻ CCCD" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none transition-all font-mono">
-                    <div class="absolute right-3 top-2.5 text-slate-400">
-                      <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
-                    </div>
-                  </div>
-                </div>
-
-                <p id="rental-ekyc-error" class="hidden text-xs font-bold text-rose-600 flex items-center space-x-1">
-                  <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
-                  <span id="rental-ekyc-error-text">Vui lòng nhập đúng SĐT và 12 số CCCD!</span>
-                </p>
-
-                <!-- Scanner Animation Box -->
-                <div id="ekyc-scanner-box" class="w-full h-24 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 flex flex-col items-center justify-center relative overflow-hidden transition-all">
-                  <i data-lucide="scan-face" class="w-8 h-8 text-brand mb-1"></i>
-                  <span class="text-[11px] font-semibold text-slate-600" id="ekyc-scan-text">Nhận diện khuôn mặt & Chip CCCD NFC</span>
-                  <div id="ekyc-laser" class="absolute left-0 right-0 h-1 bg-brand shadow-md shadow-brand hidden transition-all duration-700"></div>
-                </div>
-
-                <!-- Success Tag -->
-                <div id="ekyc-success-tag" class="hidden p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs space-y-1">
-                  <div class="flex items-center space-x-1.5 font-extrabold text-emerald-800">
-                    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-                    <span>Đã Xác Thực eKYC Thành Công</span>
-                  </div>
-                  <div class="text-[11px] text-emerald-700 font-semibold" id="ekyc-verified-details">
-                    Chủ tài khoản: Khuất Văn Chân • CCCD: 001202008921
-                  </div>
-                </div>
-
-                <button id="btn-trigger-ekyc" onclick="runSimulatedEkyc()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3 rounded-xl font-bold text-xs shadow-md shadow-brand/20 flex items-center justify-center space-x-1.5">
-                  <i data-lucide="shield-check" class="w-4 h-4"></i>
-                  <span>Xác Thực SĐT & Chip CCCD (eKYC)</span>
-                </button>
-              </div>
-
-              <!-- BƯỚC 2: ĐẶT CỌC VIETQR -->
-              <div id="sheet-step-2" class="border-2 border-slate-200 rounded-2xl p-4 text-center opacity-40 pointer-events-none transition-all space-y-3">
-                <div class="flex items-center justify-between">
-                  <div class="text-xs font-extrabold uppercase text-slate-700 tracking-wider flex items-center space-x-1.5">
-                    <span class="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px]">2</span>
-                    <span>Cọc Tiền Tự Động Qua VietQR</span>
-                  </div>
-                  <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">Hoàn cọc 100%</span>
-                </div>
-                
-                <!-- VietQR Image Mock -->
-                <div class="w-full bg-white border border-slate-300 rounded-2xl p-3 shadow-sm flex flex-col items-center justify-center">
-                  <div class="flex items-center justify-between w-full px-2 mb-2">
-                    <span class="text-[10px] font-black text-brand tracking-wider">VietQR • NAPAS 247</span>
-                    <span class="text-[10px] font-bold text-slate-500">MBBank • 99998888SMART</span>
-                  </div>
-
-                  <div class="w-28 h-28 bg-slate-900 rounded-xl flex items-center justify-center p-2 shadow-inner">
-                    <svg viewBox="0 0 100 100" class="w-full h-full fill-white">
-                      <rect x="0" y="0" width="30" height="30" />
-                      <rect x="5" y="5" width="20" height="20" fill="#000" />
-                      <rect x="10" y="10" width="10" height="10" />
-                      <rect x="70" y="0" width="30" height="30" />
-                      <rect x="75" y="5" width="20" height="20" fill="#000" />
-                      <rect x="80" y="10" width="10" height="10" />
-                      <rect x="0" y="70" width="30" height="30" />
-                      <rect x="5" y="75" width="20" height="20" fill="#000" />
-                      <rect x="10" y="80" width="10" height="10" />
-                      <rect x="35" y="10" width="10" height="25" />
-                      <rect x="40" y="40" width="20" height="20" />
-                      <rect x="65" y="45" width="25" height="10" />
-                      <rect x="45" y="70" width="35" height="20" />
-                    </svg>
-                  </div>
-
-                  <div class="text-sm font-black text-slate-900 mt-2" id="sheet-deposit-price">200.000 VNĐ</div>
-                  <div class="text-[10px] text-slate-500 font-mono" id="sheet-deposit-content">SMARTLOCKER COC 05</div>
-                </div>
-
-                <button id="btn-trigger-vietqr" onclick="runSimulatedDepositPaid()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-xs shadow-md shadow-emerald-600/25 flex items-center justify-center space-x-1.5">
-                  <i data-lucide="check-circle" class="w-4 h-4"></i>
-                  <span>⚡ Giả Lập Khách Đã Chuyển Khoản (Webhook 24/7)</span>
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Phone Notification Modal: Đã Mở Tủ -->
-          <div id="phone-unlock-toast" class="absolute inset-x-4 top-20 bg-emerald-600 text-white p-4 rounded-3xl shadow-2xl flex items-center justify-between transform -translate-y-32 transition-transform duration-300 z-50">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center font-bold text-lg">
-                <i data-lucide="check" class="w-6 h-6"></i>
-              </div>
-              <div>
-                <div class="text-sm font-black" id="toast-title">Đã mở Ngăn #03!</div>
-                <p class="text-xs text-emerald-100 font-medium">Cánh tủ đã bung mở thành công</p>
-              </div>
-            </div>
-            <button onclick="dismissToastAndCloseLocker()" class="press-effect text-xs font-extrabold bg-white text-emerald-800 px-3 py-2 rounded-xl shadow-sm">
-              Đóng Cửa Tủ
+            <button onclick="toggleTamperAlarm(false)" class="press-effect text-xs font-extrabold bg-white text-rose-700 px-3 py-1 rounded-xl">
+              Tắt Báo Động
             </button>
           </div>
 
-        </div>
-      </div>
-    </div>
-
-    <!-- ================= CỘT PHẢI: MÔ HÌNH TỦ SMART LOCKER 12 NGĂN ================= -->
-    <div class="lg:col-span-7 flex flex-col items-center w-full">
-      <div class="w-full flex justify-between items-center mb-3">
-        <div class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center space-x-1.5">
-          <i data-lucide="layout-grid" class="w-4 h-4 text-brand"></i>
-          <span>Mô Hình Tủ Vật Lý 12 Ngăn (Tương Tác Trực Tiếp)</span>
-        </div>
-        <div class="flex space-x-3 text-xs font-bold text-slate-600">
-          <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block mr-1"></span> Trống</span>
-          <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block mr-1"></span> Bưu kiện</span>
-          <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block mr-1"></span> Thuê đồ</span>
-        </div>
-      </div>
-
-      <!-- Physical Cabinet Body (Sleek Silver-White Commercial Frame) -->
-      <div class="w-full bg-gradient-to-b from-slate-200 via-slate-100 to-slate-200 border-4 border-slate-300 rounded-[36px] p-5 sm:p-6 shadow-2xl relative">
-        
-        <!-- Cabinet Roof Branding Bar -->
-        <div class="bg-white rounded-2xl p-3 border border-slate-300 shadow-sm flex justify-between items-center mb-5">
-          <div class="flex items-center space-x-2">
-            <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
-            <span class="text-xs font-extrabold text-slate-800 uppercase tracking-widest">SMART LOCKER • VINHOMES</span>
-          </div>
-          
-          <!-- Central Dynamic QR Display on Cabinet -->
-          <div class="flex items-center space-x-2 bg-slate-50 px-3 py-1 rounded-xl border border-slate-200">
-            <div id="cabinet-qr-mini" class="w-6 h-6 bg-slate-900 rounded flex items-center justify-center p-0.5 transition-transform duration-500">
-              <svg viewBox="0 0 100 100" class="w-full h-full fill-white">
-                <rect x="0" y="0" width="30" height="30" />
-                <rect x="5" y="5" width="20" height="20" fill="#000" />
-                <rect x="10" y="10" width="10" height="10" />
-                <rect x="70" y="0" width="30" height="30" />
-                <rect x="75" y="5" width="20" height="20" fill="#000" />
-                <rect x="80" y="10" width="10" height="10" />
-                <rect x="0" y="70" width="30" height="30" />
-                <rect x="5" y="75" width="20" height="20" fill="#000" />
-                <rect x="10" y="80" width="10" height="10" />
-              </svg>
+          <div class="mt-4 pt-3 border-t border-slate-300 flex flex-wrap gap-2 justify-between items-center">
+            <div class="text-xs font-bold text-slate-500">
+              💡 Mọi thao tác Gửi / Nhận / Thuê đều tự động mở & đóng cửa tủ tương ứng
             </div>
-            <span class="text-[11px] font-bold text-slate-700" id="cabinet-qr-text">QR Động: #A92F</span>
-          </div>
-        </div>
-
-        <!-- 12-Box Locker Grid (3 Cols x 4 Rows) -->
-        <div class="grid grid-cols-3 gap-3.5 sm:gap-4" id="cabinet-grid-container">
-          <!-- 12 boxes rendered below via HTML/JS -->
-        </div>
-
-        <!-- Danger Security Warning Strip (Hidden by default) -->
-        <div id="alarm-warning-banner" class="hidden mt-4 bg-rose-600 text-white rounded-2xl p-3 flex items-center justify-between animate-pulse">
-          <div class="flex items-center space-x-2 text-xs font-black">
-            <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-            <span>CẢNH BÁO AN NINH: PHÁT HIỆN HÀNH VI CẠY CỬA TRÁI PHÉP TẠI NGĂN #04!</span>
-          </div>
-          <button onclick="toggleTamperAlarm(false)" class="press-effect text-xs font-extrabold bg-white text-rose-700 px-3 py-1 rounded-xl">
-            Tắt Báo Động
-          </button>
-        </div>
-
-        <!-- Bottom Controls for Faculty Demo -->
-        <div class="mt-5 pt-4 border-t border-slate-300 flex flex-wrap gap-2.5 justify-between items-center">
-          <div class="text-xs font-bold text-slate-500">
-            💡 Thao tác: Bấm trực tiếp vào ngăn để đóng/mở thủ công
-          </div>
-          <div class="flex space-x-2">
-            <button onclick="rotateDynamicQr()" class="press-effect text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-300 shadow-sm flex items-center space-x-1.5">
-              <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-brand"></i>
-              <span>Xoay Mã QR Động Mới</span>
-            </button>
-            <button onclick="toggleTamperAlarm(true)" class="press-effect text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 px-3.5 py-2 rounded-xl border border-rose-200 flex items-center space-x-1.5">
+            <button onclick="toggleTamperAlarm(true)" class="press-effect text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 px-3 py-1.5 rounded-xl border border-rose-200 flex items-center space-x-1.5">
               <i data-lucide="siren" class="w-3.5 h-3.5"></i>
-              <span>Giả Lập Kẻ Gian Cạy Cửa</span>
+              <span>Test Báo Động Cậy Cửa</span>
             </button>
           </div>
         </div>
-
       </div>
-    </div>
 
+    </div>
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500 font-medium">
-    Hệ Thống Tủ Thông Minh Gửi Đồ Siêu Tốc & Cho Thuê Thiết Bị Tự Động • Đồ Án Tốt Nghiệp / Nghiên Cứu Khoa Học
+  <footer class="bg-white border-t border-slate-200 py-2.5 text-center text-xs text-slate-500 font-medium">
+    Hệ Thống Tủ Thông Minh Gửi Đồ & Cho Thuê Thiết Bị Tự Động • Đồng Bộ Thời Gian Thực
   </footer>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // ================= STATE MANAGEMENT =================
-    const CABINET_DATA = [
-      { id: 1, size: 'S', status: 'AVAILABLE', content: null, isDoorOpen: false },
-      { id: 2, size: 'S', status: 'OCCUPIED', content: '📦 Shopee (Nam)', isDoorOpen: false },
-      { id: 3, size: 'S', status: 'OCCUPIED', content: '📦 Bưu kiện chờ nhận', isDoorOpen: false },
-      { id: 4, size: 'S', status: 'AVAILABLE', content: null, isDoorOpen: false },
-      { id: 5, size: 'M', status: 'RENTAL', content: '🪛 Máy khoan Bosch', isDoorOpen: false },
-      { id: 6, size: 'M', status: 'RENTAL', content: '🏓 Vợt Pickleball', isDoorOpen: false },
-      { id: 7, size: 'M', status: 'RENTAL', content: '🚗 Máy rửa xe Mini', isDoorOpen: false },
-      { id: 8, size: 'M', status: 'RENTAL', content: '🔋 Trạm sạc dự phòng', isDoorOpen: false },
-      { id: 9, size: 'L', status: 'AVAILABLE', content: null, isDoorOpen: false },
-      { id: 10, size: 'L', status: 'AVAILABLE', content: null, isDoorOpen: false },
-      { id: 11, size: 'L', status: 'AVAILABLE', content: null, isDoorOpen: false },
-      { id: 12, size: 'L', status: 'AVAILABLE', content: null, isDoorOpen: false },
-    ];
-
-    let currentSelectedSize = 'S';
-    let currentRentingTarget = null;
-    let alarmInterval = null;
-
-    // ================= AUDIO SYNTHESIZER =================
     const AudioEngine = {
       ctx: null,
       init() {
@@ -700,7 +813,7 @@
           if (AudioContext) this.ctx = new AudioContext();
         }
       },
-      beep(freq, duration = 0.1, type = 'sine') {
+      beep(freq = 600, duration = 0.08, type = 'sine') {
         try {
           this.init();
           if (!this.ctx) return;
@@ -708,7 +821,7 @@
           const gain = this.ctx.createGain();
           osc.type = type;
           osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(0.15, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
           gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
           osc.connect(gain);
           gain.connect(this.ctx.destination);
@@ -716,140 +829,433 @@
           osc.stop(this.ctx.currentTime + duration);
         } catch (e) {}
       },
-      solenoidThud() {
-        this.beep(120, 0.08, 'square');
-        setTimeout(() => this.beep(350, 0.12, 'sine'), 80);
+      solenoidUnlock() {
+        this.beep(140, 0.09, 'square');
+        setTimeout(() => this.beep(420, 0.12, 'sine'), 80);
       },
-      successFanfare() {
-        this.beep(523.25, 0.08);
-        setTimeout(() => this.beep(659.25, 0.08), 90);
-        setTimeout(() => this.beep(783.99, 0.15), 180);
+      doorCloseSound() {
+        this.beep(220, 0.08, 'triangle');
+        setTimeout(() => this.beep(580, 0.1, 'sine'), 70);
+      },
+      smsNotificationSound() {
+        this.beep(880, 0.09, 'sine');
+        setTimeout(() => this.beep(1174.66, 0.16, 'sine'), 100);
       },
       alarmSiren() {
         this.beep(900, 0.25, 'sawtooth');
       }
     };
 
-    // ================= RENDER CABINET 12 BOXES =================
-    function renderLockerCabinet() {
+    const REALISTIC_TOOL_SVGS = {
+      hand_cutter: `
+        <svg viewBox="0 0 64 64" class="w-10 h-10">
+          <defs>
+            <linearGradient id="discGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#94A3B8"/><stop offset="50%" stop-color="#E2E8F0"/><stop offset="100%" stop-color="#64748B"/>
+            </linearGradient>
+            <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#DC2626"/><stop offset="100%" stop-color="#991B1B"/>
+            </linearGradient>
+          </defs>
+          <circle cx="20" cy="32" r="15" fill="url(#discGrad)" stroke="#475569" stroke-width="2" stroke-dasharray="4 2"/>
+          <circle cx="20" cy="32" r="9" fill="none" stroke="#CBD5E1" stroke-width="1.5"/>
+          <circle cx="20" cy="32" r="4" fill="#334155"/>
+          <path d="M20 14 A18 18 0 0 1 36 40 L26 36 Z" fill="#334155" opacity="0.85"/>
+          <rect x="26" y="24" width="28" height="16" rx="5" fill="url(#bodyGrad)" stroke="#7F1D1D" stroke-width="1.5"/>
+          <line x1="34" y1="28" x2="34" y2="36" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round"/>
+          <line x1="38" y1="28" x2="38" y2="36" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round"/>
+          <rect x="44" y="27" width="6" height="4" rx="1" fill="#1E293B"/>
+          <path d="M30 24 L27 12 L33 12 L34 24 Z" fill="#1E293B"/>
+        </svg>
+      `,
+      vacuum_cleaner: `
+        <svg viewBox="0 0 64 64" class="w-10 h-10">
+          <rect x="8" y="50" width="26" height="7" rx="3.5" fill="#1E293B" stroke="#475569" stroke-width="1.5"/>
+          <rect x="11" y="53" width="20" height="2" rx="1" fill="#EC4899"/>
+          <path d="M21 50 L37 26" stroke="#F59E0B" stroke-width="4.5" stroke-linecap="round"/>
+          <rect x="33" y="12" width="14" height="18" rx="4" transform="rotate(25 40 21)" fill="#BAE6FD" stroke="#0284C7" stroke-width="1.5"/>
+          <rect x="37" y="15" width="6" height="12" rx="2" transform="rotate(25 40 21)" fill="#7C3AED"/>
+          <path d="M44 12 L54 18 L48 28 L42 24" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="43" cy="15" r="3" fill="#EF4444"/>
+        </svg>
+      `,
+      printer: `
+        <svg viewBox="0 0 64 64" class="w-10 h-10">
+          <rect x="18" y="7" width="28" height="16" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+          <rect x="8" y="20" width="48" height="26" rx="6" fill="#334155" stroke="#1E293B" stroke-width="1.5"/>
+          <rect x="12" y="24" width="40" height="10" rx="3" fill="#475569"/>
+          <circle cx="45" cy="29" r="2.2" fill="#10B981"/>
+          <circle cx="39" cy="29" r="2.2" fill="#38BDF8"/>
+          <rect x="15" y="38" width="34" height="5" rx="1.5" fill="#0F172A"/>
+          <rect x="18" y="40" width="28" height="17" rx="2" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1.5"/>
+          <line x1="22" y1="45" x2="40" y2="45" stroke="#2563EB" stroke-width="2" stroke-linecap="round"/>
+          <line x1="22" y1="49" x2="42" y2="49" stroke="#64748B" stroke-width="1.8" stroke-linecap="round"/>
+          <line x1="22" y1="53" x2="34" y2="53" stroke="#64748B" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      `,
+      projector: `
+        <svg viewBox="0 0 64 64" class="w-10 h-10">
+          <path d="M24 44 L18 55 M40 44 L46 55 M32 44 L32 56" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+          <rect x="8" y="20" width="48" height="24" rx="7" fill="#F8FAFC" stroke="#64748B" stroke-width="2"/>
+          <line x1="14" y1="26" x2="14" y2="38" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+          <line x1="18" y1="26" x2="18" y2="38" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="41" cy="32" r="10" fill="#1E293B" stroke="#475569" stroke-width="2"/>
+          <circle cx="41" cy="32" r="7" fill="#2563EB"/>
+          <circle cx="39" cy="30" r="2" fill="#FFFFFF" opacity="0.85"/>
+          <circle cx="28" cy="26" r="2" fill="#10B981"/>
+        </svg>
+      `,
+      power_drill: `
+        <svg viewBox="0 0 64 64" class="w-10 h-10">
+          <path d="M6 23 L18 23" stroke="#64748B" stroke-width="3" stroke-linecap="round"/>
+          <polygon points="18,19 25,17 25,29 18,27" fill="#334155"/>
+          <rect x="25" y="15" width="27" height="16" rx="4" fill="#0284C7" stroke="#0369A1" stroke-width="1.5"/>
+          <rect x="30" y="19" width="12" height="6" rx="1.5" fill="#E0F2FE"/>
+          <path d="M36 31 L32 47 L42 47 L45 31 Z" fill="#0284C7" stroke="#0369A1" stroke-width="1.5"/>
+          <rect x="31" y="33" width="4" height="6" rx="1" fill="#EF4444"/>
+          <rect x="28" y="47" width="18" height="9" rx="3" fill="#1E293B"/>
+          <rect x="31" y="50" width="5" height="3" rx="1" fill="#22C55E"/>
+        </svg>
+      `,
+      pressure_washer: `
+        <svg viewBox="0 0 64 64" class="w-10 h-10">
+          <path d="M22 16 L22 9 L38 9 L38 16" fill="none" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="16" y="16" width="28" height="34" rx="6" fill="#FACC15" stroke="#CA8A04" stroke-width="1.5"/>
+          <rect x="20" y="22" width="20" height="14" rx="3" fill="#1E293B"/>
+          <circle cx="30" cy="29" r="4.5" fill="#FFFFFF" stroke="#94A3B8" stroke-width="1"/>
+          <circle cx="18" cy="50" r="5" fill="#0F172A" stroke="#475569" stroke-width="1.5"/>
+          <circle cx="42" cy="50" r="5" fill="#0F172A" stroke="#475569" stroke-width="1.5"/>
+          <path d="M44 34 Q54 34 52 20 L58 16" fill="none" stroke="#0284C7" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      `
+    };
+
+    const INITIAL_DELIVERY_BOXES = [
+      { id: 1, size: 'S', type: 'DELIVERY', status: 'AVAILABLE', parcel: null, isDoorOpen: false },
+      { id: 2, size: 'S', type: 'DELIVERY', status: 'AVAILABLE', parcel: null, isDoorOpen: false },
+      { id: 3, size: 'M', type: 'DELIVERY', status: 'AVAILABLE', parcel: null, isDoorOpen: false },
+      { id: 4, size: 'M', type: 'DELIVERY', status: 'AVAILABLE', parcel: null, isDoorOpen: false },
+      { id: 5, size: 'L', type: 'DELIVERY', status: 'AVAILABLE', parcel: null, isDoorOpen: false },
+      { id: 6, size: 'L', type: 'DELIVERY', status: 'AVAILABLE', parcel: null, isDoorOpen: false },
+    ];
+
+    const INITIAL_RENTAL_ITEMS = [
+      { id: 'tool_1', boxId: 7, size: 'M', name: 'Máy Cắt Tay', svgKey: 'hand_cutter', pricePerBlock: 30000, status: 'AVAILABLE', rentedBy: null, blocks: 0, isDoorOpen: false },
+      { id: 'tool_2', boxId: 8, size: 'M', name: 'Máy Hút Bụi', svgKey: 'vacuum_cleaner', pricePerBlock: 35000, status: 'AVAILABLE', rentedBy: null, blocks: 0, isDoorOpen: false },
+      { id: 'tool_3', boxId: 9, size: 'L', name: 'Máy In Laser', svgKey: 'printer', pricePerBlock: 40000, status: 'AVAILABLE', rentedBy: null, blocks: 0, isDoorOpen: false },
+      { id: 'tool_4', boxId: 10, size: 'L', name: 'Máy Chiếu HD', svgKey: 'projector', pricePerBlock: 60000, status: 'AVAILABLE', rentedBy: null, blocks: 0, isDoorOpen: false },
+      { id: 'tool_5', boxId: 11, size: 'M', name: 'Máy Khoan Pin', svgKey: 'power_drill', pricePerBlock: 30000, status: 'AVAILABLE', rentedBy: null, blocks: 0, isDoorOpen: false },
+      { id: 'tool_6', boxId: 12, size: 'L', name: 'Máy Rửa Xe Mini', svgKey: 'pressure_washer', pricePerBlock: 45000, status: 'AVAILABLE', rentedBy: null, blocks: 0, isDoorOpen: false },
+    ];
+
+    let deliveryBoxes = JSON.parse(JSON.stringify(INITIAL_DELIVERY_BOXES));
+    let rentalItems = JSON.parse(JSON.stringify(INITIAL_RENTAL_ITEMS));
+    let currentSelectedSize = 'S';
+    let pendingDoorAction = null;
+    let activeRentalSession = null;
+    let alarmInterval = null;
+
+    // Theme Switcher
+    const COLOR_THEMES = [
+      { id: 'blue', name: 'Xanh Zalo' },
+      { id: 'emerald', name: 'Xanh Ngọc Eco' },
+      { id: 'violet', name: 'Tím Công Nghệ' },
+      { id: 'orange', name: 'Cam Năng Động' },
+    ];
+    let currentThemeIndex = 0;
+
+    function setColorTheme(themeId) {
+      AudioEngine.beep(650, 0.05);
+      document.body.setAttribute('data-theme', themeId);
+      const foundIdx = COLOR_THEMES.findIndex(t => t.id === themeId);
+      if (foundIdx !== -1) {
+        currentThemeIndex = foundIdx;
+        const label = document.getElementById('theme-label-text');
+        if (label) label.textContent = `Đổi Màu: ${COLOR_THEMES[foundIdx].name}`;
+      }
+    }
+
+    function cycleColorTheme() {
+      currentThemeIndex = (currentThemeIndex + 1) % COLOR_THEMES.length;
+      setColorTheme(COLOR_THEMES[currentThemeIndex].id);
+    }
+
+    function toggleSurfaceMode() {
+      AudioEngine.beep(520, 0.05);
+      const curr = document.body.getAttribute('data-surface');
+      const next = curr === 'dark' ? 'light' : 'dark';
+      document.body.setAttribute('data-surface', next);
+      const label = document.getElementById('surface-mode-text');
+      if (label) label.textContent = next === 'dark' ? 'Nền Tối' : 'Nền Sáng';
+    }
+
+    // Đồng bộ 100% số ô trống và mô hình tủ 12 ngăn
+    function syncAllCabinetUI() {
+      const freeDeliveryAll = deliveryBoxes.filter(b => b.status === 'AVAILABLE').length;
+      const occupiedDeliveryAll = deliveryBoxes.filter(b => b.status === 'OCCUPIED').length;
+
+      const freeS = deliveryBoxes.filter(b => b.size === 'S' && b.status === 'AVAILABLE').length;
+      const freeM = deliveryBoxes.filter(b => b.size === 'M' && b.status === 'AVAILABLE').length;
+      const freeL = deliveryBoxes.filter(b => b.size === 'L' && b.status === 'AVAILABLE').length;
+
+      const availableRentals = rentalItems.filter(item => item.status === 'AVAILABLE').length;
+      const totalRentals = rentalItems.length;
+
+      document.getElementById('header-summary-status').textContent = `Trống ${freeDeliveryAll}/6 ngăn gửi • Sẵn sàng ${availableRentals}/${totalRentals} đồ thuê`;
+      document.getElementById('cabinet-3d-summary').textContent = `${freeDeliveryAll}/6 Ngăn Gửi Trống • ${availableRentals}/${totalRentals} Đồ Thuê Sẵn Sàng`;
+
+      document.getElementById('shipper-free-boxes-text').textContent = freeDeliveryAll;
+      document.getElementById('shipper-occupied-boxes-text').textContent = occupiedDeliveryAll;
+      document.getElementById('count-size-S').textContent = `Trống: ${freeS}`;
+      document.getElementById('count-size-M').textContent = `Trống: ${freeM}`;
+      document.getElementById('count-size-L').textContent = `Trống: ${freeL}`;
+
+      const sizeCounts = { S: freeS, M: freeM, L: freeL };
+      ['S', 'M', 'L'].forEach(sz => {
+        const btn = document.getElementById(`size-btn-${sz}`);
+        const countLabel = document.getElementById(`count-size-${sz}`);
+        if (!btn) return;
+        if (sizeCounts[sz] === 0) {
+          btn.classList.add('opacity-50');
+          if (countLabel) countLabel.className = 'text-xs font-extrabold text-rose-600 mt-1';
+        } else {
+          btn.classList.remove('opacity-50');
+          if (countLabel) {
+            countLabel.className = sz === currentSelectedSize
+              ? 'text-xs font-extrabold text-brand mt-1'
+              : 'text-xs font-extrabold text-slate-600 mt-1';
+          }
+        }
+      });
+
+      document.getElementById('resident-waiting-count').textContent = occupiedDeliveryAll;
+      const badgeResident = document.getElementById('nav-badge-resident');
+      if (badgeResident) {
+        if (occupiedDeliveryAll > 0) {
+          badgeResident.textContent = occupiedDeliveryAll;
+          badgeResident.classList.remove('hidden');
+        } else {
+          badgeResident.classList.add('hidden');
+        }
+      }
+
+      renderActiveParcelsList();
+      document.getElementById('rental-available-count').textContent = `${availableRentals}/${totalRentals}`;
+      renderRentalCatalogGrid();
+      render3DCabinet12Boxes();
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function render3DCabinet12Boxes() {
       const container = document.getElementById('cabinet-grid-container');
+      if (!container) return;
       container.innerHTML = '';
 
-      let freeCount = 0;
-
-      CABINET_DATA.forEach(box => {
-        if (box.status === 'AVAILABLE') freeCount++;
-
+      // Render Ngăn #01 -> #06 (Giao nhận)
+      deliveryBoxes.forEach(box => {
+        const isFree = box.status === 'AVAILABLE';
         const boxCol = document.createElement('div');
-        boxCol.className = 'locker-box-perspective relative h-28 sm:h-32';
+        boxCol.className = 'locker-box-perspective relative h-28 sm:h-30';
 
-        // Background Interior (Inside of locker cavity)
         const cavity = document.createElement('div');
-        cavity.className = 'w-full h-full bg-slate-800 rounded-2xl border-2 border-slate-700 p-2.5 flex flex-col justify-between shadow-inner';
+        cavity.className = 'w-full h-full bg-slate-800 rounded-2xl border-2 border-slate-700 p-2 flex flex-col justify-between shadow-inner';
         cavity.innerHTML = `
-          <div class="flex justify-between items-center text-[10px] font-mono text-slate-400">
-            <span>#${String(box.id).padStart(2, '0')}</span>
-            <span class="text-emerald-400 font-bold">SOLENOID OK</span>
+          <div class="flex justify-between items-center text-[9px] font-mono text-slate-400">
+            <span>#${String(box.id).padStart(2, '0')} (${box.size})</span>
+            <span class="text-emerald-400 font-bold">${box.isDoorOpen ? 'OPEN' : 'LOCKED'}</span>
           </div>
-          <div class="text-center font-bold text-xs text-white">
-            ${box.content ? `<span class="text-2xl block mb-1">${box.content.split(' ')[0]}</span>${box.content.split(' ').slice(1).join(' ')}` : '<span class="text-slate-500 font-normal">Ngăn Trống</span>'}
+          <div class="text-center font-bold text-[11px] text-white">
+            ${isFree ? '<span class="text-slate-500">Ngăn Trống</span>' : `📦 MVĐ: ...${box.parcel?.last4}<br/><span class="text-[9px] text-amber-300">${box.parcel?.phone}</span>`}
           </div>
-          <button onclick="toggleDoor(${box.id})" class="press-effect text-[10px] font-bold bg-slate-700 hover:bg-slate-600 text-slate-200 py-1 rounded-lg text-center">
-            Đóng Cửa Lại
-          </button>
+          <div class="text-[9px] text-center text-slate-500 font-mono">GIAO NHẬN HÀNG</div>
         `;
 
-        // Door Panel (Sleek light silver exterior)
         const door = document.createElement('div');
         door.id = `box-door-${box.id}`;
-        door.className = `locker-door absolute inset-0 bg-white rounded-2xl border-2 ${box.isDoorOpen ? 'door-open' : ''} p-3 flex flex-col justify-between cursor-pointer select-none border-slate-300 shadow-sm hover:border-slate-400`;
-
-        // LED dot colors
-        let ledColor = 'bg-emerald-500 shadow-emerald-500/50';
-        let statusLabel = 'Trống';
-        let statusTextColor = 'text-emerald-700';
-
-        if (box.status === 'OCCUPIED') {
-          ledColor = 'bg-amber-500 shadow-amber-500/50';
-          statusLabel = 'Có Đồ';
-          statusTextColor = 'text-amber-700';
-        } else if (box.status === 'RENTAL') {
-          ledColor = 'bg-brand shadow-brand/50';
-          statusLabel = 'Đồ Thuê';
-          statusTextColor = 'text-brand';
-        }
-
+        door.className = `locker-door absolute inset-0 bg-white rounded-2xl border-2 ${box.isDoorOpen ? 'door-open' : ''} p-2.5 flex flex-col justify-between select-none border-slate-300 shadow-xs`;
         door.innerHTML = `
           <div class="flex justify-between items-center">
-            <span class="font-black text-sm text-slate-800">#${String(box.id).padStart(2, '0')}</span>
-            <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">${box.size}</span>
+            <span class="font-black text-xs text-slate-800">#${String(box.id).padStart(2, '0')}</span>
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">Cỡ ${box.size}</span>
           </div>
           <div class="text-center">
-            <div class="w-8 h-8 mx-auto rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center font-bold text-base mb-1">
-              ${box.content ? box.content.split(' ')[0] : '🔒'}
+            <div class="w-7 h-7 mx-auto rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center text-sm mb-0.5">
+              ${isFree ? '🟢' : '📦'}
             </div>
-            <div class="text-[11px] font-bold text-slate-800 truncate">${box.content ? box.content.split(' ').slice(1).join(' ') : 'Khóa'}</div>
+            <div class="text-[10px] font-bold text-slate-700 truncate">${isFree ? 'Đang Trống' : `Đơn ...${box.parcel?.last4}`}</div>
           </div>
           <div class="flex items-center justify-between pt-1 border-t border-slate-100">
-            <span class="text-[10px] font-bold ${statusTextColor}">${statusLabel}</span>
-            <span class="w-2.5 h-2.5 rounded-full ${ledColor} shadow-md"></span>
+            <span class="text-[9px] font-extrabold ${isFree ? 'text-emerald-700' : 'text-amber-700'}">${isFree ? 'Trống' : 'Có Hàng'}</span>
+            <span class="w-2 h-2 rounded-full ${isFree ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
           </div>
         `;
-
-        door.addEventListener('click', (e) => {
-          if (!box.isDoorOpen) {
-            triggerPhysicalUnlock(box.id);
-          }
-        });
 
         boxCol.appendChild(cavity);
         boxCol.appendChild(door);
         container.appendChild(boxCol);
       });
 
-      // Update badge counts
-      updateLockerCounts();
+      // Render Ngăn #07 -> #12 (Thuê đồ)
+      rentalItems.forEach(item => {
+        const isAvail = item.status === 'AVAILABLE';
+        const boxCol = document.createElement('div');
+        boxCol.className = 'locker-box-perspective relative h-28 sm:h-30';
+
+        const cavity = document.createElement('div');
+        cavity.className = 'w-full h-full bg-slate-800 rounded-2xl border-2 border-slate-700 p-2 flex flex-col justify-between shadow-inner';
+        cavity.innerHTML = `
+          <div class="flex justify-between items-center text-[9px] font-mono text-slate-400">
+            <span>#${String(item.boxId).padStart(2, '0')}</span>
+            <span class="text-blue-400 font-bold">RENTAL</span>
+          </div>
+          <div class="flex flex-col items-center justify-center">
+            ${isAvail ? `<div class="w-8 h-8 bg-white/10 rounded-lg p-1 flex items-center justify-center">${REALISTIC_TOOL_SVGS[item.svgKey]}</div>` : '<span class="text-[10px] text-amber-300 font-bold">Khách đang thuê</span>'}
+          </div>
+          <div class="text-[9px] text-center text-slate-400 truncate">${item.name}</div>
+        `;
+
+        const door = document.createElement('div');
+        door.id = `box-door-${item.boxId}`;
+        door.className = `locker-door absolute inset-0 bg-white rounded-2xl border-2 ${item.isDoorOpen ? 'door-open' : ''} p-2.5 flex flex-col justify-between select-none border-slate-300 shadow-xs`;
+        door.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="font-black text-xs text-slate-800">#${String(item.boxId).padStart(2, '0')}</span>
+            <span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-brand">Thuê Đồ</span>
+          </div>
+          <div class="text-center">
+            <div class="w-8 h-8 mx-auto rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center p-1 mb-0.5">
+              ${REALISTIC_TOOL_SVGS[item.svgKey]}
+            </div>
+            <div class="text-[10px] font-extrabold text-slate-800 truncate">${item.name}</div>
+          </div>
+          <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+            <span class="text-[9px] font-extrabold ${isAvail ? 'text-blue-700' : 'text-rose-600'}">${isAvail ? 'Có Sẵn' : `Đang Thuê (${item.blocks}B)`}</span>
+            <span class="w-2 h-2 rounded-full ${isAvail ? 'bg-blue-500' : 'bg-rose-500'}"></span>
+          </div>
+        `;
+
+        boxCol.appendChild(cavity);
+        boxCol.appendChild(door);
+        container.appendChild(boxCol);
+      });
     }
 
-    // ================= DYNAMIC LOCKER COUNTS UPDATE =================
-    function updateLockerCounts() {
-      const freeCount = CABINET_DATA.filter(b => b.status === 'AVAILABLE').length;
-      const occupiedCount = CABINET_DATA.filter(b => b.status === 'OCCUPIED').length;
+    function setPhysicalCabinetDoor(boxId, isOpen) {
+      const dBox = deliveryBoxes.find(b => b.id === boxId);
+      if (dBox) dBox.isDoorOpen = isOpen;
+      const rItem = rentalItems.find(i => i.boxId === boxId);
+      if (rItem) rItem.isDoorOpen = isOpen;
+      render3DCabinet12Boxes();
+    }
 
-      const freeS = CABINET_DATA.filter(b => b.size === 'S' && b.status === 'AVAILABLE').length;
-      const freeM = CABINET_DATA.filter(b => b.size === 'M' && b.status === 'AVAILABLE').length;
-      const freeL = CABINET_DATA.filter(b => b.size === 'L' && b.status === 'AVAILABLE').length;
+    // Màn hình 1/2 khách hàng
+    function clearCustomerMiniPhone(reasonText = 'Khách hàng mới', phoneNum = null) {
+      const area = document.getElementById('mini-phone-messages-area');
+      const ownerEl = document.getElementById('mini-phone-owner-number');
+      const ledEl = document.getElementById('mini-phone-led');
 
-      const freeEl = document.getElementById('shipper-free-boxes-text');
-      if (freeEl) freeEl.textContent = freeCount;
+      if (ownerEl) ownerEl.textContent = phoneNum ? `SĐT: ${phoneNum}` : 'SĐT: Đang chờ giao dịch...';
+      if (ledEl) ledEl.className = 'w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping';
 
-      const occEl = document.getElementById('shipper-occupied-boxes-text');
-      if (occEl) occEl.textContent = occupiedCount;
-
-      const countSEl = document.getElementById('count-size-S');
-      if (countSEl) countSEl.textContent = `Trống: ${freeS}`;
-
-      const countMEl = document.getElementById('count-size-M');
-      if (countMEl) countMEl.textContent = `Trống: ${freeM}`;
-
-      const countLEl = document.getElementById('count-size-L');
-      if (countLEl) countLEl.textContent = `Trống: ${freeL}`;
-
-      // Update resident notification badge
-      const resBadge = document.getElementById('nav-badge-resident');
-      if (resBadge) {
-        if (occupiedCount > 0) resBadge.classList.remove('hidden');
-        else resBadge.classList.add('hidden');
+      if (area) {
+        area.className = 'flex-1 overflow-y-auto p-3 space-y-2.5 bg-white flex flex-col justify-center items-center text-center';
+        area.innerHTML = `
+          <div class="space-y-2 p-2 msg-pop">
+            <div class="w-10 h-10 mx-auto rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
+              <i data-lucide="sparkles" class="w-5 h-5 text-brand"></i>
+            </div>
+            <div class="text-xs font-extrabold text-slate-700">Đã Làm Mới Thông Báo</div>
+            <p class="text-[10px] text-slate-400 font-medium">(${reasonText})<br/>Đã xóa trắng giao diện cho khách hàng mới.</p>
+          </div>
+        `;
       }
+      if (window.lucide) lucide.createIcons();
     }
 
-    // ================= PHONE INPUT LIVE VALIDATION =================
+    function pushCustomerMessage({ phone, type, title, bodyHtml, highlightCode }) {
+      AudioEngine.smsNotificationSound();
+      const area = document.getElementById('mini-phone-messages-area');
+      const ownerEl = document.getElementById('mini-phone-owner-number');
+      const ledEl = document.getElementById('mini-phone-led');
+      const miniPhone = document.getElementById('customer-mini-phone');
+
+      if (ownerEl) ownerEl.textContent = `SĐT Khách: ${phone}`;
+      if (ledEl) ledEl.className = 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping';
+
+      if (miniPhone) {
+        miniPhone.classList.add('ring-4', 'ring-emerald-400');
+        setTimeout(() => miniPhone.classList.remove('ring-4', 'ring-emerald-400'), 1400);
+      }
+
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+
+      if (area) {
+        area.className = 'flex-1 overflow-y-auto p-3 space-y-2.5 bg-slate-100/80 flex flex-col justify-start text-left';
+        area.innerHTML = `
+          <div class="text-center">
+            <span class="inline-block px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[9px] font-bold">Hôm nay • ${timeStr}</span>
+          </div>
+          <div class="msg-pop bg-white border-2 ${type === 'SHIPPER' ? 'border-emerald-400' : 'border-brandBorder'} rounded-2xl rounded-tl-xs p-3 shadow-md space-y-2">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
+              <span class="text-[10px] font-black uppercase ${type === 'SHIPPER' ? 'text-emerald-700' : 'text-brand'} flex items-center gap-1">
+                <i data-lucide="bell-ring" class="w-3 h-3"></i>
+                <span>${title}</span>
+              </span>
+              <span class="text-[9px] font-bold text-slate-400">Vừa xong</span>
+            </div>
+            <div class="text-xs text-slate-800 font-semibold leading-relaxed">${bodyHtml}</div>
+            ${highlightCode ? `
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-2 flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-500">4 số cuối MVĐ:</span>
+                <span class="text-base font-black text-emerald-600 font-mono tracking-widest">${highlightCode}</span>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Shipper Flow
+    function selectLockerSize(size) {
+      AudioEngine.beep(520, 0.05);
+      currentSelectedSize = size;
+      ['S', 'M', 'L'].forEach(s => {
+        const btn = document.getElementById(`size-btn-${s}`);
+        if (!btn) return;
+        btn.className = s === size
+          ? 'press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all'
+          : 'press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all';
+      });
+      syncAllCabinetUI();
+    }
+
+    function quickFillShipper(phone) {
+      AudioEngine.beep(600, 0.04);
+      const input = document.getElementById('recipient-phone-input');
+      if (input) {
+        input.value = phone;
+        validatePhoneInputLive(input);
+      }
+      generateRandomTracking();
+      clearCustomerMiniPhone(`Chuẩn bị gửi hàng cho SĐT ${phone}`, phone);
+    }
+
+    function generateRandomTracking() {
+      const prefixes = ['SPX', 'GHN', 'GHTK', 'VNPOST'];
+      const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+      const last4 = Math.floor(1000 + Math.random() * 9000);
+      const el = document.getElementById('tracking-code-input');
+      if (el) el.value = `${prefix}-${last4}`;
+    }
+
     function validatePhoneInputLive(input) {
       const val = input.value.replace(/[^0-9]/g, '');
       input.value = val;
       const errorEl = document.getElementById('recipient-phone-error');
       const statusIcon = document.getElementById('recipient-phone-status-icon');
-      
       if (val.length === 0) {
         input.classList.remove('border-emerald-500', 'border-rose-500');
         input.classList.add('border-slate-200');
@@ -868,392 +1274,467 @@
       if (window.lucide) lucide.createIcons();
     }
 
-    // ================= PHYSICAL UNLOCK SIMULATION =================
-    function triggerPhysicalUnlock(boxId, autoOpenPhoneToast = false, toastTitle = 'Đã mở tủ!') {
-      const box = CABINET_DATA.find(b => b.id === boxId);
-      if (!box) return;
-
-      AudioEngine.solenoidThud();
-
-      const doorEl = document.getElementById(`box-door-${boxId}`);
-      if (doorEl) {
-        doorEl.classList.add('solenoid-active');
-        setTimeout(() => {
-          box.isDoorOpen = true;
-          doorEl.classList.add('door-open');
-        }, 120);
-      }
-
-      if (autoOpenPhoneToast) {
-        showPhoneToast(toastTitle);
-      }
-    }
-
-    function toggleDoor(boxId) {
-      const box = CABINET_DATA.find(b => b.id === boxId);
-      if (!box) return;
-
-      AudioEngine.beep(400, 0.05);
-
-      const doorEl = document.getElementById(`box-door-${boxId}`);
-      if (doorEl) {
-        box.isDoorOpen = false;
-        doorEl.classList.remove('door-open');
-      }
-    }
-
-    // ================= PHONE NAVIGATION TABS =================
-    function switchTab(tabName) {
-      AudioEngine.beep(600, 0.05);
-
-      const tabs = ['shipper', 'resident', 'rental'];
-      tabs.forEach(t => {
-        const content = document.getElementById(`tab-content-${t}`);
-        const navBtn = document.getElementById(`nav-btn-${t}`);
-        if (t === tabName) {
-          content.classList.remove('hidden');
-          navBtn.classList.remove('text-slate-400');
-          navBtn.classList.add('text-brand');
-        } else {
-          content.classList.add('hidden');
-          navBtn.classList.add('text-slate-400');
-          navBtn.classList.remove('text-brand');
-        }
-      });
-    }
-
-    function selectLockerSize(size) {
-      AudioEngine.beep(500, 0.05);
-      currentSelectedSize = size;
-      ['S', 'M', 'L'].forEach(s => {
-        const btn = document.getElementById(`size-btn-${s}`);
-        if (s === size) {
-          btn.className = 'press-effect border-2 border-brand bg-brandLight/60 rounded-2xl p-3 text-center transition-all';
-        } else {
-          btn.className = 'press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 text-center transition-all';
-        }
-      });
-    }
-
-    function fillPhone(phone) {
-      AudioEngine.beep(550, 0.04);
-      const input = document.getElementById('recipient-phone-input');
-      if (input) {
-        input.value = phone;
-        validatePhoneInputLive(input);
-      }
-    }
-
-    // ================= TAB 1: SHIPPER GỬI ĐỒ =================
     function executeShipperDropoff() {
       const phoneInput = document.getElementById('recipient-phone-input');
+      const trackingInput = document.getElementById('tracking-code-input');
       const errorEl = document.getElementById('recipient-phone-error');
       const errorText = document.getElementById('recipient-phone-error-text');
-      const rawVal = phoneInput ? phoneInput.value.trim() : '';
-      const cleanPhone = rawVal.replace(/[^0-9]/g, '');
 
-      // Strict validation: must start with 0 and have 10 or 11 digits
+      const cleanPhone = phoneInput ? phoneInput.value.replace(/[^0-9]/g, '') : '';
       if (!cleanPhone.startsWith('0') || (cleanPhone.length !== 10 && cleanPhone.length !== 11)) {
         AudioEngine.beep(250, 0.15);
         if (errorEl) {
           errorEl.classList.remove('hidden');
-          if (cleanPhone.length === 0) {
-            errorText.textContent = 'Vui lòng nhập số điện thoại người nhận để mở tủ!';
-          } else if (!cleanPhone.startsWith('0')) {
-            errorText.textContent = 'Số điện thoại hợp lệ phải bắt đầu bằng số 0!';
-          } else {
-            errorText.textContent = `Số điện thoại phải đủ 10 hoặc 11 chữ số (hiện có ${cleanPhone.length} số)!`;
-          }
-        }
-        if (phoneInput) {
-          phoneInput.classList.remove('border-slate-200', 'border-emerald-500');
-          phoneInput.classList.add('border-rose-500');
-          phoneInput.focus();
-        }
-        return;
-      }
-
-      // Valid: clear error
-      if (errorEl) errorEl.classList.add('hidden');
-      if (phoneInput) {
-        phoneInput.classList.remove('border-rose-500');
-        phoneInput.classList.add('border-emerald-500');
-      }
-
-      // Find suitable empty box for selected size, or any available
-      const targetBox = CABINET_DATA.find(b => b.size === currentSelectedSize && b.status === 'AVAILABLE') 
-                     || CABINET_DATA.find(b => b.status === 'AVAILABLE');
-
-      if (!targetBox) {
-        AudioEngine.beep(250, 0.15);
-        alert('Tất cả các ngăn tủ hiện đã kín chỗ! Vui lòng quay lại sau.');
-        return;
-      }
-
-      // Mark occupied
-      targetBox.status = 'OCCUPIED';
-      targetBox.content = `📦 Bưu kiện (${cleanPhone.slice(-4)})`;
-
-      // Trigger physical unlock
-      triggerPhysicalUnlock(targetBox.id, true, `Đã mở Ngăn #${String(targetBox.id).padStart(2, '0')}`);
-      renderLockerCabinet();
-
-      // Show in Resident Tab
-      document.getElementById('resident-parcel-card').classList.remove('hidden');
-      document.getElementById('resident-empty-state').classList.add('hidden');
-      document.getElementById('nav-badge-resident').classList.remove('hidden');
-    }
-
-    // ================= TAB 2: CƯ DÂN NHẬN ĐỒ =================
-    function executeResidentPickup() {
-      // Find first occupied box
-      let occupiedBox = CABINET_DATA.find(b => b.status === 'OCCUPIED');
-      const targetBoxId = occupiedBox ? occupiedBox.id : 3;
-      const box = CABINET_DATA.find(b => b.id === targetBoxId);
-      
-      // Physical Unlock
-      triggerPhysicalUnlock(targetBoxId, true, `Đã mở Ngăn #${String(targetBoxId).padStart(2, '0')}`);
-
-      // Confetti celebration
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.6 }
-      });
-      AudioEngine.successFanfare();
-
-      // Mark empty
-      if (box) {
-        box.status = 'AVAILABLE';
-        box.content = null;
-      }
-      renderLockerCabinet();
-
-      // Check if any occupied left
-      const remainingOccupied = CABINET_DATA.filter(b => b.status === 'OCCUPIED').length;
-      if (remainingOccupied === 0) {
-        document.getElementById('resident-parcel-card').classList.add('hidden');
-        document.getElementById('resident-empty-state').classList.remove('hidden');
-        document.getElementById('nav-badge-resident').classList.add('hidden');
-      }
-    }
-
-    function fillSampleParcel() {
-      const box = CABINET_DATA.find(b => b.status === 'AVAILABLE') || CABINET_DATA.find(b => b.id === 3);
-      if (box) {
-        box.status = 'OCCUPIED';
-        box.content = '📦 Bưu kiện mới';
-      }
-      renderLockerCabinet();
-      document.getElementById('resident-parcel-card').classList.remove('hidden');
-      document.getElementById('resident-empty-state').classList.add('hidden');
-      document.getElementById('nav-badge-resident').classList.remove('hidden');
-      switchTab('resident');
-    }
-
-    // ================= TAB 3: THUÊ ĐỒ (eKYC & VIETQR) =================
-    function openRentalProcess(toolId, name, boxLabel, boxId, deposit) {
-      AudioEngine.beep(600, 0.06);
-      currentRentingTarget = { toolId, name, boxLabel, boxId, deposit };
-
-      document.getElementById('sheet-item-name').textContent = name;
-      document.getElementById('sheet-item-box').textContent = `${boxLabel} • Tiền cọc: ${deposit.toLocaleString('vi-VN')}đ`;
-      
-      const depositPriceEl = document.getElementById('sheet-deposit-price');
-      if (depositPriceEl) depositPriceEl.textContent = `${deposit.toLocaleString('vi-VN')} VNĐ`;
-
-      const depositContentEl = document.getElementById('sheet-deposit-content');
-      if (depositContentEl) depositContentEl.textContent = `SMARTLOCKER COC ${boxId}`;
-
-      // Reset sheet steps
-      const scannerBox = document.getElementById('ekyc-scanner-box');
-      if (scannerBox) {
-        scannerBox.classList.remove('border-emerald-500', 'bg-emerald-50');
-        scannerBox.classList.add('border-slate-300', 'bg-slate-100');
-      }
-      document.getElementById('ekyc-success-tag').classList.add('hidden');
-      
-      const btnEkyc = document.getElementById('btn-trigger-ekyc');
-      if (btnEkyc) {
-        btnEkyc.disabled = false;
-        btnEkyc.classList.remove('hidden');
-        btnEkyc.innerHTML = '<i data-lucide="shield-check" class="w-4 h-4"></i><span>Xác Thực SĐT & Chip CCCD (eKYC)</span>';
-      }
-
-      const laser = document.getElementById('ekyc-laser');
-      if (laser) laser.classList.add('hidden');
-
-      const errEl = document.getElementById('rental-ekyc-error');
-      if (errEl) errEl.classList.add('hidden');
-
-      document.getElementById('sheet-step-2').classList.add('opacity-40', 'pointer-events-none');
-
-      // Open bottom sheet
-      const sheet = document.getElementById('rental-bottom-sheet');
-      const panel = document.getElementById('rental-sheet-panel');
-      sheet.classList.remove('opacity-0', 'pointer-events-none');
-      panel.classList.remove('translate-y-full');
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function closeRentalSheet() {
-      AudioEngine.beep(400, 0.05);
-      const sheet = document.getElementById('rental-bottom-sheet');
-      const panel = document.getElementById('rental-sheet-panel');
-      panel.classList.add('translate-y-full');
-      sheet.classList.add('opacity-0', 'pointer-events-none');
-    }
-
-    function runSimulatedEkyc() {
-      const phoneInput = document.getElementById('rental-phone-input');
-      const cccdInput = document.getElementById('rental-cccd-input');
-      const errorEl = document.getElementById('rental-ekyc-error');
-      const errorText = document.getElementById('rental-ekyc-error-text');
-
-      const phone = phoneInput ? phoneInput.value.replace(/[^0-9]/g, '') : '';
-      const cccd = cccdInput ? cccdInput.value.replace(/[^0-9]/g, '') : '';
-
-      if (!phone.startsWith('0') || (phone.length !== 10 && phone.length !== 11)) {
-        AudioEngine.beep(250, 0.15);
-        if (errorEl) {
-          errorEl.classList.remove('hidden');
-          errorText.textContent = 'SĐT người thuê phải đủ 10 hoặc 11 chữ số (bắt đầu bằng số 0)!';
+          errorText.textContent = 'Vui lòng nhập SĐT hợp lệ (10-11 chữ số, bắt đầu bằng 0)!';
         }
         if (phoneInput) phoneInput.focus();
         return;
       }
+      if (errorEl) errorEl.classList.add('hidden');
 
-      if (cccd.length !== 12) {
+      let targetBox = deliveryBoxes.find(b => b.size === currentSelectedSize && b.status === 'AVAILABLE')
+                   || deliveryBoxes.find(b => b.status === 'AVAILABLE');
+      if (!targetBox) {
         AudioEngine.beep(250, 0.15);
-        if (errorEl) {
-          errorEl.classList.remove('hidden');
-          errorText.textContent = `Số CCCD gắn chip phải đủ 12 chữ số (hiện có ${cccd.length} số)!`;
-        }
-        if (cccdInput) cccdInput.focus();
+        showPhoneToast('Tất cả 6 ngăn gửi hàng đều đã đầy!');
         return;
       }
 
-      if (errorEl) errorEl.classList.add('hidden');
-      AudioEngine.beep(700, 0.1);
+      let rawTracking = trackingInput && trackingInput.value.trim() ? trackingInput.value.trim().toUpperCase() : '';
+      const digitsOnly = rawTracking.replace(/[^0-9]/g, '');
+      let last4Digits = digitsOnly.length >= 4 ? digitsOnly.slice(-4) : String(Math.floor(1000 + Math.random() * 9000));
+      if (digitsOnly.length < 4) {
+        rawTracking = rawTracking ? `${rawTracking}-${last4Digits}` : `SPX-${last4Digits}`;
+        if (trackingInput) trackingInput.value = rawTracking;
+      }
 
-      const btn = document.getElementById('btn-trigger-ekyc');
-      const text = document.getElementById('ekyc-scan-text');
-      const laser = document.getElementById('ekyc-laser');
-      btn.disabled = true;
-      btn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i><span>Đang xác thực CSDL VNeID Bộ Công An...</span>';
-      if (laser) laser.classList.remove('hidden');
+      // Xóa trắng giao diện 1/2 bên cạnh
+      clearCustomerMiniPhone(`Đang gửi hàng cho SĐT ${cleanPhone}`, cleanPhone);
+
+      pendingDoorAction = {
+        mode: 'SHIPPER_DROP',
+        boxId: targetBox.id,
+        boxSize: targetBox.size,
+        phone: cleanPhone,
+        trackingCode: rawTracking,
+        last4: last4Digits
+      };
+
+      // Mở cả cửa 3D trên mô hình tủ vật lý bên phải
+      setPhysicalCabinetDoor(targetBox.id, true);
+
+      openDoorSimulationModal({
+        boxId: targetBox.id,
+        boxSize: targetBox.size,
+        title: `Đã Mở Ngăn #${String(targetBox.id).padStart(2, '0')} (Cỡ ${targetBox.size})`,
+        subtitle: `Shipper đặt đơn [${rawTracking}] vào tủ và bấm đóng cửa tủ.`,
+        contentEmoji: '📦',
+        contentText: `MVĐ: ...${last4Digits}`,
+        buttonText: 'Đã Đặt Hàng & Đóng Cửa Tủ'
+      });
+    }
+
+    function openDoorSimulationModal({ boxId, boxSize, title, subtitle, contentEmoji, contentText, buttonText }) {
+      AudioEngine.solenoidUnlock();
+      document.getElementById('sim-status-badge').className = 'inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 uppercase tracking-wide';
+      document.getElementById('sim-status-badge').innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span><span>Cửa Tủ Đang Mở</span>';
+
+      document.getElementById('sim-modal-title').textContent = title;
+      document.getElementById('sim-modal-subtitle').textContent = subtitle;
+      document.getElementById('sim-cavity-box-label').textContent = `BOX #${String(boxId).padStart(2, '0')}`;
+      document.getElementById('sim-sensor-text').textContent = 'OPEN';
+      document.getElementById('sim-door-box-num').textContent = `#${String(boxId).padStart(2, '0')}`;
+      document.getElementById('sim-door-size').textContent = boxSize || 'S';
+
+      document.getElementById('sim-cavity-content').innerHTML = `
+        <div class="text-4xl mb-1">${contentEmoji}</div>
+        <span class="text-[11px] font-bold text-white">${contentText}</span>
+      `;
+
+      const btn = document.getElementById('btn-confirm-close-door');
+      btn.disabled = false;
+      document.getElementById('btn-close-door-label').textContent = buttonText;
+
+      const modal = document.getElementById('locker-door-sim-modal');
+      const door = document.getElementById('sim-animated-door');
+      door.classList.remove('open');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      setTimeout(() => door.classList.add('open'), 120);
       if (window.lucide) lucide.createIcons();
+    }
+
+    function confirmCloseSimulatedDoor() {
+      if (!pendingDoorAction) return;
+      AudioEngine.doorCloseSound();
+
+      const door = document.getElementById('sim-animated-door');
+      const btn = document.getElementById('btn-confirm-close-door');
+      btn.disabled = true;
+      door.classList.remove('open');
+
+      // Đóng cửa 3D trên mô hình tủ vật lý bên phải
+      setPhysicalCabinetDoor(pendingDoorAction.boxId, false);
+
+      document.getElementById('sim-sensor-text').textContent = 'LOCKED';
+      document.getElementById('sim-status-badge').className = 'inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 uppercase tracking-wide';
+      document.getElementById('sim-status-badge').innerHTML = '<span>🔒 Đã Đóng Tủ An Toàn</span>';
+      document.getElementById('sim-modal-title').textContent = `Đã Đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')} Xong!`;
 
       setTimeout(() => {
-        AudioEngine.successFanfare();
-        btn.classList.add('hidden');
-        if (laser) laser.classList.add('hidden');
-        
-        const detailsEl = document.getElementById('ekyc-verified-details');
-        if (detailsEl) {
-          detailsEl.textContent = `Chủ TK: Khuất Văn Chân • SĐT: ${phone} • CCCD: ${cccd}`;
+        document.getElementById('locker-door-sim-modal').classList.add('opacity-0', 'pointer-events-none');
+
+        if (pendingDoorAction.mode === 'SHIPPER_DROP') {
+          const box = deliveryBoxes.find(b => b.id === pendingDoorAction.boxId);
+          if (box) {
+            box.status = 'OCCUPIED';
+            box.parcel = {
+              phone: pendingDoorAction.phone,
+              trackingCode: pendingDoorAction.trackingCode,
+              last4: pendingDoorAction.last4
+            };
+          }
+          syncAllCabinetUI();
+
+          pushCustomerMessage({
+            phone: pendingDoorAction.phone,
+            type: 'SHIPPER',
+            title: 'Thông Báo Đơn Hàng Mới',
+            bodyHtml: `Bạn có 1 đơn hàng shopper mã vận đơn 4 số cuối là <b class="text-emerald-700 text-sm font-mono underline">${pendingDoorAction.last4}</b> (Tại Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')}).`,
+            highlightCode: pendingDoorAction.last4
+          });
+
+          showPhoneToast(`Đã đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')} & gửi thông báo cho khách!`);
+          generateRandomTracking();
+        } else if (pendingDoorAction.mode === 'RESIDENT_PICKUP') {
+          const box = deliveryBoxes.find(b => b.id === pendingDoorAction.boxId);
+          if (box) {
+            box.status = 'AVAILABLE';
+            box.parcel = null;
+          }
+          syncAllCabinetUI();
+          if (window.confetti) confetti({ particleCount: 65, spread: 60, origin: { y: 0.6 } });
+          showPhoneToast(`Đã lấy hàng & đóng Ngăn #${String(pendingDoorAction.boxId).padStart(2, '0')}!`);
+          document.getElementById('pickup-phone-input').value = '';
+          document.getElementById('pickup-tracking-input').value = '';
         }
 
-        const scannerBox = document.getElementById('ekyc-scanner-box');
-        if (scannerBox) {
-          scannerBox.classList.remove('border-slate-300', 'bg-slate-100');
-          scannerBox.classList.add('border-emerald-500', 'bg-emerald-50');
-        }
+        pendingDoorAction = null;
+      }, 650);
+    }
 
-        document.getElementById('ekyc-success-tag').classList.remove('hidden');
-        document.getElementById('sheet-step-2').classList.remove('opacity-40', 'pointer-events-none');
+    // Resident Pickup
+    function renderActiveParcelsList() {
+      const container = document.getElementById('active-parcels-list');
+      if (!container) return;
+      const occupied = deliveryBoxes.filter(b => b.status === 'OCCUPIED' && b.parcel);
+      if (occupied.length === 0) {
+        container.innerHTML = `<div class="text-center py-3 text-xs text-slate-400 font-medium">Chưa có đơn hàng nào trong tủ. Hãy qua mục <b>Gửi Hàng</b> để gửi thử!</div>`;
+        return;
+      }
+      container.innerHTML = occupied.map(b => `
+        <div onclick="fillPickupForm('${b.parcel.phone}', '${b.parcel.last4}')" class="press-effect cursor-pointer bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 rounded-xl p-2.5 flex items-center justify-between transition">
+          <div class="flex items-center space-x-2">
+            <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 font-black text-xs flex items-center justify-center">#${String(b.id).padStart(2, '0')}</span>
+            <div>
+              <div class="text-xs font-extrabold text-slate-800">SĐT: ${b.parcel.phone}</div>
+              <div class="text-[10px] font-semibold text-slate-500">4 số cuối MVĐ: <b class="text-emerald-700">${b.parcel.last4}</b></div>
+            </div>
+          </div>
+          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-lg">Điền nhanh</span>
+        </div>
+      `).join('');
+    }
+
+    function fillPickupForm(phone, last4) {
+      AudioEngine.beep(600, 0.04);
+      document.getElementById('pickup-phone-input').value = phone;
+      document.getElementById('pickup-tracking-input').value = last4;
+      document.getElementById('pickup-error-msg').classList.add('hidden');
+    }
+
+    function executeResidentPickupByForm() {
+      const phoneVal = document.getElementById('pickup-phone-input').value.replace(/[^0-9]/g, '');
+      const trackingVal = document.getElementById('pickup-tracking-input').value.trim().toUpperCase();
+      const errBox = document.getElementById('pickup-error-msg');
+      const errText = document.getElementById('pickup-error-text');
+
+      if (!phoneVal || !trackingVal) {
+        AudioEngine.beep(250, 0.15);
+        errBox.classList.remove('hidden');
+        errText.textContent = 'Vui lòng nhập đầy đủ SĐT và 4 số cuối Mã vận đơn!';
+        return;
+      }
+
+      const matchedBox = deliveryBoxes.find(b => {
+        if (b.status !== 'OCCUPIED' || !b.parcel) return false;
+        const phoneMatch = b.parcel.phone === phoneVal;
+        const trackingDigits = trackingVal.replace(/[^0-9]/g, '');
+        const codeMatch = b.parcel.last4 === trackingVal || b.parcel.last4 === trackingDigits.slice(-4) || b.parcel.trackingCode.toUpperCase() === trackingVal;
+        return phoneMatch && codeMatch;
+      });
+
+      if (!matchedBox) {
+        AudioEngine.beep(250, 0.15);
+        errBox.classList.remove('hidden');
+        errText.textContent = 'Không tìm thấy đơn hàng khớp với SĐT và Mã vận đơn này!';
+        return;
+      }
+
+      errBox.classList.add('hidden');
+      pendingDoorAction = {
+        mode: 'RESIDENT_PICKUP',
+        boxId: matchedBox.id,
+        boxSize: matchedBox.size,
+        phone: matchedBox.parcel.phone,
+        trackingCode: matchedBox.parcel.trackingCode,
+        last4: matchedBox.parcel.last4
+      };
+
+      setPhysicalCabinetDoor(matchedBox.id, true);
+
+      openDoorSimulationModal({
+        boxId: matchedBox.id,
+        boxSize: matchedBox.size,
+        title: `Xác Thực Đúng! Mở Ngăn #${String(matchedBox.id).padStart(2, '0')}`,
+        subtitle: `Khách hàng (${matchedBox.parcel.phone}) lấy đơn [${matchedBox.parcel.trackingCode}] và đóng tủ.`,
+        contentEmoji: '🎁',
+        contentText: `Đơn #${matchedBox.parcel.last4}`,
+        buttonText: 'Đã Lấy Hàng & Đóng Cửa Tủ'
+      });
+    }
+
+    // Rental Flow
+    function renderRentalCatalogGrid() {
+      const grid = document.getElementById('rental-catalog-grid');
+      if (!grid) return;
+      grid.innerHTML = rentalItems.map(item => {
+        const isAvail = item.status === 'AVAILABLE';
+        return `
+          <div class="bg-white border-2 ${isAvail ? 'border-slate-200' : 'border-amber-300 bg-amber-50/30'} rounded-2xl p-3 flex flex-col justify-between transition-all shadow-2xs">
+            <div>
+              <div class="flex items-start justify-between mb-2">
+                <div class="w-11 h-11 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center p-1">
+                  ${REALISTIC_TOOL_SVGS[item.svgKey] || ''}
+                </div>
+                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full ${isAvail ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                  ${isAvail ? 'Sẵn sàng' : `Đang thuê (${item.blocks}B)`}
+                </span>
+              </div>
+              <div class="text-xs font-extrabold text-slate-900 leading-tight">${item.name}</div>
+              <div class="text-[11px] font-bold text-amber-600 mt-0.5">${item.pricePerBlock.toLocaleString('vi-VN')}đ/block 3h • #${String(item.boxId).padStart(2, '0')}</div>
+            </div>
+            ${isAvail ? `
+              <button onclick="openRentalModal('${item.id}')" class="press-effect w-full mt-2.5 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-extrabold text-xs">
+                Thuê Ngay
+              </button>
+            ` : `
+              <button onclick="returnRentedItem('${item.id}')" class="press-effect w-full mt-2.5 bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-xl font-extrabold text-xs">
+                Trả Đồ Vào Tủ
+              </button>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openRentalModal(toolId) {
+      const item = rentalItems.find(i => i.id === toolId);
+      if (!item) return;
+      AudioEngine.beep(600, 0.06);
+
+      const defaultPhone = document.getElementById('rental-customer-phone')?.value || '0912345678';
+      clearCustomerMiniPhone(`Bắt đầu thuê: ${item.name}`, defaultPhone);
+
+      activeRentalSession = { item, blocks: 1, hours: 3, totalPrice: item.pricePerBlock, phone: defaultPhone };
+
+      document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
+      document.getElementById('rental-modal-name').textContent = item.name;
+      document.getElementById('rental-modal-box').textContent = `Ngăn #${String(item.boxId).padStart(2, '0')}`;
+      document.getElementById('rental-modal-rate').textContent = `${item.pricePerBlock.toLocaleString('vi-VN')}đ / 1 Block (3 giờ)`;
+
+      showRentalStep(1);
+      selectRentalBlocks(1);
+
+      const modal = document.getElementById('rental-flow-modal');
+      const panel = document.getElementById('rental-flow-panel');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      panel.classList.remove('translate-y-full');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeRentalModal() {
+      AudioEngine.beep(420, 0.05);
+      document.getElementById('rental-flow-panel').classList.add('translate-y-full');
+      document.getElementById('rental-flow-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function showRentalStep(stepNum) {
+      const titles = {
+        1: 'Bước 1/4 • Chọn Số Block Giờ (1 Block = 3h)',
+        2: 'Bước 2/4 • Quét Mã QR Xác Thực',
+        3: 'Bước 3/4 • Quét Mã QR Thanh Toán',
+        4: 'Bước 4/4 • Mở Tủ & Đóng Tủ Lấy Đồ'
+      };
+      document.getElementById('rental-step-indicator').textContent = titles[stepNum] || '';
+      document.getElementById('rental-step-1-blocks').classList.toggle('hidden', stepNum !== 1);
+      document.getElementById('rental-step-2-auth').classList.toggle('hidden', stepNum !== 2);
+      document.getElementById('rental-step-3-payment').classList.toggle('hidden', stepNum !== 3);
+      document.getElementById('rental-step-4-door').classList.toggle('hidden', stepNum !== 4);
+    }
+
+    function selectRentalBlocks(blockCount) {
+      if (!activeRentalSession) return;
+      AudioEngine.beep(550, 0.04);
+      activeRentalSession.blocks = blockCount;
+      activeRentalSession.hours = blockCount * 3;
+      activeRentalSession.totalPrice = blockCount * activeRentalSession.item.pricePerBlock;
+
+      [1, 2, 3, 4].forEach(n => {
+        const btn = document.getElementById(`block-btn-${n}`);
+        if (btn) btn.className = n === blockCount
+          ? 'press-effect border-2 border-brand bg-brandLight rounded-xl p-2.5 text-center'
+          : 'press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center';
+      });
+
+      document.getElementById('rental-summary-hours').textContent = `${blockCount} Block (${activeRentalSession.hours} giờ)`;
+      document.getElementById('rental-summary-price').textContent = `${activeRentalSession.totalPrice.toLocaleString('vi-VN')}đ`;
+    }
+
+    function goToRentalStep2AuthQr() {
+      if (!activeRentalSession) return;
+      const phoneVal = document.getElementById('rental-customer-phone').value.replace(/[^0-9]/g, '') || '0912345678';
+      activeRentalSession.phone = phoneVal;
+      clearCustomerMiniPhone(`Khách ${phoneVal} đang thuê ${activeRentalSession.item.name}`, phoneVal);
+
+      AudioEngine.beep(680, 0.06);
+      showRentalStep(2);
+      document.getElementById('auth-spinner-overlay').classList.add('hidden');
+      document.getElementById('auth-success-overlay').classList.add('hidden');
+      const btn = document.getElementById('btn-simulate-auth');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function triggerSimulateAuthSpinner() {
+      AudioEngine.beep(720, 0.07);
+      const spinner = document.getElementById('auth-spinner-overlay');
+      const success = document.getElementById('auth-success-overlay');
+      const btn = document.getElementById('btn-simulate-auth');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      spinner.classList.remove('hidden');
+
+      setTimeout(() => {
+        AudioEngine.beep(880, 0.1);
+        spinner.classList.add('hidden');
+        success.classList.remove('hidden');
         if (window.lucide) lucide.createIcons();
-      }, 900);
+        setTimeout(() => goToRentalStep3PaymentQr(), 750);
+      }, 1100);
     }
 
-    function runSimulatedDepositPaid() {
-      if (!currentRentingTarget) return;
-
-      AudioEngine.successFanfare();
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.6 }
-      });
-
-      closeRentalSheet();
-
-      // Trigger physical unlock on right cabinet
-      triggerPhysicalUnlock(currentRentingTarget.boxId, true, `Đã cọc thành công! Mở ${currentRentingTarget.boxLabel}`);
-
-      // Update cabinet status for this tool box
-      const box = CABINET_DATA.find(b => b.id === currentRentingTarget.boxId);
-      if (box) {
-        box.content = `🛠️ Đang thuê (${currentRentingTarget.name.slice(0, 10)})`;
-      }
-      renderLockerCabinet();
-
-      // Update button on rental card to "Trả Đồ & Hoàn Cọc"
-      const rentBtn = document.getElementById(`btn-rent-${currentRentingTarget.toolId}`);
-      if (rentBtn) {
-        rentBtn.className = 'press-effect w-full mt-3 bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1';
-        rentBtn.innerHTML = '<i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i><span>Trả Đồ & Hoàn Cọc</span>';
-        rentBtn.onclick = () => executeReturnItem(currentRentingTarget.toolId, currentRentingTarget.boxId, currentRentingTarget.name);
-      }
+    function goToRentalStep3PaymentQr() {
+      if (!activeRentalSession) return;
+      showRentalStep(3);
+      document.getElementById('payment-block-badge').textContent = `${activeRentalSession.blocks} Block (${activeRentalSession.hours} giờ)`;
+      document.getElementById('payment-amount-display').textContent = `${activeRentalSession.totalPrice.toLocaleString('vi-VN')} VNĐ`;
+      document.getElementById('payment-spinner-overlay').classList.add('hidden');
+      document.getElementById('payment-success-overlay').classList.add('hidden');
+      const btn = document.getElementById('btn-simulate-payment');
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
       if (window.lucide) lucide.createIcons();
     }
 
-    function executeReturnItem(toolId, boxId, name) {
-      AudioEngine.successFanfare();
-      triggerPhysicalUnlock(boxId, true, `Mở Ngăn #${String(boxId).padStart(2, '0')} để cất đồ`);
+    function triggerSimulatePaymentSpinner() {
+      AudioEngine.beep(750, 0.07);
+      const spinner = document.getElementById('payment-spinner-overlay');
+      const success = document.getElementById('payment-success-overlay');
+      const btn = document.getElementById('btn-simulate-payment');
+      btn.disabled = true;
+      btn.classList.add('opacity-50');
+      spinner.classList.remove('hidden');
 
-      // Reset cabinet box content
-      const box = CABINET_DATA.find(b => b.id === boxId);
-      if (box) {
-        const defaultNames = { 5: 'Máy khoan Bosch', 6: 'Vợt Pickleball', 7: 'Máy rửa xe Mini', 8: 'Trạm sạc dự phòng' };
-        box.content = `🧰 ${defaultNames[boxId] || 'Thiết bị'}`;
-      }
-      renderLockerCabinet();
+      setTimeout(() => {
+        AudioEngine.beep(960, 0.12);
+        spinner.classList.add('hidden');
+        success.classList.remove('hidden');
+        if (window.lucide) lucide.createIcons();
+        setTimeout(() => goToRentalStep4OpenDoor(), 750);
+      }, 1100);
+    }
 
-      // Reset button
-      const rentBtn = document.getElementById(`btn-rent-${toolId}`);
-      if (rentBtn) {
-        rentBtn.className = 'press-effect w-full mt-3 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-bold text-xs shadow-sm flex items-center justify-center space-x-1';
-        rentBtn.innerHTML = '<span>Thuê Ngay</span>';
-        rentBtn.onclick = () => openRentalProcess(toolId, name, `Ngăn #${String(boxId).padStart(2, '0')}`, boxId, 200000);
-      }
+    function goToRentalStep4OpenDoor() {
+      if (!activeRentalSession) return;
+      AudioEngine.solenoidUnlock();
+      showRentalStep(4);
+
+      const item = activeRentalSession.item;
+      setPhysicalCabinetDoor(item.boxId, true);
+
+      document.getElementById('rental-door-title').textContent = `Cửa Ngăn #${String(item.boxId).padStart(2, '0')} Đang Mở!`;
+      document.getElementById('rental-cavity-icon').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
+      document.getElementById('rental-cavity-name').textContent = item.name;
+      document.getElementById('rental-door-num').textContent = `#${String(item.boxId).padStart(2, '0')}`;
+
+      const door = document.getElementById('rental-animated-door');
+      door.classList.remove('open');
+      setTimeout(() => door.classList.add('open'), 100);
+
+      document.getElementById('btn-close-rental-door').disabled = false;
       if (window.lucide) lucide.createIcons();
-
-      alert(`✅ Đối soát RFID khớp 100%! Thiết bị "${name || 'tiện ích'}" nguyên vẹn.\nĐã hoàn tiền cọc 200.000 VNĐ về tài khoản của bạn.`);
     }
 
-    // ================= TOAST NOTIFICATION ON PHONE =================
-    function showPhoneToast(title) {
-      const toast = document.getElementById('phone-unlock-toast');
-      document.getElementById('toast-title').textContent = title;
-      toast.classList.remove('-translate-y-32');
-    }
+    function confirmCloseRentalDoor() {
+      if (!activeRentalSession) return;
+      AudioEngine.doorCloseSound();
 
-    function dismissToastAndCloseLocker() {
-      const toast = document.getElementById('phone-unlock-toast');
-      toast.classList.add('-translate-y-32');
-      // Close all open doors on model
-      CABINET_DATA.forEach(b => {
-        if (b.isDoorOpen) {
-          toggleDoor(b.id);
+      const door = document.getElementById('rental-animated-door');
+      document.getElementById('btn-close-rental-door').disabled = true;
+      door.classList.remove('open');
+
+      const { item, blocks, hours, totalPrice, phone } = activeRentalSession;
+      setPhysicalCabinetDoor(item.boxId, false);
+
+      setTimeout(() => {
+        closeRentalModal();
+        const targetItem = rentalItems.find(i => i.id === item.id);
+        if (targetItem) {
+          targetItem.status = 'RENTED';
+          targetItem.rentedBy = phone;
+          targetItem.blocks = blocks;
         }
-      });
+        syncAllCabinetUI();
+
+        pushCustomerMessage({
+          phone: phone,
+          type: 'RENTAL',
+          title: 'Xác Nhận Thuê Thiết Bị',
+          bodyHtml: `Bạn đã thuê thành công <b class="text-brand">${item.name}</b> (Ngăn #${String(item.boxId).padStart(2, '0')}) trong <b class="text-emerald-700">${blocks} block (${hours} giờ)</b>.<br/>Tổng thanh toán: <b>${totalPrice.toLocaleString('vi-VN')} VNĐ</b>.`,
+          highlightCode: null
+        });
+
+        if (window.confetti) confetti({ particleCount: 60, spread: 55, origin: { y: 0.6 } });
+        showPhoneToast(`Đã đóng Ngăn #${String(item.boxId).padStart(2, '0')} & gửi tin nhắn thuê ${blocks} block!`);
+        activeRentalSession = null;
+      }, 600);
     }
 
-    // ================= FACULTY DEMO CONTROLS =================
-    function rotateDynamicQr() {
-      AudioEngine.beep(800, 0.08);
-      const randHex = Math.random().toString(16).substring(2, 6).toUpperCase();
-      document.getElementById('cabinet-qr-text').textContent = `QR Động: #${randHex}`;
-      const qrEl = document.getElementById('cabinet-qr-mini');
-      qrEl.classList.add('rotate-180');
-      setTimeout(() => qrEl.classList.remove('rotate-180'), 500);
+    function returnRentedItem(toolId) {
+      const item = rentalItems.find(i => i.id === toolId);
+      if (!item) return;
+      AudioEngine.solenoidUnlock();
+      item.status = 'AVAILABLE';
+      item.rentedBy = null;
+      item.blocks = 0;
+      syncAllCabinetUI();
+      showPhoneToast(`Đã trả [${item.name}] vào Ngăn #${String(item.boxId).padStart(2, '0')}!`);
     }
 
     function toggleTamperAlarm(enable) {
       const banner = document.getElementById('alarm-warning-banner');
       const boxDoor = document.getElementById('box-door-4');
-
       if (enable) {
         banner.classList.remove('hidden');
         if (boxDoor) boxDoor.classList.add('alarm-active');
@@ -1266,16 +1747,73 @@
       }
     }
 
-    // ================= AUTO-FIT SCREEN SCALING =================
+    function switchTab(tabName) {
+      AudioEngine.beep(580, 0.04);
+      ['shipper', 'resident', 'rental'].forEach(t => {
+        const content = document.getElementById(`tab-content-${t}`);
+        const navBtn = document.getElementById(`nav-btn-${t}`);
+        if (t === tabName) {
+          content.classList.remove('hidden');
+          navBtn.classList.remove('text-slate-400');
+          navBtn.classList.add('text-brand');
+        } else {
+          content.classList.add('hidden');
+          navBtn.classList.add('text-slate-400');
+          navBtn.classList.remove('text-brand');
+        }
+      });
+      if (tabName === 'shipper') {
+        clearCustomerMiniPhone('Chuyển sang chế độ Gửi Hàng (Khách hàng mới)');
+      } else if (tabName === 'rental') {
+        clearCustomerMiniPhone('Chuyển sang chế độ Thuê Đồ (Khách hàng mới)');
+      }
+      syncAllCabinetUI();
+    }
+
+    function resetAllDemo() {
+      AudioEngine.beep(500, 0.08);
+      toggleTamperAlarm(false);
+      deliveryBoxes = JSON.parse(JSON.stringify(INITIAL_DELIVERY_BOXES));
+      rentalItems = JSON.parse(JSON.stringify(INITIAL_RENTAL_ITEMS));
+      currentSelectedSize = 'S';
+      selectLockerSize('S');
+      clearCustomerMiniPhone('Khôi phục toàn bộ hệ thống');
+      syncAllCabinetUI();
+      showPhoneToast('Đã khôi phục 12 ngăn tủ về trạng thái chuẩn!');
+    }
+
+    let toastTimer = null;
+    function showPhoneToast(msg) {
+      const toast = document.getElementById('phone-toast');
+      const text = document.getElementById('phone-toast-text');
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+      }, 3400);
+    }
+
+    function updateClocks() {
+      const now = new Date();
+      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      document.querySelectorAll('.live-clock').forEach(el => el.textContent = timeStr);
+    }
+    setInterval(updateClocks, 20000);
+    updateClocks();
+
     let isFitScreen = true;
     function applyFitScreen() {
       const main = document.getElementById('main-presentation-viewport');
       if (!main) return;
-      if (isFitScreen && window.innerWidth >= 1024) {
-        const availableHeight = window.innerHeight - 90;
+      if (isFitScreen && window.innerWidth >= 1280) {
+        const availableHeight = window.innerHeight - 105;
         const contentHeight = 880;
         if (availableHeight < contentHeight) {
-          const scale = Math.max(0.70, Math.min(1, availableHeight / contentHeight));
+          const scale = Math.max(0.66, Math.min(1, availableHeight / contentHeight));
           main.style.transform = `scale(${scale})`;
           main.style.transformOrigin = 'top center';
           main.style.marginBottom = `${-(contentHeight * (1 - scale))}px`;
@@ -1288,12 +1826,13 @@
         main.style.marginBottom = '0px';
       }
     }
+
     function toggleFitScreen() {
       isFitScreen = !isFitScreen;
       const btn = document.getElementById('btn-fit-screen');
       if (btn) {
-        btn.innerHTML = isFitScreen 
-          ? '<i data-lucide="maximize" class="w-3.5 h-3.5"></i><span>Vừa Màn Hình</span>' 
+        btn.innerHTML = isFitScreen
+          ? '<i data-lucide="maximize" class="w-3.5 h-3.5"></i><span>Vừa Màn Hình</span>'
           : '<i data-lucide="minimize" class="w-3.5 h-3.5"></i><span>Chuẩn 100%</span>';
         lucide.createIcons();
       }
@@ -1301,12 +1840,13 @@
     }
     window.addEventListener('resize', applyFitScreen);
 
-    // ================= INITIALIZE =================
     window.addEventListener('DOMContentLoaded', () => {
-      renderLockerCabinet();
+      syncAllCabinetUI();
       lucide.createIcons();
       applyFitScreen();
     });
+    syncAllCabinetUI();
+    lucide.createIcons();
     setTimeout(applyFitScreen, 150);
   </script>
 </body>
