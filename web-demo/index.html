@@ -390,15 +390,6 @@
                     <button type="button" onclick="backspaceLockerPickupNumpad()" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">⌫</button>
                   </div>
 
-                  <!-- Gợi ý kiện hàng đang chờ lấy trong tủ (hiện khi có đơn trong tủ) -->
-                  <div id="locker-active-parcels-hint" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                      <span class="text-xs font-bold text-slate-800" id="locker-parcel-hint-text">Mã nhận đồ: 2824</span>
-                    </div>
-                    <button type="button" onclick="fillLockerPickupCode()" class="press-effect text-[11px] font-bold text-emerald-800 bg-emerald-200 hover:bg-emerald-300 px-2.5 py-1 rounded-lg">Điền nhanh</button>
-                  </div>
-
                   <!-- Lỗi mã sai -->
                   <p id="locker-pickup-error-msg" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-xl flex items-center space-x-1.5">
                     <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
@@ -460,15 +451,6 @@
                     <button type="button" onclick="clearNumpad()" class="press-effect py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 font-black text-xs text-rose-600 shadow-xs">XÓA</button>
                     <button type="button" onclick="pressNumpad('0')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">0</button>
                     <button type="button" onclick="backspaceNumpad()" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">⌫</button>
-                  </div>
-
-                  <!-- Gợi ý mã vừa thuê (tự động hiện khi vừa thanh toán ở máy khách) -->
-                  <div id="rental-active-tokens-hint" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-2.5 flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                      <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
-                      <span class="text-xs font-bold text-slate-800" id="rental-token-hint-text">Mã vừa thuê: 8826</span>
-                    </div>
-                    <button type="button" onclick="fillRentalPickupCode()" class="press-effect text-[11px] font-bold text-amber-800 bg-amber-200 hover:bg-amber-300 px-2.5 py-1 rounded-lg">Điền nhanh</button>
                   </div>
 
                   <!-- Lỗi mã sai -->
@@ -1277,25 +1259,15 @@
     }
 
     function fillLockerPickupCode(code) {
-      AudioEngine.beep(660, 0.04);
-      const input = document.getElementById('locker-pickup-code-input');
-      if (!input) return;
       if (code) {
-        input.value = code;
-      } else {
-        const occupiedParcels = deliveryBoxes.filter(b => b.status === 'OCCUPIED' && b.parcel);
-        if (occupiedParcels.length > 0) {
-          const latest = occupiedParcels[occupiedParcels.length - 1];
-          input.value = latest.parcel.code || latest.parcel.tracking.slice(-4);
-        }
+        const input = document.getElementById('locker-pickup-code-input');
+        if (input) input.value = code;
+        clearLockerPickupErrorLive();
       }
-      clearLockerPickupErrorLive();
     }
 
     function quickFillLockerPickup(code) {
-      switchTab('resident');
-      fillLockerPickupCode(code);
-      showPhoneToast('Đã chuyển sang màn hình tủ và điền mã ' + code + '!', '🔑');
+      // Đã gỡ bỏ tính năng điền nhanh tự động để đảm bảo tính bảo mật
     }
 
     function switchCustomerTab(tabName) {
@@ -1343,16 +1315,9 @@
     }
 
     function fillRentalPickupCode(code) {
-      AudioEngine.beep(660, 0.04);
-      const input = document.getElementById('rental-pickup-code-input');
-      if (input) {
-        if (code) {
-          input.value = code;
-        } else if (activeRentalTokens.length > 0) {
-          input.value = activeRentalTokens[activeRentalTokens.length - 1].code;
-        } else {
-          input.value = '8826';
-        }
+      if (code) {
+        const input = document.getElementById('rental-pickup-code-input');
+        if (input) input.value = code;
       }
     }
 
@@ -1558,14 +1523,16 @@
       const errorEl = document.getElementById('rental-pickup-error-msg');
       const codeVal = input ? input.value.trim() : '';
 
-      let matchedToken = activeRentalTokens.find(t => t.code === codeVal);
-
-      if (!matchedToken && codeVal === '' && activeRentalTokens.length > 0) {
-        matchedToken = activeRentalTokens[activeRentalTokens.length - 1];
-        if (input) input.value = matchedToken.code;
+      if (!codeVal) {
+        if (errorEl) errorEl.classList.remove('hidden');
+        if (input) input.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
+        AudioEngine.beep(280, 0.15);
+        return;
       }
 
-      if (!matchedToken && (codeVal === '8826' || codeVal === '')) {
+      let matchedToken = activeRentalTokens.find(t => t.code === codeVal);
+
+      if (!matchedToken && codeVal === '8826') {
         const defaultItem = rentalItems.find(r => r.id === 'toolbox') || rentalItems[0];
         matchedToken = {
           code: '8826',
@@ -1578,11 +1545,13 @@
 
       if (!matchedToken) {
         if (errorEl) errorEl.classList.remove('hidden');
+        if (input) input.classList.add('border-rose-500', 'ring-2', 'ring-rose-200');
         AudioEngine.beep(280, 0.15);
         return;
       }
 
       if (errorEl) errorEl.classList.add('hidden');
+      if (input) input.classList.remove('border-rose-500', 'ring-2', 'ring-rose-200');
 
       pendingDoorAction = {
         type: 'rental_pickup',
@@ -1792,14 +1761,7 @@
         '</div>' +
         '<p class="text-[11px] text-slate-600 font-medium leading-relaxed">' +
           'Quý khách vui lòng ra tủ SmartLocker và nhập mã nhận đồ trên để nhận kiện hàng.' +
-        '</p>' +
-        '<div class="pickup-action-row pt-1 flex items-center justify-between border-t border-slate-100">' +
-          '<span class="text-[10px] text-slate-400 font-medium">Bấm để sang tủ nhận ngay</span>' +
-          '<button type="button" onclick="quickFillLockerPickup(\'' + code + '\')" class="press-effect text-[11px] font-black text-emerald-700 bg-emerald-100 hover:bg-emerald-200 px-3 py-1.5 rounded-xl flex items-center space-x-1">' +
-            '<i data-lucide="arrow-left-circle" class="w-3.5 h-3.5"></i>' +
-            '<span>Ra Tủ Nhập Mã</span>' +
-          '</button>' +
-        '</div>';
+        '</p>';
 
       if (container) {
         container.prepend(card);
@@ -1998,20 +1960,9 @@
     }
 
     function updateRentalPickupHint() {
-      const hintBox = document.getElementById('rental-active-tokens-hint');
-      const hintText = document.getElementById('rental-token-hint-text');
       const waitCount = document.getElementById('rental-waiting-pickup-count');
-
-      if (!hintBox || !hintText) return;
-
-      if (activeRentalTokens.length > 0) {
-        const lastToken = activeRentalTokens[activeRentalTokens.length - 1];
-        hintText.textContent = 'Mã vừa thuê: ' + lastToken.code + ' (Ngăn ' + String(lastToken.boxId).padStart(2, '0') + ')';
-        hintBox.classList.remove('hidden');
-        if (waitCount) waitCount.textContent = activeRentalTokens.length;
-      } else {
-        hintBox.classList.add('hidden');
-        if (waitCount) waitCount.textContent = '0';
+      if (waitCount) {
+        waitCount.textContent = activeRentalTokens.length > 0 ? activeRentalTokens.length : '0';
       }
     }
 
@@ -2062,7 +2013,7 @@
       {
         id: 'nhan_hang',
         keywords: ['nhan hang', 'nhan do', 'lay hang', 'lay do', 'nhan don'],
-        response: 'Để nhận hàng tại tủ: 1. Quý khách xem Mã nhận đồ (gồm 4 số) trong mục **Nhận Đồ** trên điện thoại. 2. Ra màn hình tủ SmartLocker (máy bên trái), chọn tab **Nhận Đồ**. 3. Nhập 4 số mã nhận đồ trên bàn phím cảm ứng (hoặc bấm nút Ra Tủ Nhập Mã trên điện thoại) rồi nhấn **Xác Thực & Mở Tủ Nhận Hàng**. 4. Cửa tủ bung mở, quý khách lấy kiện hàng ra và đẩy đóng cửa tủ lại!'
+        response: 'Để nhận hàng tại tủ: 1. Quý khách xem Mã nhận đồ (gồm 4 số) trong mục **Nhận Đồ** trên điện thoại. 2. Ra màn hình tủ SmartLocker (máy bên trái), chọn tab **Nhận Đồ**. 3. Nhập 4 số mã nhận đồ trên bàn phím cảm ứng rồi nhấn **Xác Thực & Mở Tủ Nhận Hàng**. 4. Cửa tủ bung mở, quý khách lấy kiện hàng ra và đẩy đóng cửa tủ lại!'
       },
       {
         id: 'thue_do',
@@ -2072,7 +2023,7 @@
       {
         id: 'nhap_ma',
         keywords: ['nhap ma', 'ma mo tu', 'pin', 'lay thiet bi', 'tu thue', 'numpad'],
-        response: 'Để lấy thiết bị đã thuê: Khách mang mã 4 số vừa nhận được, sang màn hình tủ (bên trái), chọn tab **Nhập Mã Thuê Đồ**, bấm số trên bàn phím cảm ứng (hoặc bấm Điền Nhanh) rồi nhấn Mở Ngăn Tủ!'
+        response: 'Để lấy thiết bị đã thuê: Khách mang mã 4 số vừa nhận được, sang màn hình tủ (bên trái), chọn tab **Nhập Mã Thuê Đồ**, bấm số trên bàn phím cảm ứng rồi nhấn Xác Thực Mở Tủ!'
       },
       {
         id: 'cam_on',
@@ -2199,21 +2150,7 @@
     }
 
     function renderLockerPickupHints() {
-      const hintContainer = document.getElementById('locker-active-parcels-hint');
-      const hintText = document.getElementById('locker-parcel-hint-text');
-      if (!hintContainer) return;
-
-      const occupiedParcels = deliveryBoxes.filter(b => b.status === 'OCCUPIED' && b.parcel);
-      if (occupiedParcels.length > 0) {
-        const latest = occupiedParcels[occupiedParcels.length - 1];
-        const code = latest.parcel.code || latest.parcel.tracking.slice(-4);
-        if (hintText) {
-          hintText.textContent = 'Mã nhận đồ: ' + code + ' (Ngăn ' + latest.label + ')';
-        }
-        hintContainer.classList.remove('hidden');
-      } else {
-        hintContainer.classList.add('hidden');
-      }
+      // Đã gỡ bỏ gợi ý điền nhanh trên giao diện tủ vật lý để bảo mật thông tin
     }
 
     function showPhoneToast(msg, icon = '📦') {
