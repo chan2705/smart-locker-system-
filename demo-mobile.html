@@ -177,17 +177,7 @@
           <span>Vừa Màn Hình</span>
         </button>
 
-        <button onclick="resetAllDemo()" class="press-effect text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200 flex items-center space-x-1.5 shadow-xs">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-          <span>Reset Tủ</span>
-        </button>
-
-        <!-- Link chuyển sang bản Full có Tủ 3D lớn -->
-        <a href="demo-giang-vien.html" class="press-effect text-xs font-bold text-brand bg-brandLight hover:opacity-90 px-3 py-1.5 rounded-xl border border-brandBorder flex items-center space-x-1.5 shadow-xs">
-          <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-          <span>Bản Có Tủ Vật Lý</span>
-        </a>
-      </div>
+        </div>
     </div>
   </header>
 
@@ -249,7 +239,29 @@
               </button>
             </div>
 
-            <!-- Mini Map removed for spacious clean layout -->
+            <!-- Phone Scrollable Body -->
+            <div class="flex-1 overflow-y-auto p-3.5 no-scrollbar pb-24" id="phone-content-viewport">
+
+              <!-- ================= TAB 1: GỬI ĐỒ (SHIPPER) ================= -->
+              <div id="tab-content-shipper" class="space-y-3.5">
+                <!-- Banner Card (Cập nhật chính xác số lượng ô trống và ô có đồ) -->
+                <div class="bg-brandLight border border-brandBorder rounded-2xl p-3 flex justify-between items-center transition-colors">
+                  <div>
+                    <div class="text-[10px] font-extrabold uppercase text-brand tracking-wider">Chế Độ Shipper</div>
+                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Gửi Hàng Vào Tủ</div>
+                  </div>
+                  <div class="flex items-center space-x-3 text-right">
+                    <div>
+                      <span class="text-base font-black text-brand" id="shipper-free-boxes-text">6</span>
+                      <span class="text-[10px] font-bold text-slate-500 block -mt-1">ô trống</span>
+                    </div>
+                    <div class="w-px h-6 bg-slate-300"></div>
+                    <div>
+                      <span class="text-base font-black text-amber-600" id="shipper-occupied-boxes-text">0</span>
+                      <span class="text-[10px] font-bold text-slate-500 block -mt-1">đang gửi</span>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- 1. Chọn Cỡ Ngăn (Đếm chính xác từng cỡ S, M, L) -->
                 <div>
@@ -325,10 +337,7 @@
                       <i data-lucide="barcode" class="w-4 h-4"></i>
                     </div>
                   </div>
-                  <p class="text-[10px] text-slate-500 font-semibold mt-1">
-                    💡 Sau khi đóng tủ, hệ thống sẽ nhắn <span class="text-brand font-bold">4 số cuối mã vận đơn</span> sang màn hình điện thoại khách hàng bên cạnh.
-                  </p>
-                </div>
+                  </div>
 
                 <!-- CTA GỬI ĐỒ -->
                 <button onclick="executeShipperDropoff()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
@@ -799,10 +808,7 @@
                   <i data-lucide="bell-ring" class="w-5 h-5"></i>
                 </div>
                 <div class="text-xs font-extrabold text-slate-700">Màn Hình Thông Báo Khách Hàng</div>
-                <p class="text-[10px] text-slate-500 leading-relaxed">
-                  Mỗi lần nhấn <b>Gửi Hàng</b> hoặc <b>Thuê Đồ</b> mới, màn hình này sẽ tự động <b>xóa trắng</b> (giả lập điện thoại của khách hàng mới) và nhận tin nhắn ngay khi đóng tủ.
-                </p>
-              </div>
+                </div>
             </div>
 
             <!-- Footer nhỏ dưới đáy màn hình 1/2 -->
@@ -813,21 +819,8 @@
           </div>
         </div>
 
-        <!-- Chú thích hỗ trợ trình bày -->
-        <div class="mt-2.5 max-w-[285px] bg-white/85 backdrop-blur rounded-2xl p-2.5 border border-slate-200 text-[11px] text-slate-600 shadow-2xs">
-          <div class="font-extrabold text-slate-800 flex items-center space-x-1 mb-0.5">
-            <i data-lucide="info" class="w-3.5 h-3.5 text-brand"></i>
-            <span>Cơ chế đồng bộ tự động:</span>
-          </div>
-          <ul class="list-disc list-inside space-y-0.5 text-[10px] text-slate-600">
-            <li>Nhấn <b>Gửi đồ / Thuê đồ</b> → Tự động xóa trắng màn hình phụ.</li>
-            <li><b>Đóng tủ gửi hàng</b> → Báo mã vận đơn 4 số cuối.</li>
-            <li><b>Đóng tủ thuê đồ</b> → Báo tên đồ + số block đã thuê.</li>
-          </ul>
         </div>
-      </div>
-
-    </div>
+</div>
   </main>
 
   <!-- ================= FOOTER ================= -->
@@ -1216,10 +1209,7 @@
               <i data-lucide="sparkles" class="w-5 h-5 text-brand"></i>
             </div>
             <div class="text-xs font-extrabold text-slate-700">Đã Làm Mới Giao Diện</div>
-            <p class="text-[10px] text-slate-400 font-medium">
-              (${reasonText})<br/>Màn hình trắng sẵn sàng nhận thông báo mới khi tủ đóng xong.
-            </p>
-          </div>
+            </div>
         `;
       }
       if (window.lucide) lucide.createIcons();
