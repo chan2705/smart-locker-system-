@@ -1692,6 +1692,8 @@
           const codeInput = document.getElementById('rental-pickup-code-input');
           if (codeInput) codeInput.value = '';
 
+          markCustomerParcelNotificationAsPicked('THUE-' + token.code, token.code);
+
           if (window.confetti) {
             window.confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
           }
@@ -1979,7 +1981,7 @@
             boxLabel: String(token.boxId).padStart(2, '0'),
             code: pinCode,
             fullTracking: 'THUE-' + pinCode,
-            phone: '0981056245',
+            phone: currentCustomerPhone || '0981056245',
             time: token.time
           });
 
