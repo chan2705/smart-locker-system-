@@ -868,6 +868,7 @@
     </div>
   </main>
 
+
   <!-- ================= JAVASCRIPT LOGIC & THUẬT TOÁN ================= -->
   <script>
     const REALISTIC_TOOL_SVGS = {
@@ -1018,6 +1019,12 @@
       `
     };
 
+    // Bổ sung alias đảm bảo luôn tìm thấy SVG dù gọi bằng tên nào
+    REALISTIC_TOOL_SVGS.vacuum = REALISTIC_TOOL_SVGS.vacuum_cleaner;
+    REALISTIC_TOOL_SVGS.laser_printer = REALISTIC_TOOL_SVGS.printer;
+    REALISTIC_TOOL_SVGS.drill = REALISTIC_TOOL_SVGS.power_drill;
+    REALISTIC_TOOL_SVGS.car_washer = REALISTIC_TOOL_SVGS.pressure_washer;
+
     // =========================================================================
     
         
@@ -1078,10 +1085,10 @@
     const rentalItems = [
       { id: 'toolbox', name: 'Bộ Dụng Cụ Sửa Chữa', rate: 25000, boxId: 10, status: 'AVAILABLE', key: 'toolbox' },
       { id: 'hand_cutter', name: 'Máy Cắt Tay', rate: 30000, boxId: 7, status: 'AVAILABLE', key: 'hand_cutter' },
-      { id: 'vacuum', name: 'Máy Hút Bụi', rate: 35000, boxId: 8, status: 'AVAILABLE', key: 'vacuum' },
-      { id: 'laser_printer', name: 'Máy In Laser', rate: 40000, boxId: 9, status: 'AVAILABLE', key: 'laser_printer' },
-      { id: 'drill', name: 'Máy Khoan Pin', rate: 30000, boxId: 11, status: 'AVAILABLE', key: 'drill' },
-      { id: 'car_washer', name: 'Máy Rửa Xe Mini', rate: 45000, boxId: 12, status: 'AVAILABLE', key: 'car_washer' },
+      { id: 'vacuum', name: 'Máy Hút Bụi', rate: 35000, boxId: 8, status: 'AVAILABLE', key: 'vacuum_cleaner' },
+      { id: 'laser_printer', name: 'Máy In Laser', rate: 40000, boxId: 9, status: 'AVAILABLE', key: 'printer' },
+      { id: 'drill', name: 'Máy Khoan Pin', rate: 30000, boxId: 11, status: 'AVAILABLE', key: 'power_drill' },
+      { id: 'car_washer', name: 'Máy Rửa Xe Mini', rate: 45000, boxId: 12, status: 'AVAILABLE', key: 'pressure_washer' },
     ];
 
     let activeRentalTokens = [];
@@ -1496,7 +1503,7 @@
       grid.innerHTML = '';
 
       rentalItems.forEach(item => {
-        const svg = REALISTIC_TOOL_SVGS[item.key] || '<div class="text-2xl">🔧</div>';
+        const svg = REALISTIC_TOOL_SVGS[item.key] || REALISTIC_TOOL_SVGS[item.id] || '<div class="text-2xl">🔧</div>';
         const isAvail = item.status === 'AVAILABLE';
         const card = document.createElement('div');
         card.className = 'bg-white border-2 ' + (isAvail ? 'border-slate-200' : 'border-slate-100 opacity-60') + ' rounded-3xl p-3 flex flex-col justify-between shadow-xs transition-all hover:border-brand/40';
@@ -1533,7 +1540,7 @@
       document.getElementById('rental-modal-name').textContent = currentRentalItem.name;
       document.getElementById('rental-modal-box').textContent = 'Ngăn ' + String(currentRentalItem.boxId).padStart(2, '0');
       document.getElementById('rental-modal-rate').textContent = (currentRentalItem.rate).toLocaleString('vi-VN') + 'đ / 1 Block (3 giờ)';
-      document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[currentRentalItem.key] || '🔧';
+      document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[currentRentalItem.key] || REALISTIC_TOOL_SVGS[currentRentalItem.id] || '🔧';
 
       selectRentalBlocks(1);
       showRentalStep(1);
