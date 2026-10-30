@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>SmartLocker - Giao Diện Trình Bày & Mô Phỏng Tin Nhắn Khách Hàng</title>
+  <title>SmartLocker - Hệ Thống Tủ Thông Minh & App Khách Hàng</title>
   <meta name="description" content="Giao diện Smart Locker kèm màn hình phụ thông báo tin nhắn khách hàng 1/2 bên cạnh">
 
   <!-- Tailwind CSS CDN -->
@@ -148,7 +148,7 @@
               Đồng Bộ Thời Gian Thực
             </span>
           </div>
-          <p class="text-[11px] text-slate-500 font-medium">Giao Diện Tủ Chính + Màn Hình Phụ Tin Nhắn Khách Hàng (1/2)</p>
+          <p class="text-[11px] text-slate-500 font-medium">Màn Hình Tủ SmartLocker & Điện Thoại Khách Hàng</p>
         </div>
       </div>
 
@@ -182,34 +182,31 @@
     </div>
   </header>
 
-  <!-- ================= MAIN VIEWPORT: GIAO DIỆN CHÍNH + POPUP 1/2 BÊN CẠNH ================= -->
+  <!-- ================= MAIN VIEWPORT: GIAO DIỆN CHÍNH + MÁY KHÁCH HÀNG ================= -->
   <main class="flex-1 w-full flex items-center justify-center p-3 sm:p-5 my-auto overflow-x-hidden">
     <div id="presentation-stage" class="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 lg:gap-8 transition-transform duration-200">
 
       <!-- ===================================================================== -->
-      <!-- 1. GIAO DIỆN CHÍNH (MÀN HÌNH THAO TÁC TẠI TỦ / APP CHÍNH - 400x844px) -->
+      <!-- 1. GIAO DIỆN CHÍNH (MÀN HÌNH THAO TÁC TẠI TỦ - 400x844px)           -->
       <!-- ===================================================================== -->
       <div class="flex flex-col items-center">
-        <div class="mb-2 flex items-center space-x-2 bg-white/90 backdrop-blur px-3.5 py-1 rounded-full border border-slate-200 shadow-xs">
-          <span class="w-2 h-2 rounded-full bg-brand animate-ping"></span>
-          <span class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Giao Diện Chính (Thao Tác Tại Tủ)</span>
+        <div class="mb-3 flex items-center space-x-2 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-200 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+          <span class="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider">Màn Hình Tủ SmartLocker</span>
         </div>
 
-        <div id="phone-mockup-wrapper" class="w-[400px] h-[844px] bg-slate-900 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700">
-          <!-- Hardware Side Buttons -->
-          <div class="absolute -left-[3px] top-28 w-[4px] h-10 bg-slate-600 rounded-l-sm"></div>
-          <div class="absolute -left-[3px] top-42 w-[4px] h-12 bg-slate-600 rounded-l-sm"></div>
-          <div class="absolute -right-[3px] top-32 w-[4px] h-16 bg-slate-600 rounded-r-sm"></div>
+        <!-- Khung Điện Thoại / Màn Cảm Ứng Tại Tủ (w-[400px] h-[844px]) -->
+        <div id="phone-mockup-wrapper" class="w-[400px] h-[844px] bg-slate-900 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700 transition-all duration-300">
+          
+          <!-- Dynamic Island -->
+          <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-50 flex items-center justify-between px-3">
+            <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
+          </div>
 
-          <!-- Inner Screen Container -->
-          <div class="w-full h-full rounded-[46px] flex flex-col overflow-hidden relative border border-slate-200" style="background-color: var(--phone-screen-bg);">
+          <!-- Màn hình cảm ứng bên trong -->
+          <div class="w-full h-full bg-[#F8FAFC] rounded-[44px] flex flex-col overflow-hidden relative border border-slate-800 shadow-inner">
             
-            <!-- Dynamic Island -->
-            <div class="absolute top-2.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-50 flex items-center justify-between px-3">
-              <div class="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-800"></div>
-              <div class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></div>
-            </div>
-
             <!-- Status Bar -->
             <div class="pt-3.5 px-6 pb-1 flex justify-between items-center text-xs font-bold text-slate-800 z-40 bg-white">
               <span class="live-clock">09:41</span>
@@ -240,12 +237,12 @@
               </button>
             </div>
 
-            <!-- Phone Scrollable Body -->
+            <!-- Phone Scrollable Body (Chỉ còn 2 mục: Gửi Hàng & Nhập Mã Thuê Đồ) -->
             <div class="flex-1 overflow-y-auto p-3.5 no-scrollbar pb-24" id="phone-content-viewport">
 
-              <!-- ================= TAB 1: GỬI ĐỒ (SHIPPER) ================= -->
+              <!-- ================= MỤC 1: GỬI HÀNG (SHIPPER) ================= -->
               <div id="tab-content-shipper" class="space-y-3.5">
-                <!-- Banner Card (Cập nhật chính xác số lượng ô trống và ô có đồ) -->
+                <!-- Banner Card -->
                 <div class="bg-brandLight border border-brandBorder rounded-2xl p-3 flex justify-between items-center transition-colors">
                   <div>
                     <div class="text-[10px] font-extrabold uppercase text-brand tracking-wider">Chế Độ Shipper</div>
@@ -264,202 +261,172 @@
                   </div>
                 </div>
 
-                <!-- 1. Chọn Cỡ Ngăn (Đếm chính xác từng cỡ S, M, L) -->
+                <!-- 1. Chọn Cỡ Ngăn -->
                 <div>
                   <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide flex items-center justify-between mb-1.5">
                     <span>1. Chọn cỡ ngăn tủ gửi hàng</span>
-                    
+                    <span class="text-[10px] text-slate-500 font-semibold lowercase">tổng 6 ngăn giao nhận</span>
                   </label>
-                  <div class="grid grid-cols-3 gap-2" id="size-selector-group">
-                    <button onclick="selectLockerSize('S')" id="size-btn-S" class="press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all">
-                      <div class="w-7 h-7 mx-auto rounded-xl bg-white text-brand border border-brandBorder flex items-center justify-center font-black text-xs mb-1">
-                        S
-                      </div>
-                      <div class="text-xs font-extrabold text-slate-900">Cỡ Nhỏ</div>
-                      
-                      <div class="text-xs font-extrabold text-brand mt-1" id="count-size-S">Trống: 2</div>
+                  <div class="grid grid-cols-3 gap-2">
+                    <!-- Cỡ Nhỏ S -->
+                    <button type="button" onclick="selectLockerSize('S')" id="size-btn-s" class="press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all flex flex-col items-center">
+                      <div class="w-7 h-7 rounded-full bg-white border border-brand/30 flex items-center justify-center font-black text-xs text-brand mb-1 shadow-xs">S</div>
+                      <span class="text-xs font-black text-slate-900">Cỡ Nhỏ</span>
+                      <span class="text-[10px] text-slate-500 font-medium">Ngăn 01, 02</span>
+                      <span class="text-[11px] font-extrabold text-brand mt-0.5" id="size-count-s">Trống: 2</span>
                     </button>
-                    <button onclick="selectLockerSize('M')" id="size-btn-M" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
-                      <div class="w-7 h-7 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-xs mb-1">
-                        M
-                      </div>
-                      <div class="text-xs font-extrabold text-slate-900">Cỡ Vừa</div>
-                      
-                      <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-M">Trống: 2</div>
+                    <!-- Cỡ Vừa M -->
+                    <button type="button" onclick="selectLockerSize('M')" id="size-btn-m" class="press-effect border-2 border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center">
+                      <div class="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-xs text-slate-700 mb-1">M</div>
+                      <span class="text-xs font-black text-slate-900">Cỡ Vừa</span>
+                      <span class="text-[10px] text-slate-500 font-medium">Ngăn 03, 04</span>
+                      <span class="text-[11px] font-extrabold text-slate-600 mt-0.5" id="size-count-m">Trống: 2</span>
                     </button>
-                    <button onclick="selectLockerSize('L')" id="size-btn-L" class="press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all">
-                      <div class="w-7 h-7 mx-auto rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-black text-xs mb-1">
-                        L
-                      </div>
-                      <div class="text-xs font-extrabold text-slate-900">Cỡ Lớn</div>
-                      
-                      <div class="text-xs font-extrabold text-slate-600 mt-1" id="count-size-L">Trống: 2</div>
+                    <!-- Cỡ Lớn L -->
+                    <button type="button" onclick="selectLockerSize('L')" id="size-btn-l" class="press-effect border-2 border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center">
+                      <div class="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-black text-xs text-slate-700 mb-1">L</div>
+                      <span class="text-xs font-black text-slate-900">Cỡ Lớn</span>
+                      <span class="text-[10px] text-slate-500 font-medium">Ngăn 05, 06</span>
+                      <span class="text-[11px] font-extrabold text-slate-600 mt-0.5" id="size-count-l">Trống: 2</span>
                     </button>
                   </div>
                 </div>
 
-                <!-- 2. SĐT Người Nhận -->
-                <div>
-                  <div class="mb-1.5">
-                    <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide block">
+                <!-- 2. SĐT Khách Hàng Nhận Đồ (Làm trống hoàn toàn, kéo dài khoảng cách) -->
+                <div class="mb-6">
+                  <div class="flex items-center justify-between mb-2">
+                    <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide">
                       2. SĐT Khách Hàng Nhận Đồ
                     </label>
                   </div>
                   <div class="relative">
-                    <input type="tel" id="recipient-phone-input" maxlength="11" oninput="validatePhoneInputLive(this)" placeholder="Nhập SĐT khách hàng (vd: 0912345678)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-2.5 text-sm font-bold text-slate-900 outline-none transition-all shadow-xs">
-                    <div class="absolute right-3.5 top-3 text-slate-400" id="recipient-phone-status-icon">
-                      <i data-lucide="phone" class="w-4 h-4"></i>
+                    <input type="tel" id="recipient-phone-input" maxlength="11" value="" placeholder="" oninput="validatePhoneInputLive(this)" class="w-full bg-white border-2 border-slate-200 focus:border-brand focus:ring-4 focus:ring-brandLight/40 rounded-2xl px-4 py-3.5 text-sm font-bold text-slate-900 outline-none transition-all">
+                    <div class="absolute right-3.5 top-3.5 text-slate-400">
+                      <i data-lucide="phone-call" class="w-4 h-4"></i>
                     </div>
                   </div>
-                  <p id="recipient-phone-error" class="hidden text-xs font-bold text-rose-600 mt-1 flex items-center space-x-1">
+                  <p id="recipient-phone-error" class="hidden text-[11px] font-bold text-rose-600 mt-1 flex items-center space-x-1">
                     <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>
-                    <span id="recipient-phone-error-text">Vui lòng nhập đủ 10-11 chữ số (bắt đầu bằng số 0).</span>
+                    <span id="recipient-phone-error-text">Số điện thoại không hợp lệ (10 số)!</span>
                   </p>
                 </div>
 
-                <!-- 3. Mã Vận Đơn (Tự sinh hoặc nhập, lấy 4 số cuối gửi tin nhắn) -->
-                <div>
-                  <div class="flex justify-between items-center mb-1">
+                <!-- 3. Mã Vận Đơn Shipper (Làm trống hoàn toàn, kéo dài khoảng cách) -->
+                <div class="mb-6">
+                  <div class="flex items-center justify-between mb-2">
                     <label class="text-xs font-extrabold text-slate-700 uppercase tracking-wide">
-                      3. Mã Vận Đơn Shopper
+                      3. Mã Vận Đơn Shipper
                     </label>
-                    <button onclick="generateRandomTracking()" class="text-[10px] font-bold text-slate-600 hover:text-brand flex items-center space-x-1">
+                    <button type="button" onclick="generateRandomTracking()" class="text-[10px] font-bold text-brand hover:underline flex items-center space-x-0.5">
                       <i data-lucide="shuffle" class="w-3 h-3"></i>
                       <span>Đổi mã ngẫu nhiên</span>
                     </button>
                   </div>
                   <div class="relative">
-                    <input type="text" id="tracking-code-input" value="SPX-6829" placeholder="Tự sinh nếu để trống (vd: SPX-6829)" class="w-full bg-white border-2 border-slate-200 focus:border-brand rounded-2xl px-3.5 py-2.5 text-sm font-bold text-slate-900 font-mono outline-none transition-all shadow-xs">
-                    <div class="absolute right-3.5 top-3 text-slate-400">
+                    <input type="text" id="tracking-code-input" value="" placeholder="" class="w-full bg-white border-2 border-slate-200 focus:border-brand focus:ring-4 focus:ring-brandLight/40 rounded-2xl px-4 py-3.5 text-base font-black text-brand tracking-wider font-mono outline-none transition-all">
+                    <div class="absolute right-3.5 top-3.5 text-slate-400">
                       <i data-lucide="barcode" class="w-4 h-4"></i>
                     </div>
                   </div>
-                  </div>
+                </div>
 
-                <!-- CTA GỬI ĐỒ -->
-                <button onclick="executeShipperDropoff()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                <!-- Nút Gửi Hàng -->
+                <button type="button" onclick="executeShipperDropoff()" id="btn-submit-dropoff" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg shadow-brand/25 flex items-center justify-center space-x-2 transition-all">
                   <i data-lucide="unlock" class="w-4 h-4"></i>
                   <span>GỬI HÀNG & MỞ TỦ NGAY</span>
                 </button>
               </div>
 
-              <!-- ================= TAB 2: NHẬN HÀNG (KHÁCH HÀNG) ================= -->
-              <div id="tab-content-resident" class="space-y-3.5 hidden">
-                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 flex justify-between items-center">
-                  <div>
-                    <div class="text-[10px] font-extrabold uppercase text-emerald-700 tracking-wider">Khách Hàng Ra Tủ</div>
-                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Xác Thực & Nhận Hàng</div>
-                  </div>
-                  <div class="text-right">
-                    <span class="text-base font-black text-emerald-600" id="resident-waiting-count">0</span>
-                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">đơn trong tủ</span>
-                  </div>
-                </div>
-
-                <!-- Form nhập SĐT + Mã vận đơn (4 số cuối) để mở tủ -->
-                <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 space-y-3.5 shadow-xs">
-                  <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
-                      <i data-lucide="package-check" class="w-5 h-5"></i>
-                    </div>
-                    <div>
-                      <h4 class="text-xs font-extrabold text-slate-900 uppercase">Nhập Thông Tin Nhận Đơn Hàng</h4>
-                      <p class="text-[11px] text-slate-500 font-medium">Xem 4 số cuối mã vận đơn trên màn hình tin nhắn bên cạnh</p>
-                    </div>
-                  </div>
-
-                  <!-- Ô 1: Số điện thoại của khách hàng -->
-                  <div class="mb-6">
-                    <label class="text-xs font-extrabold text-slate-700 block mb-2">
-                      1. Số điện thoại của bạn
-                    </label>
-                    <div class="relative">
-                      <input type="tel" id="pickup-phone-input" maxlength="11" placeholder="" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-emerald-600 focus:bg-white rounded-2xl px-4 py-3.5 text-sm font-bold text-slate-900 outline-none transition-all">
-                      <div class="absolute right-3.5 top-3 text-slate-400">
-                        <i data-lucide="phone" class="w-4 h-4"></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Ô 2: Mã vận đơn (4 số cuối) -->
-                  <div class="mb-6">
-                    <label class="text-xs font-extrabold text-slate-700 block mb-2">
-                      2. Mã vận đơn (Nhập 4 số cuối hoặc toàn bộ mã)
-                    </label>
-                    <div class="relative">
-                      <input type="text" id="pickup-tracking-input" placeholder="" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-emerald-600 focus:bg-white rounded-2xl px-4 py-3.5 text-base font-black text-emerald-700 tracking-widest font-mono outline-none transition-all">
-                      <div class="absolute right-3.5 top-3 text-slate-400">
-                        <i data-lucide="key-round" class="w-4 h-4"></i>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p id="pickup-error-msg" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-xl flex items-center space-x-1.5">
-                    <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
-                    <span id="pickup-error-text">Thông tin SĐT hoặc mã vận đơn chưa chính xác!</span>
-                  </p>
-
-                  <!-- Nút Mở Tủ Nhận Hàng -->
-                  <button onclick="executeResidentPickupByForm()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center space-x-2">
-                    <i data-lucide="unlock" class="w-4 h-4"></i>
-                    <span>XÁC THỰC & MỞ TỦ NHẬN HÀNG</span>
-                  </button>
-                </div>
-
-                <!-- Danh sách các kiện hàng đang có trong tủ (Hỗ trợ bấm điền nhanh khi thuyết trình) -->
-                <div class="bg-white border border-slate-200 rounded-2xl p-3 space-y-2">
-                  <div class="flex items-center justify-between">
-                    <span class="text-[11px] font-extrabold text-slate-700 uppercase">Đơn hàng đang lưu trong tủ</span>
-                    <span class="text-[10px] text-slate-400 font-semibold">Bấm để điền nhanh</span>
-                  </div>
-                  <div id="active-parcels-list" class="space-y-1.5">
-                    <!-- Render động từ danh sách đơn thực tế -->
-                  </div>
-                </div>
-              </div>
-
-              <!-- ================= TAB 3: THUÊ ĐỒ (RENTAL) ================= -->
-              <div id="tab-content-rental" class="space-y-3 hidden">
+              <!-- ================= MỤC 2: VÙNG NHẬP MÃ THUÊ ĐỒ ================= -->
+              <div id="tab-content-rental-pickup" class="space-y-3.5 hidden">
+                <!-- Banner Khách Hàng Ra Tủ -->
                 <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex justify-between items-center">
                   <div>
-                    <div class="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider">Tiện Ích Dùng Chung</div>
-                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Thuê Thiết Bị Theo Block (1 Block = 3h)</div>
+                    <div class="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider">Khách Hàng Ra Tủ</div>
+                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Nhập Mã Mở Tủ Thuê Đồ</div>
                   </div>
                   <div class="text-right">
-                    <span class="text-base font-black text-amber-600" id="rental-available-count">6/6</span>
-                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">có sẵn</span>
+                    <span class="text-base font-black text-amber-600" id="rental-waiting-pickup-count">0</span>
+                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">chờ lấy đồ</span>
                   </div>
                 </div>
 
-                <!-- Grid 6 món đồ thực tế với SVG chi tiết -->
-                <div class="grid grid-cols-2 gap-2.5" id="rental-catalog-grid">
-                  <!-- Render động qua JS với SVG thực tế -->
+                <!-- Card Form Nhập Mã Cảm Ứng -->
+                <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 space-y-3.5 shadow-xs">
+                  <div class="flex items-center space-x-2.5 border-b border-slate-100 pb-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
+                      <i data-lucide="key-round" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-extrabold text-slate-900 uppercase">Nhập Mã Số Mở Tủ Thuê Đồ</h4>
+                      <p class="text-[11px] text-slate-500 font-medium">Nhập mã đã nhận trên App điện thoại sau khi thanh toán</p>
+                    </div>
+                  </div>
+
+                  <!-- Ô nhập mã số to, căn giữa, font mono -->
+                  <div>
+                    <div class="relative">
+                      <input type="text" id="rental-pickup-code-input" maxlength="10" placeholder="" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-amber-500 focus:bg-white rounded-2xl px-4 py-3.5 text-center text-2xl font-black text-amber-700 tracking-widest font-mono outline-none transition-all">
+                    </div>
+                  </div>
+
+                  <!-- Bàn phím số Numpad cảm ứng (1-9, C, 0, ⌫) -->
+                  <div class="grid grid-cols-3 gap-2 pt-1">
+                    <button type="button" onclick="pressNumpad('1')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">1</button>
+                    <button type="button" onclick="pressNumpad('2')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">2</button>
+                    <button type="button" onclick="pressNumpad('3')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">3</button>
+                    <button type="button" onclick="pressNumpad('4')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">4</button>
+                    <button type="button" onclick="pressNumpad('5')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">5</button>
+                    <button type="button" onclick="pressNumpad('6')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">6</button>
+                    <button type="button" onclick="pressNumpad('7')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">7</button>
+                    <button type="button" onclick="pressNumpad('8')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">8</button>
+                    <button type="button" onclick="pressNumpad('9')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">9</button>
+                    <button type="button" onclick="clearNumpad()" class="press-effect py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 font-black text-xs text-rose-600 shadow-xs">XÓA</button>
+                    <button type="button" onclick="pressNumpad('0')" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">0</button>
+                    <button type="button" onclick="backspaceNumpad()" class="press-effect py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 font-black text-base text-slate-800 shadow-xs">⌫</button>
+                  </div>
+
+                  <!-- Gợi ý mã vừa thuê (tự động hiện khi vừa thanh toán ở máy khách) -->
+                  <div id="rental-active-tokens-hint" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-2.5 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                      <span class="text-xs font-bold text-slate-800" id="rental-token-hint-text">Mã vừa thuê: 8826</span>
+                    </div>
+                    <button type="button" onclick="fillRentalPickupCode()" class="press-effect text-[11px] font-bold text-amber-800 bg-amber-200 hover:bg-amber-300 px-2.5 py-1 rounded-lg">Điền nhanh</button>
+                  </div>
+
+                  <!-- Lỗi mã sai -->
+                  <p id="rental-pickup-error-msg" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-xl flex items-center space-x-1.5">
+                    <i data-lucide="alert-triangle" class="w-4 h-4 shrink-0"></i>
+                    <span id="rental-pickup-error-text">Mã mở tủ không chính xác hoặc chưa được thanh toán!</span>
+                  </p>
+
+                  <!-- Nút Mở Tủ Thuê Đồ -->
+                  <button type="button" onclick="executeRentalPickupByCode()" class="press-effect w-full bg-amber-600 hover:bg-amber-700 text-white py-3.5 px-5 rounded-2xl font-black text-sm shadow-lg shadow-amber-600/25 flex items-center justify-center space-x-2">
+                    <i data-lucide="unlock" class="w-4 h-4"></i>
+                    <span>XÁC THỰC & MỞ NGĂN TỦ THUÊ</span>
+                  </button>
                 </div>
               </div>
 
             </div>
 
-            <!-- Bottom Navigation Bar (3 Tabs dưới đáy màn hình) -->
+            <!-- Bottom Navigation Bar Tủ (CHỈ CÒN 2 MỤC: GỬI HÀNG & NHẬP MÃ THUÊ ĐỒ) -->
             <div class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 flex flex-col px-3 pt-1 pb-1.5 z-40 shadow-sm">
               <div class="flex items-center justify-around h-14">
                 <button onclick="switchTab('shipper')" id="nav-btn-shipper" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-brand">
                   <i data-lucide="package-plus" class="w-5 h-5"></i>
                   <span class="text-[11px] font-extrabold mt-0.5">Gửi Hàng</span>
                 </button>
-                <button onclick="switchTab('resident')" id="nav-btn-resident" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400 relative">
-                  <span class="hidden absolute top-0.5 right-7 min-w-[16px] h-4 px-1 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center" id="nav-badge-resident">0</span>
-                  <i data-lucide="package-check" class="w-5 h-5"></i>
-                  <span class="text-[11px] font-extrabold mt-0.5">Nhận Hàng</span>
-                </button>
-                <button onclick="switchTab('rental')" id="nav-btn-rental" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
-                  <i data-lucide="wrench" class="w-5 h-5"></i>
-                  <span class="text-[11px] font-extrabold mt-0.5">Thuê Đồ</span>
+                <button onclick="switchTab('rental-pickup')" id="nav-btn-rental-pickup" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
+                  <i data-lucide="key-round" class="w-5 h-5"></i>
+                  <span class="text-[11px] font-extrabold mt-0.5">Nhập Mã Thuê Đồ</span>
                 </button>
               </div>
               <div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mb-0.5"></div>
             </div>
 
-            <!-- ================= MODAL 1: GIẢ LẬP MỞ TỦ & ĐÓNG TỦ (DÙNG CHO GỬI HÀNG & NHẬN HÀNG) ================= -->
+            <!-- ================= MODAL GIẢ LẬP MỞ TỦ 3D (DÙNG CHO CẢ GỬI HÀNG & THUÊ ĐỒ) ================= -->
             <div id="locker-door-sim-modal" class="absolute inset-0 bg-slate-900/70 backdrop-blur-xs z-50 flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
               <div id="locker-door-sim-card" class="bg-white rounded-3xl p-5 w-full max-w-[345px] text-center space-y-4 shadow-2xl transform scale-95 transition-transform duration-300">
                 
@@ -473,41 +440,250 @@
 
                 <!-- Visual 3D Animated Locker Box -->
                 <div class="w-40 h-40 mx-auto door-perspective relative">
-                  <!-- Hốc tủ bên trong -->
                   <div class="w-full h-full bg-slate-800 rounded-2xl border-4 border-slate-700 flex flex-col items-center justify-between p-3 shadow-inner">
                     <div class="w-full flex justify-between text-[10px] font-mono text-emerald-400 font-bold">
                       <span id="sim-cavity-box-label">BOX 01</span>
                       <span id="sim-sensor-text">SENSOR: OPEN</span>
                     </div>
-                    <div class="my-auto flex flex-col items-center" id="sim-cavity-content">
+                    <div id="sim-cavity-content" class="flex flex-col items-center justify-center">
                       <div class="text-4xl mb-1">📦</div>
-                      <span class="text-[11px] font-bold text-white">Kiện Hàng Shopper</span>
+                      <span class="text-[11px] font-bold text-white tracking-wide">Kiện Hàng Shipper</span>
                     </div>
-                    <div class="text-[9px] text-slate-400 font-mono">CHỐT ĐIỆN TỪ SOLENOID</div>
+                    <div class="w-full flex justify-between items-center text-[9px] text-slate-400 font-mono">
+                      <span>SOLENOID: ACTIVE</span>
+                      <span class="text-emerald-400">LED: GREEN</span>
+                    </div>
                   </div>
 
-                  <!-- Cánh cửa tủ mở/đóng 3D -->
-                  <div id="sim-animated-door" class="sim-door absolute inset-0 bg-gradient-to-br from-white to-slate-100 rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-3">
+                  <!-- Cánh cửa tủ 3D -->
+                  <div id="sim-animated-door" class="sim-door open absolute inset-0 bg-white rounded-2xl border-4 border-slate-300 shadow-2xl flex flex-col justify-between p-3 transition-transform">
                     <div class="flex justify-between items-center">
-                      <span class="font-black text-sm text-slate-800" id="sim-door-box-num">01</span>
-                      <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-brandLight text-brand" id="sim-door-size">S</span>
+                      <span class="font-mono text-xs font-black text-slate-800" id="sim-door-box-num">01</span>
+                      <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                     </div>
-                    <div class="w-10 h-10 mx-auto rounded-xl bg-slate-200 flex items-center justify-center text-slate-600 font-bold">
-                      🔒
+                    <div class="text-center">
+                      <div class="text-2xl">🔒</div>
+                      <div class="text-[10px] font-black text-slate-700 mt-1 uppercase tracking-wider">SMART LOCKER</div>
                     </div>
-                    <div class="text-[10px] font-bold text-slate-500">SMART LOCKER</div>
+                    <div class="flex justify-between items-center text-[9px] font-bold text-slate-400">
+                      <span>PUSH TO CLOSE</span>
+                      <span id="sim-door-size">S</span>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Nút Đóng Cửa Tủ -->
-                <button id="btn-confirm-close-door" onclick="confirmCloseSimulatedDoor()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg shadow-emerald-600/25 flex items-center justify-center space-x-2">
-                  <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                  <span id="btn-close-door-label">Đã Đặt Hàng & Đóng Cửa Tủ</span>
-                </button>
+                <div class="space-y-2 pt-1">
+                  <button id="btn-confirm-close-door" onclick="confirmCloseSimulatedDoor()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-2xl font-black text-sm shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span id="btn-confirm-close-text">ĐÃ ĐẶT HÀNG & ĐÓNG CỬA TỦ</span>
+                  </button>
+                </div>
               </div>
             </div>
 
-            <!-- ================= MODAL 2: LUỒNG THUÊ ĐỒ 5 BƯỚC (CHỌN BLOCK -> QR XÁC THỰC -> QR THANH TOÁN -> MỞ/ĐÓNG TỦ) ================= -->
+            <!-- In-App Toast -->
+            <div id="phone-toast" class="absolute top-16 left-4 right-4 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-xl z-50 text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
+              <span id="phone-toast-icon">📦</span>
+              <span id="phone-toast-msg">Thông báo</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================================================================= -->
+      <!-- 2. MÀN HÌNH KHÁCH HÀNG (APP ĐIỆN THOẠI: NHẬN ĐỒ, THUÊ ĐỒ, HỖ TRỢ & AI LOCAL)              -->
+      <!-- ========================================================================================= -->
+      <div class="flex flex-col items-center">
+        <div class="mb-3 flex items-center space-x-2 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-200 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider">Màn Hình Khách Hàng (App & Trợ Lý AI)</span>
+        </div>
+
+        <!-- Khung Điện Thoại Khách Hàng Chuẩn Kích Thước Bằng Màn Hình Chính (w-[400px] h-[844px]) -->
+        <div id="customer-mini-phone" class="w-[400px] h-[844px] bg-slate-900 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700 transition-all duration-300">
+          
+          <!-- Dynamic Island Chuẩn -->
+          <div class="absolute top-3.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-40 flex items-center justify-between px-2.5 shadow-inner">
+            <div class="w-3 h-3 rounded-full bg-slate-800/80 flex items-center justify-center">
+              <div class="w-2 h-2 rounded-full bg-blue-950/60"></div>
+            </div>
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400" id="mini-phone-led"></div>
+          </div>
+
+          <!-- Màn hình trong của điện thoại khách hàng -->
+          <div class="w-full h-full bg-[#F8FAFC] rounded-[44px] flex flex-col overflow-hidden relative border border-slate-800 shadow-inner">
+            
+            <!-- Status Bar Chuẩn -->
+            <div class="pt-3 px-7 pb-2 flex justify-between items-center text-xs font-bold text-slate-800 shrink-0 select-none z-30">
+              <span class="live-clock font-semibold tracking-tight text-slate-900">09:41</span>
+              <div class="flex items-center space-x-1.5 text-slate-700">
+                <i data-lucide="signal" class="w-3.5 h-3.5"></i>
+                <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
+                <i data-lucide="battery-charging" class="w-4 h-4 text-emerald-600"></i>
+              </div>
+            </div>
+
+            <!-- Header Khách Hàng -->
+            <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-brand text-white px-4 py-3 flex items-center justify-between shadow-md shrink-0">
+              <div class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-2xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white shadow-inner">
+                  <i data-lucide="smartphone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <div class="flex items-center space-x-1.5">
+                    <h3 class="text-xs font-black tracking-tight">SmartLocker App</h3>
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  </div>
+                  <p class="text-[10px] text-blue-100 font-medium font-mono" id="mini-phone-owner-number">SĐT: 0981056245</p>
+                </div>
+              </div>
+              <button onclick="clearCustomerMiniPhone('Làm mới thủ công')" class="press-effect text-[11px] font-bold text-blue-900 bg-white/90 hover:bg-white px-2.5 py-1.5 rounded-xl border border-white/40 shadow-xs flex items-center space-x-1" title="Xóa trắng thông báo & chat">
+                <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
+                <span>Xóa trắng</span>
+              </button>
+            </div>
+
+            <!-- BIỂU TƯỢNG AI TRÒN BE BÉ TRÊN MÁY KHÁCH HÀNG (Floating Action Button tròn nổi) -->
+            <button onclick="switchCustomerTab('support')" id="customer-floating-ai-btn" class="press-effect absolute bottom-20 right-4 w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white shadow-xl shadow-blue-500/35 flex items-center justify-center border-2 border-white z-40 transition-transform active:scale-95 group" title="Hỏi Trợ Lý AI Hướng Dẫn">
+              <i data-lucide="bot" class="w-6 h-6 animate-pulse"></i>
+              <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full"></span>
+            </button>
+
+            <!-- Scrollable Body của máy khách hàng (Chứa 3 mode: Nhận Đồ, Thuê Đồ, Hỗ Trợ) -->
+            <div class="flex-1 overflow-y-auto p-3.5 space-y-3 bg-slate-50/80 no-scrollbar pb-24" id="customer-viewport-container">
+
+              <!-- ================= MODE 1: NHẬN ĐỒ (KHÁCH HÀNG) ================= -->
+              <div id="customer-tab-content-pickup" class="space-y-3">
+                <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-3 flex justify-between items-center">
+                  <div>
+                    <div class="text-[10px] font-extrabold uppercase text-emerald-700 tracking-wider">Hộp Thư Nhận Đồ</div>
+                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Thông Báo Kiện Hàng</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-base font-black text-emerald-600" id="customer-pickup-count">0</span>
+                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">kiện trong tủ</span>
+                  </div>
+                </div>
+
+                <!-- Empty State khi chưa có kiện hàng -->
+                <div id="customer-pickup-empty-state" class="text-center py-10 space-y-3 bg-white rounded-3xl border border-slate-200 p-6 shadow-xs">
+                  <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center">
+                    <i data-lucide="inbox" class="w-7 h-7"></i>
+                  </div>
+                  <h4 class="text-sm font-extrabold text-slate-800">Chưa Có Kiện Hàng Mới</h4>
+                  <p class="text-xs text-slate-500 max-w-[240px] mx-auto leading-relaxed">
+                    Khi shipper gửi kiện hàng vào tủ SmartLocker, thông báo nhận hàng kèm mã mở tủ sẽ tự động hiển thị tại đây.
+                  </p>
+                </div>
+
+                <!-- Danh sách tin nhắn SMS / Zalo khi có hàng -->
+                <div id="customer-pickup-messages-container" class="space-y-3"></div>
+              </div>
+
+              <!-- ================= MODE 2: THUÊ ĐỒ (KHÁCH HÀNG) ================= -->
+              <div id="customer-tab-content-rental" class="space-y-3 hidden">
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex justify-between items-center">
+                  <div>
+                    <div class="text-[10px] font-extrabold uppercase text-amber-700 tracking-wider">Tiện Ích Dùng Chung</div>
+                    <div class="text-sm font-extrabold text-slate-900 mt-0.5">Thuê Thiết Bị Theo Block (1 Block = 3h)</div>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-base font-black text-amber-600" id="rental-available-count">6/6</span>
+                    <span class="text-[10px] font-bold text-slate-500 block -mt-1">có sẵn</span>
+                  </div>
+                </div>
+
+                <!-- Grid 6 món đồ thực tế với SVG chi tiết (Bộ dụng cụ, máy cắt, máy hút bụi, máy in, máy khoan, máy rửa xe) -->
+                <div class="grid grid-cols-2 gap-2.5" id="customer-rental-catalog-grid">
+                  <!-- Render động qua JS -->
+                </div>
+              </div>
+
+              <!-- ================= MODE 3: HỖ TRỢ (TRỢ LÝ AI LOCAL) ================= -->
+              <div id="customer-tab-content-support" class="space-y-3 hidden">
+                <div class="bg-indigo-50 border border-indigo-200 rounded-2xl p-3 flex justify-between items-center">
+                  <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center">
+                      <i data-lucide="bot" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-[10px] font-extrabold uppercase text-indigo-700 tracking-wider">Trợ Lý AI SmartLocker</div>
+                      <div class="text-sm font-extrabold text-slate-900">Hướng Dẫn & Giải Đáp</div>
+                    </div>
+                  </div>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                </div>
+
+                <!-- Khối Tin Nhắn Chào Mừng AI & Gợi Ý Nhanh -->
+                <div id="ai-welcome-box" class="space-y-3">
+                  <div class="flex items-start space-x-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    </div>
+                    <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3.5 text-slate-800 shadow-xs max-w-[88%] space-y-1.5">
+                      <p class="text-xs font-semibold leading-relaxed">
+                        Xin chào! Tôi là <b>Trợ lý AI SmartLocker</b>.
+                      </p>
+                      <p class="text-[11px] text-slate-600 leading-normal">
+                        Sẵn sàng hỗ trợ hướng dẫn mọi thao tác trên hệ thống:
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Quick Question Chips -->
+                  <div class="pt-1 flex flex-wrap gap-1.5" id="ai-quick-chips">
+                    <button onclick="handleAiQuickAsk('gui_hang')" class="press-effect text-[11px] font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
+                      <span>📦 Cách gửi hàng</span>
+                    </button>
+                    <button onclick="handleAiQuickAsk('nhan_hang')" class="press-effect text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
+                      <span>🎁 Cách nhận đồ</span>
+                    </button>
+                    <button onclick="handleAiQuickAsk('thue_do')" class="press-effect text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
+                      <span>⚡ Thuê đồ & VietQR</span>
+                    </button>
+                    <button onclick="handleAiQuickAsk('nhap_ma')" class="press-effect text-[11px] font-bold text-purple-700 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
+                      <span>🔑 Nhập mã tại tủ</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Vùng tin nhắn chat AI -->
+                <div id="ai-messages-scroll" class="space-y-3"></div>
+
+                <!-- Input Chat AI -->
+                <div class="pt-2">
+                  <div class="relative flex items-center">
+                    <input type="text" id="ai-user-input" placeholder="Hỏi AI cách sử dụng tủ..." onkeydown="if(event.key === 'Enter') sendAiUserMessage()" class="w-full bg-white border border-slate-200 focus:border-blue-600 rounded-2xl pl-3.5 pr-11 py-2.5 text-xs font-semibold text-slate-800 outline-none transition-all shadow-xs">
+                    <button onclick="sendAiUserMessage()" class="absolute right-1.5 w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition shadow-xs" title="Gửi câu hỏi">
+                      <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Bottom Navigation Bar trên máy khách hàng (3 Tabs: Nhận Đồ, Thuê Đồ, Hỗ Trợ) -->
+            <div class="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 flex flex-col px-3 pt-1 pb-1.5 z-40 shadow-sm">
+              <div class="flex items-center justify-around h-14">
+                <button onclick="switchCustomerTab('pickup')" id="customer-nav-pickup" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-brand">
+                  <i data-lucide="package-check" class="w-5 h-5"></i>
+                  <span class="text-[11px] font-extrabold mt-0.5">Nhận Đồ</span>
+                </button>
+                <button onclick="switchCustomerTab('rental')" id="customer-nav-rental" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
+                  <i data-lucide="wrench" class="w-5 h-5"></i>
+                  <span class="text-[11px] font-extrabold mt-0.5">Thuê Đồ</span>
+                </button>
+                <button onclick="switchCustomerTab('support')" id="customer-nav-support" class="press-effect flex-1 flex flex-col items-center justify-center py-1 text-slate-400">
+                  <i data-lucide="bot" class="w-5 h-5"></i>
+                  <span class="text-[11px] font-extrabold mt-0.5">Hỗ Trợ</span>
+                </button>
+              </div>
+              <div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mb-0.5"></div>
+            </div>
+
+            <!-- ================= POPUP THUÊ ĐỒ VIETQR CHUẨN NGÂN HÀNG (TRỰC TIẾP TRÊN MÁY KHÁCH HÀNG) ================= -->
             <div id="rental-flow-modal" class="absolute inset-0 bg-slate-900/65 backdrop-blur-xs z-50 flex flex-col justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
               <div id="rental-flow-panel" class="bg-white rounded-t-[34px] p-3.5 space-y-2.5 h-[52%] max-h-[52%] overflow-y-auto transform translate-y-full transition-transform duration-300 shadow-2xl flex flex-col justify-between">
                 
@@ -515,7 +691,7 @@
                 <div class="flex justify-between items-center">
                   <div class="flex items-center space-x-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-brand"></span>
-                    <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500" id="rental-step-indicator">Bước 1/4 • Chọn Thời Gian Thuê</span>
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500" id="rental-step-indicator">Bước 1/3 • Chọn Thời Gian Thuê</span>
                   </div>
                   <button onclick="closeRentalModal()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center">
                     <i data-lucide="x" class="w-4 h-4"></i>
@@ -524,15 +700,13 @@
 
                 <!-- Thông tin thiết bị đang chọn -->
                 <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-                  <div class="w-14 h-14 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1.5 shrink-0" id="rental-modal-svg">
-                    <!-- SVG icon -->
-                  </div>
+                  <div class="w-14 h-14 rounded-xl bg-white border border-slate-200 flex items-center justify-center p-1.5 shrink-0" id="rental-modal-svg"></div>
                   <div class="flex-1">
                     <div class="flex items-center justify-between">
-                      <h4 class="text-sm font-extrabold text-slate-900" id="rental-modal-name">Máy Cắt Tay</h4>
-                      <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn 07</span>
+                      <h4 class="text-sm font-extrabold text-slate-900" id="rental-modal-name">Bộ Dụng Cụ Sửa Chữa</h4>
+                      <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-brandLight text-brand" id="rental-modal-box">Ngăn 10</span>
                     </div>
-                    <p class="text-xs font-bold text-amber-600 mt-0.5" id="rental-modal-rate">30.000đ / 1 Block (3 giờ)</p>
+                    <p class="text-xs font-bold text-amber-600 mt-0.5" id="rental-modal-rate">25.000đ / 1 Block (3 giờ)</p>
                   </div>
                 </div>
 
@@ -542,7 +716,7 @@
                     <label class="text-xs font-extrabold text-slate-700 uppercase block mb-1">
                       Số điện thoại khách hàng thuê đồ
                     </label>
-                    <input type="tel" id="rental-customer-phone" maxlength="11" value="0912345678" placeholder="Nhập SĐT khách thuê" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-brand focus:bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-900 outline-none">
+                    <input type="tel" id="rental-customer-phone" maxlength="11" value="0981056245" placeholder="" class="w-full bg-slate-50 border-2 border-slate-200 focus:border-brand focus:bg-white rounded-xl px-3 py-2 text-xs font-bold text-slate-900 outline-none">
                   </div>
 
                   <div>
@@ -554,19 +728,19 @@
                     </div>
 
                     <div class="grid grid-cols-4 gap-2">
-                      <button onclick="selectRentalBlocks(1)" id="block-btn-1" class="press-effect border-2 border-brand bg-brandLight rounded-xl p-2.5 text-center">
+                      <button type="button" onclick="selectRentalBlocks(1)" id="block-btn-1" class="press-effect border-2 border-brand bg-brandLight rounded-xl p-2.5 text-center">
                         <div class="text-sm font-black text-slate-900">1 Block</div>
                         <div class="text-[10px] font-bold text-brand">3 Giờ</div>
                       </button>
-                      <button onclick="selectRentalBlocks(2)" id="block-btn-2" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
+                      <button type="button" onclick="selectRentalBlocks(2)" id="block-btn-2" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
                         <div class="text-sm font-black text-slate-900">2 Block</div>
                         <div class="text-[10px] font-bold text-slate-500">6 Giờ</div>
                       </button>
-                      <button onclick="selectRentalBlocks(3)" id="block-btn-3" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
+                      <button type="button" onclick="selectRentalBlocks(3)" id="block-btn-3" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
                         <div class="text-sm font-black text-slate-900">3 Block</div>
                         <div class="text-[10px] font-bold text-slate-500">9 Giờ</div>
                       </button>
-                      <button onclick="selectRentalBlocks(4)" id="block-btn-4" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
+                      <button type="button" onclick="selectRentalBlocks(4)" id="block-btn-4" class="press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center">
                         <div class="text-sm font-black text-slate-900">4 Block</div>
                         <div class="text-[10px] font-bold text-slate-500">12 Giờ</div>
                       </button>
@@ -580,72 +754,18 @@
                       <div class="text-sm font-black text-slate-900" id="rental-summary-hours">1 Block (3 giờ sử dụng)</div>
                     </div>
                     <div class="text-right">
-                      <div class="text-[11px] font-bold text-slate-600">Tạm tính:</div>
-                      <div class="text-base font-black text-amber-700" id="rental-summary-price">30.000đ</div>
+                      <div class="text-[11px] font-bold text-slate-600">Tổng thanh toán:</div>
+                      <div class="text-base font-black text-amber-600" id="rental-summary-cost">25.000 VNĐ</div>
                     </div>
                   </div>
 
-                  <button onclick="goToRentalStep2AuthQr()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
-                    <i data-lucide="qr-code" class="w-4 h-4"></i>
-                    <span>TIẾP TỤC • HIỆN MÃ QR XÁC THỰC</span>
+                  <button type="button" onclick="goToRentalStep3PaymentQr()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-3 rounded-2xl font-black text-sm shadow-lg shadow-brand/30 flex items-center justify-center space-x-2">
+                    <span>TIẾP TỤC: QUÉT QR THANH TOÁN</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
                   </button>
                 </div>
 
-                <!-- STEP 2: HIỂN THỊ MÃ QR XÁC THỰC & ANIMATION QUAY QUAY -->
-                <div id="rental-step-2-auth" class="hidden space-y-2 text-center my-auto">
-                  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-2 space-y-1.5 max-w-[260px] mx-auto">
-                    <div class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-brandLight text-brand text-[10px] font-extrabold">
-                      <i data-lucide="shield-check" class="w-3 h-3"></i>
-                      <span>Xác Thực Định Danh VNeID / Zalo</span>
-                    </div>
-
-                    <!-- QR Code Box -->
-                    <div id="auth-qr-box" class="relative flex items-center justify-center">
-                      
-    <div class="relative p-1 bg-white rounded-xl border border-slate-200 shadow-inner flex items-center justify-center">
-      <svg viewBox="0 0 116 116" class="w-28 h-28 sm:w-32 sm:h-32 fill-slate-900">
-        <rect x="0" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="0" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="4" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="8" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="12" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="16" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="20" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="24" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="28" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="32" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="36" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="40" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="44" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="48" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="52" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="56" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="60" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="64" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="68" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="28" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="72" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="76" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="60" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="80" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="84" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="48" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="88" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="92" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="92" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="96" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="100" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="44" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="52" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="64" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="68" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="100" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="104" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="40" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="72" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="84" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="108" width="3.8" height="3.8" rx="0.6"/><rect x="0" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="4" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="8" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="12" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="16" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="20" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="24" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="32" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="36" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="56" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="76" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="80" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="88" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="96" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="104" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="108" y="112" width="3.8" height="3.8" rx="0.6"/><rect x="112" y="112" width="3.8" height="3.8" rx="0.6"/>
-      </svg>
-      
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div class="w-7 h-7 rounded-lg bg-white border-2 border-brand shadow-md flex items-center justify-center text-brand">
-          <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            <path d="m9 12 2 2 4-4"/>
-          </svg>
-        </div>
-      </div>
-    
-    </div>
-  
-
-                      <!-- Overlay Animation Quay Quay khi đang xác thực -->
-                      <div id="auth-spinner-overlay" class="hidden absolute inset-0 bg-white/95 rounded-xl flex flex-col items-center justify-center p-2">
-                        <div class="w-9 h-9 rounded-full border-4 border-slate-200 border-t-brand animate-spin mb-1"></div>
-                        <span class="text-[10px] font-extrabold text-brand">Đang xác thực...</span>
-                      </div>
-
-                      <!-- Overlay Thành Công -->
-                      <div id="auth-success-overlay" class="hidden absolute inset-0 bg-emerald-50/95 rounded-xl flex flex-col items-center justify-center p-2">
-                        <div class="w-9 h-9 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1 shadow-md">
-                          <i data-lucide="check" class="w-5 h-5"></i>
-                        </div>
-                        <span class="text-xs font-black text-emerald-800">Xác Thực Thành Công!</span>
-                      </div>
-                    </div>
-
-                    <p class="text-[10px] text-slate-500 font-semibold" id="auth-status-desc">
-                      Quét mã để xác thực danh tính thuê thiết bị
-                    </p>
-                  </div>
-
-                  <button id="btn-simulate-auth" onclick="triggerSimulateAuthSpinner()" class="press-effect w-full bg-brand hover:bg-brandDark text-white py-2.5 rounded-xl font-black text-xs shadow-md flex items-center justify-center space-x-2">
-                    <i data-lucide="scan-line" class="w-3.5 h-3.5"></i>
-                    <span>GIẢ LẬP QUÉT QR & XÁC THỰC</span>
-                  </button>
-                </div>
-
-                <!-- STEP 3: HIỂN THỊ QR THANH TOÁN NGÂN HÀNG VIETQR CHUẨN (1/2 MÀN HÌNH) -->
+                <!-- STEP 2: VIETQR THANH TOÁN NGÂN HÀNG CHUẨN (1/2 MÀN HÌNH) -->
                 <div id="rental-step-3-payment" class="hidden space-y-2 text-center my-auto">
                   <div class="bg-white rounded-2xl p-2.5 border-2 border-emerald-300 shadow-md flex flex-col items-center max-w-[260px] mx-auto">
                     <!-- VietQR & NAPAS Top Branding -->
@@ -706,161 +826,40 @@
                   </button>
                 </div>
 
-                <!-- STEP 4: GIẢ LẬP MỞ TỦ & ĐÓNG TỦ LẤY ĐỒ THUÊ -->
-                <div id="rental-step-4-door" class="hidden space-y-3.5 text-center">
+                
+
+                
+
+                <!-- STEP 3: THANH TOÁN THÀNH CÔNG & CẤP MÃ MỞ TỦ -->
+                <div id="rental-step-4-code" class="hidden space-y-3 text-center">
                   <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 uppercase">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                    <span id="rental-door-badge">Cửa Tủ Đã Mở</span>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span>Thanh Toán Thành Công</span>
                   </div>
 
-                  <h4 class="text-base font-black text-slate-900" id="rental-door-title">Mời Lấy Thiết Bị Tại Ngăn 07</h4>
+                  <h4 class="text-base font-black text-slate-900">Mã Mở Tủ Đã Được Cấp!</h4>
 
-                  <!-- Mô hình cửa tủ mở trong modal thuê đồ -->
-                  <div class="w-36 h-36 mx-auto door-perspective relative">
-                    <div class="w-full h-full bg-slate-800 rounded-2xl border-4 border-slate-700 flex flex-col items-center justify-center p-2 shadow-inner">
-                      <div class="w-14 h-14 bg-white/10 rounded-xl p-2 flex items-center justify-center mb-1" id="rental-cavity-icon"></div>
-                      <span class="text-[10px] font-bold text-emerald-400" id="rental-cavity-name">Máy Cắt Tay</span>
-                    </div>
-                    <div id="rental-animated-door" class="sim-door open absolute inset-0 bg-white rounded-2xl border-4 border-slate-300 shadow-xl flex flex-col justify-between p-2.5">
-                      <span class="font-black text-xs text-slate-800 text-left" id="rental-door-num">07</span>
-                      <div class="text-xl">🔓</div>
-                      <span class="text-[9px] font-bold text-slate-400">RENTAL BOX</span>
-                    </div>
+                  <!-- Thẻ hiển thị mã số to rõ ràng -->
+                  <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-3xl p-4 text-center space-y-1 shadow-md">
+                    <span class="text-[10px] font-extrabold text-amber-700 uppercase tracking-wider block">MÃ SỐ MỞ TỦ THUÊ ĐỒ</span>
+                    <div class="text-3xl font-black text-amber-800 font-mono tracking-widest my-1" id="rental-issued-pin">8826</div>
+                    <p class="text-xs font-bold text-slate-700" id="rental-issued-info">Ngăn 10 • Bộ Dụng Cụ Sửa Chữa</p>
                   </div>
 
-                  <p class="text-xs text-slate-500 font-medium">
-                    Sau khi lấy thiết bị và đóng cửa tủ, hệ thống sẽ gửi tin nhắn xác nhận thuê sang điện thoại khách hàng bên cạnh.
-                  </p>
-
-                  <button id="btn-close-rental-door" onclick="confirmCloseRentalDoor()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
-                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                    <span>ĐÃ LẤY ĐỒ & ĐÓNG CỬA TỦ</span>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-            <!-- In-App Toast -->
-            <div id="phone-toast" class="absolute top-16 left-4 right-4 bg-slate-900/95 text-white px-4 py-3 rounded-2xl shadow-xl z-50 text-xs font-bold flex items-center space-x-2.5 transition-all duration-300 opacity-0 -translate-y-4 pointer-events-none">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-              <span id="phone-toast-text">Thông báo hệ thống</span>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- ========================================================================================= -->
-      <!-- 2. POPUP BE BÉ = 1/2 MÀN HÌNH ĐIỆN THOẠI BÊN CẠNH (GIAO DIỆN TIN NHẮN CỦA KHÁCH HÀNG)     -->
-      <!-- ========================================================================================= -->
-            <!-- ========================================================================================= -->
-      <!-- 2. MÀN HÌNH KHÁCH HÀNG CHUẨN KÍCH THƯỚC (APP SMARTLOCKER & TRỢ LÝ AI LOCAL TÍCH HỢP)         -->
-      <!-- ========================================================================================= -->
-      <div class="flex flex-col items-center">
-        <div class="mb-3 flex items-center space-x-2 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-200 shadow-xs">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider">Màn Hình Khách Hàng (App & Trợ Lý AI)</span>
-        </div>
-
-        <!-- Khung Điện Thoại Khách Hàng Chuẩn Kích Thước Bằng Màn Hình Chính (w-[400px] h-[844px]) -->
-        <div id="customer-mini-phone" class="w-[400px] h-[844px] bg-slate-900 rounded-[54px] p-2.5 shadow-2xl relative flex flex-col overflow-hidden border-2 border-slate-700 transition-all duration-300">
-          
-          <!-- Dynamic Island Chuẩn -->
-          <div class="absolute top-3.5 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-40 flex items-center justify-between px-2.5 shadow-inner">
-            <div class="w-3 h-3 rounded-full bg-slate-800/80 flex items-center justify-center">
-              <div class="w-2 h-2 rounded-full bg-blue-950/60"></div>
-            </div>
-            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400" id="mini-phone-led"></div>
-          </div>
-
-          <!-- Màn hình trong của điện thoại khách hàng -->
-          <div class="w-full h-full bg-[#F8FAFC] rounded-[44px] flex flex-col overflow-hidden relative border border-slate-800 shadow-inner">
-            
-            <!-- Status Bar Chuẩn -->
-            <div class="pt-3 px-7 pb-2 flex justify-between items-center text-xs font-bold text-slate-800 shrink-0 select-none z-30">
-              <span class="live-clock font-semibold tracking-tight text-slate-900">09:41</span>
-              <div class="flex items-center space-x-1.5 text-slate-700">
-                <i data-lucide="signal" class="w-3.5 h-3.5"></i>
-                <i data-lucide="wifi" class="w-3.5 h-3.5"></i>
-                <i data-lucide="battery-charging" class="w-4 h-4 text-emerald-600"></i>
-              </div>
-            </div>
-
-            <!-- Header Khách Hàng & Trợ Lý AI -->
-            <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-brand text-white px-4 py-3 flex items-center justify-between shadow-md shrink-0">
-              <div class="flex items-center space-x-2.5">
-                <div class="w-9 h-9 rounded-2xl bg-white/20 backdrop-blur border border-white/30 flex items-center justify-center text-white shadow-inner">
-                  <i data-lucide="bot" class="w-5 h-5"></i>
-                </div>
-                <div>
-                  <div class="flex items-center space-x-1.5">
-                    <h3 class="text-xs font-black tracking-tight">SmartLocker Assistant</h3>
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  </div>
-                  <p class="text-[10px] text-blue-100 font-medium font-mono" id="mini-phone-owner-number">SĐT Khách: Đang chờ giao dịch...</p>
-                </div>
-              </div>
-              <button onclick="clearCustomerMiniPhone('Làm mới thủ công')" class="press-effect text-[11px] font-bold text-blue-900 bg-white/90 hover:bg-white px-2.5 py-1.5 rounded-xl border border-white/40 shadow-xs flex items-center space-x-1" title="Xóa trắng thông báo & chat">
-                <i data-lucide="rotate-ccw" class="w-3 h-3"></i>
-                <span>Xóa trắng</span>
-              </button>
-            </div>
-
-            <!-- Vùng Hiển Thị Tin Nhắn & AI Chat (Scrollable) -->
-            <div id="ai-messages-scroll" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/80 no-scrollbar">
-              
-              <!-- Khối Tin Nhắn Chào Mừng AI & Gợi Ý Nhanh -->
-              <div id="ai-welcome-box" class="space-y-3">
-                <div class="flex items-start space-x-2.5">
-                  <div class="w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i>
-                  </div>
-                  <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3.5 text-slate-800 shadow-xs max-w-[88%] space-y-1.5">
-                    <p class="text-xs font-semibold leading-relaxed">
-                      Xin chào! Tôi là <b>Trợ lý AI SmartLocker</b>.
-                    </p>
-                    <p class="text-[11px] text-slate-600 leading-normal">
-                      Khung này tự động nhận tin nhắn SMS/Zalo từ tủ đồ, đồng thời sẵn sàng hỗ trợ hướng dẫn mọi thao tác:
+                  <div class="bg-blue-50 border border-blue-200 rounded-2xl p-2.5 text-left flex items-start space-x-2">
+                    <i data-lucide="info" class="w-4 h-4 text-blue-600 shrink-0 mt-0.5"></i>
+                    <p class="text-xs text-blue-900 font-semibold leading-relaxed">
+                      Vui lòng ra màn hình tủ bên trái, chọn tab <b>Nhập Mã Thuê Đồ</b> và bấm mã số này để mở tủ lấy thiết bị.
                     </p>
                   </div>
-                </div>
 
-                <!-- Quick Question Chips -->
-                <div class="pt-1 flex flex-wrap gap-1.5" id="ai-quick-chips">
-                  <button onclick="handleAiQuickAsk('gui_hang')" class="press-effect text-[11px] font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
-                    <span>📦 Cách gửi hàng</span>
-                  </button>
-                  <button onclick="handleAiQuickAsk('nhan_hang')" class="press-effect text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
-                    <span>🎁 Cách nhận hàng</span>
-                  </button>
-                  <button onclick="handleAiQuickAsk('thue_do')" class="press-effect text-[11px] font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-2.5 py-1.5 rounded-xl flex items-center space-x-1">
-                    <span>⚡ Thuê đồ & VietQR</span>
-                  </button>
-                  <button onclick="handleAiQuickAsk('auto_tour')" class="press-effect text-[11px] font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:opacity-90 px-2.5 py-1.5 rounded-xl flex items-center space-x-1 shadow-xs">
-                    <span>🎯 Dẫn đường Auto-Tour</span>
+                  <button type="button" onclick="closeRentalModalAfterSuccess()" class="press-effect w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-2xl font-black text-sm shadow-lg flex items-center justify-center space-x-2">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                    <span>ĐÃ LƯU MÃ • ĐÓNG</span>
                   </button>
                 </div>
+
               </div>
-
-              <!-- Vùng tin nhắn động (Thông báo SMS/Zalo gửi hàng & thuê đồ, cùng các câu hỏi đáp với AI) -->
-              <div id="mini-phone-messages-area" class="space-y-3"></div>
-
-            </div>
-
-            <!-- Khung Chat Input AI ở đáy màn hình khách hàng -->
-            <div class="p-3 bg-white border-t border-slate-200 shrink-0">
-              <div class="relative flex items-center">
-                <input type="text" id="ai-user-input" placeholder="Hỏi AI cách sử dụng tủ..." onkeydown="if(event.key === 'Enter') sendAiUserMessage()" class="w-full bg-slate-100 border border-slate-200 focus:border-blue-600 focus:bg-white rounded-2xl pl-3.5 pr-11 py-2.5 text-xs font-semibold text-slate-800 placeholder-slate-400 outline-none transition-all">
-                <button onclick="sendAiUserMessage()" class="absolute right-1.5 w-8 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition shadow-xs" title="Gửi câu hỏi">
-                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Home Indicator Bar -->
-            <div class="pb-2 pt-1 bg-white flex justify-center shrink-0">
-              <div class="w-32 h-1 bg-slate-300 rounded-full"></div>
             </div>
 
           </div>
@@ -869,57 +868,8 @@
     </div>
   </main>
 
-  <!-- ================= FOOTER ================= -->
-  <footer class="bg-white border-t border-slate-200 py-2.5 text-center text-xs text-slate-500 font-medium">
-    Hệ Thống Smart Locker • Thuật Toán Đồng Bộ Ngăn Tủ Thời Gian Thực & Mô Phỏng Đa Màn Hình
-  </footer>
-
   <!-- ================= JAVASCRIPT LOGIC & THUẬT TOÁN ================= -->
   <script>
-    // =========================================================================
-    // 1. ÂM THANH MÔ PHỎNG (OFFLINE WEB AUDIO SYNTHESIZER)
-    // =========================================================================
-    const AudioEngine = {
-      ctx: null,
-      init() {
-        if (!this.ctx) {
-          const AudioContext = window.AudioContext || window.webkitAudioContext;
-          if (AudioContext) this.ctx = new AudioContext();
-        }
-      },
-      beep(freq = 600, duration = 0.08, type = 'sine') {
-        try {
-          this.init();
-          if (!this.ctx) return;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = type;
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + duration);
-        } catch (e) {}
-      },
-      solenoidUnlock() {
-        this.beep(140, 0.09, 'square');
-        setTimeout(() => this.beep(420, 0.12, 'sine'), 80);
-      },
-      doorCloseSound() {
-        this.beep(220, 0.08, 'triangle');
-        setTimeout(() => this.beep(580, 0.1, 'sine'), 70);
-      },
-      smsNotificationSound() {
-        this.beep(880, 0.09, 'sine');
-        setTimeout(() => this.beep(1174.66, 0.16, 'sine'), 100);
-      }
-    };
-
-    // =========================================================================
-    // 2. ICON SVG THỰC TẾ CHO CÁC THIẾT BỊ THUÊ ĐỒ (MÁY CẮT TAY, HÚT BỤI, MÁY IN, MÁY CHIẾU...)
-    // =========================================================================
     const REALISTIC_TOOL_SVGS = {
       // 1. Máy cắt tay (Hand Angle Grinder / Cutter)
       hand_cutter: `
@@ -1069,441 +1019,334 @@
     };
 
     // =========================================================================
-    // 3. CƠ SỞ DỮ LIỆU NGĂN TỦ DUY NHẤT (SINGLE SOURCE OF TRUTH - CHỐNG SỐ Ô ẢO)
+    
+        
+        // =========================================================================
+    // 1. ÂM THANH MÔ PHỎNG (OFFLINE WEB AUDIO SYNTHESIZER)
     // =========================================================================
-    // Tổng 12 ngăn:
-    // - Ngăn 01 -> Ngăn 06: Dành cho Gửi/Nhận Hàng (2 cỡ S, 2 cỡ M, 2 cỡ L). Ban đầu TRỐNG CẢ 6 NGĂN!
-    // - Ngăn 07 -> Ngăn 12: Dành cho Thuê Đồ Tiện Ích (6 thiết bị). Ban đầu CÓ SẴN CẢ 6 THIẾT BỊ!
-    const INITIAL_DELIVERY_BOXES = [
-      { id: 1, size: 'S', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
-      { id: 2, size: 'S', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
-      { id: 3, size: 'M', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
-      { id: 4, size: 'M', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
-      { id: 5, size: 'L', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
-      { id: 6, size: 'L', type: 'DELIVERY', status: 'AVAILABLE', parcel: null },
-    ];
-
-    const INITIAL_RENTAL_ITEMS = [
-      { id: 'tool_1', boxId: 7, name: 'Máy Cắt Tay', svgKey: 'hand_cutter', pricePerBlock: 30000, status: 'AVAILABLE', rentedBy: null, blocks: 0 },
-      { id: 'tool_2', boxId: 8, name: 'Máy Hút Bụi', svgKey: 'vacuum_cleaner', pricePerBlock: 35000, status: 'AVAILABLE', rentedBy: null, blocks: 0 },
-      { id: 'tool_3', boxId: 9, name: 'Máy In Laser', svgKey: 'printer', pricePerBlock: 40000, status: 'AVAILABLE', rentedBy: null, blocks: 0 },
-      { id: 'tool_4', boxId: 10, name: 'Bộ Dụng Cụ Sửa Chữa', svgKey: 'toolbox', pricePerBlock: 25000, status: 'AVAILABLE', rentedBy: null, blocks: 0 },
-      { id: 'tool_5', boxId: 11, name: 'Máy Khoan Pin', svgKey: 'power_drill', pricePerBlock: 30000, status: 'AVAILABLE', rentedBy: null, blocks: 0 },
-      { id: 'tool_6', boxId: 12, name: 'Máy Rửa Xe Mini', svgKey: 'pressure_washer', pricePerBlock: 45000, status: 'AVAILABLE', rentedBy: null, blocks: 0 },
-    ];
-
-    let deliveryBoxes = JSON.parse(JSON.stringify(INITIAL_DELIVERY_BOXES));
-    let rentalItems = JSON.parse(JSON.stringify(INITIAL_RENTAL_ITEMS));
-
-    let currentSelectedSize = 'S';
-    let pendingDoorAction = null; // Lưu hành động đang chờ đóng cửa tủ (SHIPPER_DROP hoặc RESIDENT_PICKUP)
-    let activeRentalSession = null; // Lưu phiên thuê đồ hiện tại
-
-    // =========================================================================
-    // 4. CHUYỂN ĐỔI MÀU GIAO DIỆN (THEME SWITCHER)
-    // =========================================================================
-    const COLOR_THEMES = [
-      { id: 'blue', name: 'Xanh Zalo' },
-      { id: 'emerald', name: 'Xanh Ngọc Eco' },
-      { id: 'violet', name: 'Tím Công Nghệ' },
-      { id: 'orange', name: 'Cam Năng Động' },
-    ];
-    let currentThemeIndex = 0;
-
-    function setColorTheme(themeId) {
-      AudioEngine.beep(650, 0.05);
-      document.body.setAttribute('data-theme', themeId);
-      const foundIdx = COLOR_THEMES.findIndex(t => t.id === themeId);
-      if (foundIdx !== -1) {
-        currentThemeIndex = foundIdx;
-        const label = document.getElementById('theme-label-text');
-        if (label) label.textContent = `Đổi Màu: ${COLOR_THEMES[foundIdx].name}`;
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      },
+      beep(freq = 600, duration = 0.08, type = 'sine') {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      },
+      solenoidUnlock() {
+        this.beep(850, 0.05, 'square');
+        setTimeout(() => this.beep(1200, 0.12, 'triangle'), 60);
+      },
+      doorCloseSound() {
+        this.beep(220, 0.15, 'triangle');
+        setTimeout(() => this.beep(160, 0.25, 'sine'), 80);
+      },
+      successChime() {
+        this.beep(523.25, 0.08);
+        setTimeout(() => this.beep(659.25, 0.08), 90);
+        setTimeout(() => this.beep(783.99, 0.14), 180);
       }
+    };
+
+    // =========================================================================
+    // 3. CƠ SỞ DỮ LIỆU NGĂN TỦ DUY NHẤT (SINGLE SOURCE OF TRUTH)
+    // =========================================================================
+    const deliveryBoxes = [
+      { id: 1, size: 'S', label: '01', status: 'FREE', parcel: null },
+      { id: 2, size: 'S', label: '02', status: 'FREE', parcel: null },
+      { id: 3, size: 'M', label: '03', status: 'FREE', parcel: null },
+      { id: 4, size: 'M', label: '04', status: 'FREE', parcel: null },
+      { id: 5, size: 'L', label: '05', status: 'FREE', parcel: null },
+      { id: 6, size: 'L', label: '06', status: 'FREE', parcel: null },
+    ];
+
+    const rentalItems = [
+      { id: 'toolbox', name: 'Bộ Dụng Cụ Sửa Chữa', rate: 25000, boxId: 10, status: 'AVAILABLE', key: 'toolbox' },
+      { id: 'hand_cutter', name: 'Máy Cắt Tay', rate: 30000, boxId: 7, status: 'AVAILABLE', key: 'hand_cutter' },
+      { id: 'vacuum', name: 'Máy Hút Bụi', rate: 35000, boxId: 8, status: 'AVAILABLE', key: 'vacuum' },
+      { id: 'laser_printer', name: 'Máy In Laser', rate: 40000, boxId: 9, status: 'AVAILABLE', key: 'laser_printer' },
+      { id: 'drill', name: 'Máy Khoan Pin', rate: 30000, boxId: 11, status: 'AVAILABLE', key: 'drill' },
+      { id: 'car_washer', name: 'Máy Rửa Xe Mini', rate: 45000, boxId: 12, status: 'AVAILABLE', key: 'car_washer' },
+    ];
+
+    let activeRentalTokens = [];
+    let pendingDoorAction = null;
+    let currentSelectedSize = 'S';
+    let currentRentalItem = null;
+    let selectedBlockHours = 1;
+    let currentTheme = 'blue';
+
+    const themeColors = {
+      blue: { brand: '#2563EB', dark: '#1D4ED8', light: '#EFF6FF', border: '#BFDBFE', name: 'Xanh Zalo' },
+      emerald: { brand: '#059669', dark: '#047857', light: '#ECFDF5', border: '#A7F3D0', name: 'Xanh Ngọc' },
+      violet: { brand: '#7C3AED', dark: '#6D28D9', light: '#F5F3FF', border: '#DDD6FE', name: 'Tím Công Nghệ' },
+      orange: { brand: '#EA580C', dark: '#C2410C', light: '#FFF7ED', border: '#FED7AA', name: 'Cam Năng Động' }
+    };
+
+    function setColorTheme(themeName) {
+      if (!themeColors[themeName]) return;
+      currentTheme = themeName;
+      const t = themeColors[themeName];
+      document.documentElement.style.setProperty('--brand-color', t.brand);
+      document.documentElement.style.setProperty('--brand-dark', t.dark);
+      document.documentElement.style.setProperty('--brand-light', t.light);
+      document.documentElement.style.setProperty('--brand-border', t.border);
+      const label = document.getElementById('theme-label-text');
+      if (label) label.textContent = 'Đổi Màu: ' + t.name;
     }
 
     function cycleColorTheme() {
-      currentThemeIndex = (currentThemeIndex + 1) % COLOR_THEMES.length;
-      setColorTheme(COLOR_THEMES[currentThemeIndex].id);
+      const themes = ['blue', 'emerald', 'violet', 'orange'];
+      const nextIdx = (themes.indexOf(currentTheme) + 1) % themes.length;
+      setColorTheme(themes[nextIdx]);
     }
 
     function toggleSurfaceMode() {
-      AudioEngine.beep(520, 0.05);
-      const curr = document.body.getAttribute('data-surface');
-      const next = curr === 'dark' ? 'light' : 'dark';
-      document.body.setAttribute('data-surface', next);
-      const label = document.getElementById('surface-mode-text');
-      if (label) label.textContent = next === 'dark' ? 'Nền Tối' : 'Nền Sáng';
+      const isDark = document.body.classList.toggle('bg-slate-900');
+      document.body.classList.toggle('bg-slate-100', !isDark);
+      const text = document.getElementById('surface-mode-text');
+      if (text) text.textContent = isDark ? 'Nền Tối' : 'Nền Sáng';
     }
 
     // =========================================================================
-    // 5. ĐỒNG BỘ SỐ Ô ĐỒ CÒN TRỐNG THEO SÁT THUẬT TOÁN (100% REAL-TIME)
+    // 4. ĐIỀU HƯỚNG TABS (MÀN HÌNH TỦ: 2 TABS & MÁY KHÁCH: 3 TABS)
     // =========================================================================
-    function syncAllCabinetUI() {
-      // 1. Tính toán chính xác từ mảng deliveryBoxes
-      const freeDeliveryAll = deliveryBoxes.filter(b => b.status === 'AVAILABLE').length;
-      const occupiedDeliveryAll = deliveryBoxes.filter(b => b.status === 'OCCUPIED').length;
-
-      const freeS = deliveryBoxes.filter(b => b.size === 'S' && b.status === 'AVAILABLE').length;
-      const freeM = deliveryBoxes.filter(b => b.size === 'M' && b.status === 'AVAILABLE').length;
-      const freeL = deliveryBoxes.filter(b => b.size === 'L' && b.status === 'AVAILABLE').length;
-
-      // 2. Tính toán chính xác từ mảng rentalItems
-      const availableRentals = rentalItems.filter(item => item.status === 'AVAILABLE').length;
-      const totalRentals = rentalItems.length;
-
-      // 3. Cập nhật Header & Mini Map
-      const headerStatus = document.getElementById('header-summary-status');
-      if (headerStatus) {
-        headerStatus.textContent = `Trống ${freeDeliveryAll}/6 ngăn gửi • Sẵn sàng ${availableRentals}/${totalRentals} đồ thuê`;
-      }
-      const miniMapCounter = document.getElementById('mini-map-counter');
-      if (miniMapCounter) {
-        miniMapCounter.textContent = `Gửi trống: ${freeDeliveryAll}/6 • Đồ thuê còn: ${availableRentals}/${totalRentals}`;
-      }
-
-      // Render 12 ô trên Mini-Map để đối chiếu trực quan
-      const mapEl = document.getElementById('mini-locker-map');
-      if (mapEl) {
-        let html = '';
-        deliveryBoxes.forEach(b => {
-          const isFree = b.status === 'AVAILABLE';
-          html += `
-            <div class="rounded-lg py-1 px-1 text-center border text-[9px] font-extrabold transition-all ${
-              isFree
-                ? 'bg-emerald-50 border-emerald-300 text-emerald-800'
-                : 'bg-amber-100 border-amber-400 text-amber-900'
-            }" title="Ngăn 0${b.id} (Cỡ ${b.size}): ${isFree ? 'Đang trống' : 'Có hàng - SĐT ' + b.parcel?.phone}">
-              ${String(b.id).padStart(2, '0')}(${b.size}) ${isFree ? 'Trống' : 'Có đồ'}
-            </div>
-          `;
-        });
-        rentalItems.forEach(r => {
-          const isAvail = r.status === 'AVAILABLE';
-          html += `
-            <div class="rounded-lg py-1 px-1 text-center border text-[9px] font-extrabold transition-all ${
-              isAvail
-                ? 'bg-blue-50 border-blue-200 text-blue-800'
-                : 'bg-rose-100 border-rose-300 text-rose-800'
-            }" title="Ngăn ${String(r.boxId).padStart(2, '0')} (${r.name}): ${isAvail ? 'Sẵn sàng' : 'Đang cho thuê'}">
-              ${String(r.boxId).padStart(2, '0')} ${isAvail ? 'Sẵn' : 'Thuê'}
-            </div>
-          `;
-        });
-        mapEl.innerHTML = html;
-      }
-
-      // 4. Cập nhật Tab 1 (Shipper)
-      document.getElementById('shipper-free-boxes-text').textContent = freeDeliveryAll;
-      document.getElementById('shipper-occupied-boxes-text').textContent = occupiedDeliveryAll;
-      document.getElementById('count-size-S').textContent = `Trống: ${freeS}`;
-      document.getElementById('count-size-M').textContent = `Trống: ${freeM}`;
-      document.getElementById('count-size-L').textContent = `Trống: ${freeL}`;
-
-      // Nếu cỡ đang chọn đã hết chỗ (Trống: 0), tự động chuyển sang cỡ còn trống theo thuật toán Best-Fit
-      const sizeCounts = { S: freeS, M: freeM, L: freeL };
-      ['S', 'M', 'L'].forEach(sz => {
-        const btn = document.getElementById(`size-btn-${sz}`);
-        const countLabel = document.getElementById(`count-size-${sz}`);
-        if (!btn) return;
-        if (sizeCounts[sz] === 0) {
-          btn.classList.add('opacity-50');
-          if (countLabel) countLabel.className = 'text-xs font-extrabold text-rose-600 mt-1';
-        } else {
-          btn.classList.remove('opacity-50');
-          if (countLabel) {
-            countLabel.className = sz === currentSelectedSize
-              ? 'text-xs font-extrabold text-brand mt-1'
-              : 'text-xs font-extrabold text-slate-600 mt-1';
+    function switchTab(tabName) {
+      AudioEngine.beep(580, 0.04);
+      const tabs = ['shipper', 'rental-pickup'];
+      tabs.forEach(t => {
+        const content = document.getElementById('tab-content-' + t);
+        const navBtn = document.getElementById('nav-btn-' + t);
+        if (content && navBtn) {
+          if (t === tabName) {
+            content.classList.remove('hidden');
+            navBtn.classList.remove('text-slate-400');
+            navBtn.classList.add('text-brand');
+          } else {
+            content.classList.add('hidden');
+            navBtn.classList.remove('text-brand');
+            navBtn.classList.add('text-slate-400');
           }
         }
       });
-
-      // 5. Cập nhật Tab 2 (Nhận Hàng)
-      document.getElementById('resident-waiting-count').textContent = occupiedDeliveryAll;
-      const badgeResident = document.getElementById('nav-badge-resident');
-      if (badgeResident) {
-        if (occupiedDeliveryAll > 0) {
-          badgeResident.textContent = occupiedDeliveryAll;
-          badgeResident.classList.remove('hidden');
-        } else {
-          badgeResident.classList.add('hidden');
-        }
-      }
-
-      renderActiveParcelsList();
-
-      // 6. Cập nhật Tab 3 (Thuê Đồ)
-      document.getElementById('rental-available-count').textContent = `${availableRentals}/${totalRentals}`;
-      renderRentalCatalogGrid();
-
-      if (window.lucide) lucide.createIcons();
+      if (window.lucide) window.lucide.createIcons();
     }
 
-    // =========================================================================
-    // 6. QUẢN LÝ MÀN HÌNH PHỤ 1/2 CỦA KHÁCH HÀNG (XÓA TRẮNG & GỬI TIN NHẮN)
-    // =========================================================================
-    
-    // =========================================================================
-    // 6. LOGIC MÀN HÌNH KHÁCH HÀNG TÍCH HỢP TRỢ LÝ AI
-    // =========================================================================
-    function clearCustomerMiniPhone(reasonText = 'Khách hàng mới', phoneNum = null) {
-      const area = document.getElementById('mini-phone-messages-area');
-      const ownerEl = document.getElementById('mini-phone-owner-number');
-      const ledEl = document.getElementById('mini-phone-led');
-      const scrollEl = document.getElementById('ai-messages-scroll');
-
-      if (ownerEl) {
-        ownerEl.textContent = phoneNum ? `SĐT Khách: ${phoneNum}` : 'SĐT Khách: Đang chờ giao dịch...';
-      }
-      if (ledEl) {
-        ledEl.className = 'w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping';
-        setTimeout(() => {
-          if (ledEl) ledEl.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400';
-        }, 1200);
-      }
-
-      if (area) {
-        area.innerHTML = `
-          <div class="p-2.5 rounded-2xl bg-white border border-slate-200 text-center shadow-xs msg-pop">
-            <span class="text-[11px] font-bold text-slate-500">Đã làm mới thông báo (${reasonText})</span>
-          </div>
-        `;
-      }
-
-      if (scrollEl) {
-        scrollEl.scrollTop = 0;
-      }
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function pushCustomerMessage({ phone, type, title, bodyHtml, highlightCode }) {
-      AudioEngine.smsNotificationSound();
-
-      const area = document.getElementById('mini-phone-messages-area');
-      const ownerEl = document.getElementById('mini-phone-owner-number');
-      const ledEl = document.getElementById('mini-phone-led');
-      const phoneWrapper = document.getElementById('customer-mini-phone');
-      const scrollEl = document.getElementById('ai-messages-scroll');
-
-      if (ownerEl) ownerEl.textContent = `SĐT Khách: ${phone}`;
-      if (ledEl) {
-        ledEl.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping';
-        setTimeout(() => {
-          if (ledEl) ledEl.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400';
-        }, 1800);
-      }
-
-      // Hiệu ứng nháy viền điện thoại khách hàng
-      if (phoneWrapper) {
-        phoneWrapper.classList.add('ring-4', 'ring-emerald-400');
-        setTimeout(() => phoneWrapper.classList.remove('ring-4', 'ring-emerald-400'), 1500);
-      }
-
-      const now = new Date();
-      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-
-      const msgCard = document.createElement('div');
-      msgCard.className = 'space-y-2 msg-pop';
-      msgCard.innerHTML = `
-        <div class="text-center">
-          <span class="inline-block px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-600 text-[10px] font-bold">
-            Thông báo tự động • ${timeStr}
-          </span>
-        </div>
-
-        <div class="bg-white border-2 ${type === 'SHIPPER' ? 'border-emerald-400' : 'border-brandBorder'} rounded-2xl rounded-tl-xs p-3.5 shadow-md space-y-2.5">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2">
-            <span class="text-xs font-black uppercase ${type === 'SHIPPER' ? 'text-emerald-700' : 'text-brand'} flex items-center gap-1.5">
-              <i data-lucide="bell-ring" class="w-3.5 h-3.5"></i>
-              <span>${title}</span>
-            </span>
-            <span class="text-[10px] font-bold text-slate-400">Vừa xong</span>
-          </div>
-
-          <div class="text-xs text-slate-800 font-semibold leading-relaxed">
-            ${bodyHtml}
-          </div>
-
-          ${highlightCode ? `
-            <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 flex items-center justify-between">
-              <span class="text-[11px] font-bold text-slate-500">4 số cuối MVĐ:</span>
-              <span class="text-lg font-black text-emerald-600 font-mono tracking-widest">${highlightCode}</span>
-            </div>
-          ` : ''}
-        </div>
-      `;
-
-      if (area) {
-        area.appendChild(msgCard);
-      }
-      if (scrollEl) {
-        setTimeout(() => {
-          scrollEl.scrollTop = scrollEl.scrollHeight;
-        }, 60);
-      }
-      if (window.lucide) lucide.createIcons();
-    }
-
-
-    function selectLockerSize(size) {
-      AudioEngine.beep(520, 0.05);
-      currentSelectedSize = size;
-      ['S', 'M', 'L'].forEach(s => {
-        const btn = document.getElementById(`size-btn-${s}`);
-        if (!btn) return;
-        if (s === size) {
-          btn.className = 'press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all';
-        } else {
-          btn.className = 'press-effect border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-2.5 text-center transition-all';
+    function switchCustomerTab(tabName) {
+      AudioEngine.beep(620, 0.04);
+      const tabs = ['pickup', 'rental', 'support'];
+      tabs.forEach(t => {
+        const content = document.getElementById('customer-tab-content-' + t);
+        const navBtn = document.getElementById('customer-nav-' + t);
+        if (content && navBtn) {
+          if (t === tabName) {
+            content.classList.remove('hidden');
+            navBtn.classList.remove('text-slate-400');
+            navBtn.classList.add('text-brand');
+          } else {
+            content.classList.add('hidden');
+            navBtn.classList.remove('text-brand');
+            navBtn.classList.add('text-slate-400');
+          }
         }
       });
-      syncAllCabinetUI();
+      if (window.lucide) window.lucide.createIcons();
     }
 
-    function quickFillShipper(phone) {
-      AudioEngine.beep(600, 0.04);
-      const input = document.getElementById('recipient-phone-input');
-      if (input) {
-        input.value = phone;
-        validatePhoneInputLive(input);
+    // =========================================================================
+    // 5. BÀN PHÍM NUMPAD CHO VÙNG NHẬP MÃ THUÊ ĐỒ TẠI TỦ
+    // =========================================================================
+    function pressNumpad(num) {
+      AudioEngine.beep(520, 0.03);
+      const input = document.getElementById('rental-pickup-code-input');
+      if (input && input.value.length < 10) {
+        input.value += num;
       }
-      generateRandomTracking();
-      // Xóa trắng giao diện màn hình 1/2 khi chuẩn bị đơn của khách hàng mới
-      clearCustomerMiniPhone(`Chuẩn bị gửi đồ cho SĐT ${phone}`, phone);
+    }
+
+    function clearNumpad() {
+      AudioEngine.beep(400, 0.05);
+      const input = document.getElementById('rental-pickup-code-input');
+      if (input) input.value = '';
+    }
+
+    function backspaceNumpad() {
+      AudioEngine.beep(480, 0.03);
+      const input = document.getElementById('rental-pickup-code-input');
+      if (input) input.value = input.value.slice(0, -1);
+    }
+
+    function fillRentalPickupCode(code) {
+      AudioEngine.beep(660, 0.04);
+      const input = document.getElementById('rental-pickup-code-input');
+      if (input) {
+        if (code) {
+          input.value = code;
+        } else if (activeRentalTokens.length > 0) {
+          input.value = activeRentalTokens[activeRentalTokens.length - 1].code;
+        } else {
+          input.value = '8826';
+        }
+      }
+    }
+
+    // =========================================================================
+    // 6. XỬ LÝ GỬI HÀNG TẠI TỦ (SHIPPER DROPOFF)
+    // =========================================================================
+    function selectLockerSize(size) {
+      currentSelectedSize = size;
+      ['s', 'm', 'l'].forEach(s => {
+        const btn = document.getElementById('size-btn-' + s);
+        if (!btn) return;
+        if (s === size.toLowerCase()) {
+          btn.className = 'press-effect border-2 border-brand bg-brandLight rounded-2xl p-2.5 text-center transition-all flex flex-col items-center';
+        } else {
+          btn.className = 'press-effect border-2 border-slate-200 bg-white hover:border-slate-300 rounded-2xl p-2.5 text-center transition-all flex flex-col items-center';
+        }
+      });
     }
 
     function generateRandomTracking() {
-      const prefixes = ['SPX', 'GHN', 'GHTK', 'VNPOST'];
-      const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-      const last4 = Math.floor(1000 + Math.random() * 9000);
-      const el = document.getElementById('tracking-code-input');
-      if (el) el.value = `${prefix}-${last4}`;
+      const code = 'SPX-' + Math.floor(1000 + Math.random() * 9000);
+      const input = document.getElementById('tracking-code-input');
+      if (input) input.value = code;
+      AudioEngine.beep(650, 0.03);
     }
 
-    function validatePhoneInputLive(input) {
-      const val = input.value.replace(/[^0-9]/g, '');
-      input.value = val;
-      const errorEl = document.getElementById('recipient-phone-error');
-      const statusIcon = document.getElementById('recipient-phone-status-icon');
-      
-      if (val.length === 0) {
-        input.classList.remove('border-emerald-500', 'border-rose-500');
-        input.classList.add('border-slate-200');
-        if (statusIcon) statusIcon.innerHTML = '<i data-lucide="phone" class="w-4 h-4 text-slate-400"></i>';
-        if (errorEl) errorEl.classList.add('hidden');
-      } else if (val.startsWith('0') && (val.length === 10 || val.length === 11)) {
-        input.classList.remove('border-slate-200', 'border-rose-500');
-        input.classList.add('border-emerald-500');
-        if (statusIcon) statusIcon.innerHTML = '<i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>';
-        if (errorEl) errorEl.classList.add('hidden');
-      } else {
-        input.classList.remove('border-emerald-500');
-        input.classList.add('border-slate-200');
-        if (statusIcon) statusIcon.innerHTML = `<span class="text-[10px] font-bold text-slate-400">${val.length}/10</span>`;
-      }
-      if (window.lucide) lucide.createIcons();
+    function validatePhoneInputLive(el) {
+      el.value = el.value.replace(/[^0-9]/g, '');
     }
 
     function executeShipperDropoff() {
       const phoneInput = document.getElementById('recipient-phone-input');
       const trackingInput = document.getElementById('tracking-code-input');
-      const errorEl = document.getElementById('recipient-phone-error');
-      const errorText = document.getElementById('recipient-phone-error-text');
+      const phoneVal = phoneInput ? phoneInput.value.trim() : '';
+      const trackingVal = trackingInput ? trackingInput.value.trim() : '';
 
-      const cleanPhone = phoneInput ? phoneInput.value.replace(/[^0-9]/g, '') : '';
+      const finalTracking = trackingVal || ('SPX-' + Math.floor(1000 + Math.random() * 9000));
+      const finalPhone = phoneVal || '0981056245';
 
-      if (!cleanPhone.startsWith('0') || (cleanPhone.length !== 10 && cleanPhone.length !== 11)) {
-        AudioEngine.beep(250, 0.15);
-        if (errorEl) {
-          errorEl.classList.remove('hidden');
-          errorText.textContent = 'Vui lòng nhập SĐT khách hàng hợp lệ (10-11 chữ số, bắt đầu bằng 0)!';
-        }
-        if (phoneInput) phoneInput.focus();
+      const availableBox = deliveryBoxes.find(b => b.size === currentSelectedSize && b.status === 'FREE');
+      if (!availableBox) {
+        showPhoneToast('Hết ngăn cỡ ' + currentSelectedSize + ', vui lòng chọn cỡ khác!', '⚠️');
+        return;
+      }
+
+      pendingDoorAction = {
+        type: 'dropoff',
+        box: availableBox,
+        phone: finalPhone,
+        tracking: finalTracking
+      };
+
+      openDoorSimulationModal({
+        boxId: availableBox.id,
+        boxSize: availableBox.size,
+        title: 'Ngăn ' + availableBox.label + ' Đã Bung Mở!',
+        subtitle: 'Vui lòng đặt kiện hàng vào trong ngăn tủ và bấm đóng cửa tủ.',
+        contentEmoji: '📦',
+        contentText: 'Kiện hàng ' + finalTracking,
+        buttonText: 'ĐÃ ĐẶT HÀNG & ĐÓNG CỬA TỦ'
+      });
+    }
+
+    // =========================================================================
+    // 7. XÁC THỰC & MỞ NGĂN TỦ THUÊ ĐỒ TẠI TỦ (RENTAL PICKUP BY CODE)
+    // =========================================================================
+    function executeRentalPickupByCode() {
+      const input = document.getElementById('rental-pickup-code-input');
+      const errorEl = document.getElementById('rental-pickup-error-msg');
+      const codeVal = input ? input.value.trim() : '';
+
+      let matchedToken = activeRentalTokens.find(t => t.code === codeVal);
+
+      if (!matchedToken && codeVal === '' && activeRentalTokens.length > 0) {
+        matchedToken = activeRentalTokens[activeRentalTokens.length - 1];
+        if (input) input.value = matchedToken.code;
+      }
+
+      if (!matchedToken && (codeVal === '8826' || codeVal === '')) {
+        const defaultItem = rentalItems.find(r => r.id === 'toolbox') || rentalItems[0];
+        matchedToken = {
+          code: '8826',
+          toolId: defaultItem.id,
+          toolName: defaultItem.name,
+          boxId: defaultItem.boxId,
+          hours: 3
+        };
+      }
+
+      if (!matchedToken) {
+        if (errorEl) errorEl.classList.remove('hidden');
+        AudioEngine.beep(280, 0.15);
         return;
       }
 
       if (errorEl) errorEl.classList.add('hidden');
 
-      // Thuật toán cấp phát ngăn tủ thực tế (ưu tiên đúng cỡ đã chọn, nếu hết thì chọn ngăn trống tiếp theo)
-      let targetBox = deliveryBoxes.find(b => b.size === currentSelectedSize && b.status === 'AVAILABLE');
-      if (!targetBox) {
-        targetBox = deliveryBoxes.find(b => b.status === 'AVAILABLE');
-      }
-
-      if (!targetBox) {
-        AudioEngine.beep(250, 0.15);
-        showPhoneToast('Tất cả 6 ngăn gửi hàng đều đã đầy! Vui lòng nhận bớt hàng.');
-        return;
-      }
-
-      // Xử lý mã vận đơn (đảm bảo có ít nhất 4 chữ số cuối)
-      let rawTracking = trackingInput && trackingInput.value.trim() ? trackingInput.value.trim().toUpperCase() : '';
-      const digitsOnly = rawTracking.replace(/[^0-9]/g, '');
-      let last4Digits = '';
-      if (digitsOnly.length >= 4) {
-        last4Digits = digitsOnly.slice(-4);
-      } else {
-        last4Digits = String(Math.floor(1000 + Math.random() * 9000));
-        rawTracking = rawTracking ? `${rawTracking}-${last4Digits}` : `SPX-${last4Digits}`;
-        if (trackingInput) trackingInput.value = rawTracking;
-      }
-
-      // LƯU Ý QUAN TRỌNG: Mỗi lần nhấn gửi đồ đều xóa trắng giao diện màn hình 1/2 bên cạnh
-      clearCustomerMiniPhone(`Đang gửi hàng cho SĐT ${cleanPhone}`, cleanPhone);
-
-      // Mở Modal giả lập mở tủ
       pendingDoorAction = {
-        mode: 'SHIPPER_DROP',
-        boxId: targetBox.id,
-        boxSize: targetBox.size,
-        phone: cleanPhone,
-        trackingCode: rawTracking,
-        last4: last4Digits
+        type: 'rental_pickup',
+        token: matchedToken
       };
 
       openDoorSimulationModal({
-        boxId: targetBox.id,
-        boxSize: targetBox.size,
-        title: `Đã Mở Ngăn ${String(targetBox.id).padStart(2, '0')} (Cỡ ${targetBox.size})`,
-        subtitle: `Shipper vui lòng đặt đơn hàng [${rawTracking}] vào tủ và bấm đóng cửa tủ.`,
-        contentEmoji: '📦',
-        contentText: `MVĐ: ...${last4Digits}`,
-        buttonText: 'Đã Đặt Hàng & Đóng Cửa Tủ'
+        boxId: matchedToken.boxId,
+        boxSize: 'M',
+        title: 'Ngăn ' + String(matchedToken.boxId).padStart(2, '0') + ' Đã Bung Mở!',
+        subtitle: 'Vui lòng lấy ' + matchedToken.toolName + ' ra khỏi tủ và đóng cửa tủ.',
+        contentEmoji: '🔧',
+        contentText: matchedToken.toolName,
+        buttonText: 'ĐÃ LẤY ĐỒ & ĐÓNG CỬA TỦ'
       });
     }
 
+    // =========================================================================
+    // 8. CỬA TỦ 3D MÔ PHỎNG (DÙNG CHO CẢ GỬI HÀNG & THUÊ ĐỒ TẠI TỦ)
+    // =========================================================================
     function openDoorSimulationModal({ boxId, boxSize, title, subtitle, contentEmoji, contentText, buttonText }) {
       AudioEngine.solenoidUnlock();
 
+      const modal = document.getElementById('locker-door-sim-modal');
+      const card = document.getElementById('locker-door-sim-card');
+      const door = document.getElementById('sim-animated-door');
+      const btn = document.getElementById('btn-confirm-close-door');
+
+      btn.disabled = false;
       document.getElementById('sim-status-badge').className = 'inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-100 text-emerald-800 uppercase tracking-wide';
       document.getElementById('sim-status-badge').innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span><span>Cửa Tủ Đang Mở</span>';
 
       document.getElementById('sim-modal-title').textContent = title;
       document.getElementById('sim-modal-subtitle').textContent = subtitle;
-      document.getElementById('sim-cavity-box-label').textContent = `BOX ${String(boxId).padStart(2, '0')}`;
-      document.getElementById('sim-sensor-text').textContent = 'DOOR: OPEN';
-      document.getElementById('sim-door-box-num').textContent = `${String(boxId).padStart(2, '0')}`;
-      document.getElementById('sim-door-size').textContent = boxSize || 'S';
+      document.getElementById('sim-cavity-box-label').textContent = 'BOX ' + String(boxId).padStart(2, '0');
+      document.getElementById('sim-sensor-text').textContent = 'SENSOR: OPEN';
+      document.getElementById('sim-door-box-num').textContent = String(boxId).padStart(2, '0');
+      document.getElementById('sim-door-size').textContent = boxSize || 'M';
 
-      document.getElementById('sim-cavity-content').innerHTML = `
-        <div class="text-4xl mb-1">${contentEmoji}</div>
-        <span class="text-[11px] font-bold text-white">${contentText}</span>
-      `;
+      document.getElementById('sim-cavity-content').innerHTML = 
+        '<div class="text-4xl mb-1">' + contentEmoji + '</div>' +
+        '<span class="text-[11px] font-bold text-white tracking-wide">' + contentText + '</span>';
 
-      const btn = document.getElementById('btn-confirm-close-door');
-      btn.disabled = false;
-      document.getElementById('btn-close-door-label').textContent = buttonText;
+      document.getElementById('btn-confirm-close-text').textContent = buttonText || 'ĐÓNG CỬA TỦ';
 
-      const modal = document.getElementById('locker-door-sim-modal');
-      const door = document.getElementById('sim-animated-door');
-      door.classList.remove('open');
-
+      door.classList.add('open');
       modal.classList.remove('opacity-0', 'pointer-events-none');
-      setTimeout(() => {
-        door.classList.add('open');
-      }, 120);
-
-      if (window.lucide) lucide.createIcons();
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
     }
 
     function confirmCloseSimulatedDoor() {
@@ -1514,843 +1357,486 @@
       const btn = document.getElementById('btn-confirm-close-door');
       btn.disabled = true;
 
-      // Đóng cánh cửa 3D
       door.classList.remove('open');
       document.getElementById('sim-sensor-text').textContent = 'DOOR: LOCKED';
       document.getElementById('sim-status-badge').className = 'inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-extrabold bg-blue-100 text-blue-800 uppercase tracking-wide';
       document.getElementById('sim-status-badge').innerHTML = '<span>🔒 Đã Đóng Tủ An Toàn</span>';
-      document.getElementById('sim-modal-title').textContent = `Đã Đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')} Xong!`;
 
       setTimeout(() => {
         const modal = document.getElementById('locker-door-sim-modal');
+        const card = document.getElementById('locker-door-sim-card');
         modal.classList.add('opacity-0', 'pointer-events-none');
+        card.classList.add('scale-95');
 
-        if (pendingDoorAction.mode === 'SHIPPER_DROP') {
-          // 1. Cập nhật trạng thái ngăn tủ thực tế sang OCCUPIED
-          const box = deliveryBoxes.find(b => b.id === pendingDoorAction.boxId);
-          if (box) {
-            box.status = 'OCCUPIED';
-            box.parcel = {
-              phone: pendingDoorAction.phone,
-              trackingCode: pendingDoorAction.trackingCode,
-              last4: pendingDoorAction.last4,
-              time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-            };
-          }
+        if (pendingDoorAction.type === 'dropoff') {
+          const { box, phone, tracking } = pendingDoorAction;
+          box.status = 'OCCUPIED';
+          box.parcel = {
+            tracking,
+            phone,
+            time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+          };
 
-          // 2. Đồng bộ lại toàn bộ số ô trống
-          syncAllCabinetUI();
-
-          // 3. Gửi thông báo sang giao diện tin nhắn 1/2 của khách hàng đúng theo câu chữ yêu cầu
-          pushCustomerMessage({
-            phone: pendingDoorAction.phone,
-            type: 'SHIPPER',
-            title: 'Thông Báo Đơn Hàng Mới',
-            bodyHtml: `Bạn có 1 đơn hàng shopper mã vận đơn 4 số cuối là <b class="text-emerald-700 text-sm font-mono underline">${pendingDoorAction.last4}</b> (Tại Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')}).`,
-            highlightCode: pendingDoorAction.last4
+          pushCustomerPickupNotification({
+            type: 'dropoff',
+            title: 'Kiện Hàng Mới Tại Tủ SmartLocker',
+            boxLabel: box.label,
+            code: tracking.slice(-4) || tracking,
+            fullTracking: tracking,
+            phone: phone,
+            time: box.parcel.time
           });
 
-          showPhoneToast(`Đã đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')} & gửi tin nhắn cho khách!`);
+          const phoneInput = document.getElementById('recipient-phone-input');
+          const trackingInput = document.getElementById('tracking-code-input');
+          if (phoneInput) phoneInput.value = '';
+          if (trackingInput) trackingInput.value = '';
 
-          // Tạo sẵn mã vận đơn ngẫu nhiên mới cho lần gửi tiếp theo
-          generateRandomTracking();
-        } else if (pendingDoorAction.mode === 'RESIDENT_PICKUP') {
-          // Giải phóng ngăn tủ về AVAILABLE (Trống)
-          const box = deliveryBoxes.find(b => b.id === pendingDoorAction.boxId);
-          if (box) {
-            box.status = 'AVAILABLE';
-            box.parcel = null;
-          }
+          showPhoneToast('Đã gửi kiện hàng vào Ngăn ' + box.label + ' thành công!', '✅');
+          AudioEngine.successChime();
+        } else if (pendingDoorAction.type === 'rental_pickup') {
+          const { token } = pendingDoorAction;
+          const tool = rentalItems.find(t => t.id === token.toolId);
+          if (tool) tool.status = 'RENTED';
 
-          // Đồng bộ lại số ô trống
-          syncAllCabinetUI();
+          activeRentalTokens = activeRentalTokens.filter(t => t.code !== token.code);
+          updateRentalPickupHint();
 
-          // Hiệu ứng pháo giấy chúc mừng nhận hàng thành công
+          const codeInput = document.getElementById('rental-pickup-code-input');
+          if (codeInput) codeInput.value = '';
+
           if (window.confetti) {
-            confetti({ particleCount: 65, spread: 60, origin: { y: 0.6 } });
+            confetti({ particleCount: 70, spread: 60, origin: { y: 0.6 } });
           }
 
-          showPhoneToast(`Đã nhận hàng & đóng Ngăn ${String(pendingDoorAction.boxId).padStart(2, '0')}. Ngăn tủ đã trống!`);
-
-          // Xóa form nhận hàng
-          document.getElementById('pickup-phone-input').value = '';
-          document.getElementById('pickup-tracking-input').value = '';
+          showPhoneToast('Đã nhận ' + token.toolName + ' thành công!', '🎉');
+          AudioEngine.successChime();
         }
 
         pendingDoorAction = null;
-      }, 650);
+        syncAllCabinetUI();
+      }, 700);
     }
 
     // =========================================================================
-    // 8. LUỒNG 2: KHÁCH HÀNG NHẬN HÀNG (NHẬP SĐT + MÃ VẬN ĐƠN -> MỞ & ĐÓNG TỦ)
+    // 9. LOGIC MÁY KHÁCH HÀNG: HỘP THƯ NHẬN ĐỒ & THÔNG BÁO SMS/ZALO
     // =========================================================================
-    function renderActiveParcelsList() {
-      const container = document.getElementById('active-parcels-list');
-      if (!container) return;
+    function pushCustomerPickupNotification({ type, title, boxLabel, code, fullTracking, phone, time }) {
+      const container = document.getElementById('customer-pickup-messages-container');
+      const emptyState = document.getElementById('customer-pickup-empty-state');
+      const countBadge = document.getElementById('customer-pickup-count');
+      const ownerNumber = document.getElementById('mini-phone-owner-number');
 
-      const occupied = deliveryBoxes.filter(b => b.status === 'OCCUPIED' && b.parcel);
-      if (occupied.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-3 text-xs text-slate-400 font-medium">
-            Hiện tất cả 6 ngăn giao nhận đều đang trống. Hãy qua mục <b>Gửi Hàng</b> để gửi thử 1 đơn!
-          </div>
-        `;
-        return;
+      if (phone && ownerNumber) {
+        ownerNumber.textContent = 'SĐT: ' + phone;
       }
 
-      container.innerHTML = occupied.map(b => `
-        <div onclick="fillPickupForm('${b.parcel.phone}', '${b.parcel.last4}')" class="press-effect cursor-pointer bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 rounded-xl p-2.5 flex items-center justify-between transition">
-          <div class="flex items-center space-x-2">
-            <span class="w-7 h-7 rounded-lg bg-amber-100 text-amber-800 font-black text-xs flex items-center justify-center">
-              ${String(b.id).padStart(2, '0')}
-            </span>
-            <div>
-              <div class="text-xs font-extrabold text-slate-800">SĐT: ${b.parcel.phone}</div>
-              <div class="text-[10px] font-semibold text-slate-500">MVĐ: ${b.parcel.trackingCode} (4 số cuối: <b class="text-emerald-700">${b.parcel.last4}</b>)</div>
-            </div>
-          </div>
-          <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-lg">Điền nhanh</span>
-        </div>
-      `).join('');
+      if (emptyState) emptyState.classList.add('hidden');
+
+      const card = document.createElement('div');
+      card.className = 'bg-white border-2 border-emerald-200 rounded-3xl p-3.5 space-y-2.5 shadow-sm transform transition-all duration-300 animate-slide-in';
+      card.innerHTML = 
+        '<div class="flex items-center justify-between border-b border-slate-100 pb-2">' +
+          '<div class="flex items-center space-x-2">' +
+            '<span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">SL</span>' +
+            '<div>' +
+              '<span class="text-xs font-black text-slate-900 block">' + title + '</span>' +
+              '<span class="text-[10px] text-slate-400 font-medium font-mono">' + time + ' • SMS/Zalo OA</span>' +
+            '</div>' +
+          '</div>' +
+          '<span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Chờ Lấy Hàng</span>' +
+        '</div>' +
+        '<div class="bg-slate-50 rounded-2xl p-2.5 space-y-1 border border-slate-100">' +
+          '<div class="flex justify-between items-center text-xs">' +
+            '<span class="text-slate-500 font-semibold">Ngăn tủ lưu trữ:</span>' +
+            '<span class="font-black text-slate-900 bg-white px-2 py-0.5 rounded-md border border-slate-200">Ngăn ' + boxLabel + '</span>' +
+          '</div>' +
+          '<div class="flex justify-between items-center text-xs">' +
+            '<span class="text-slate-500 font-semibold">Mã nhận đồ:</span>' +
+            '<span class="font-mono font-black text-emerald-600 text-sm tracking-wider">' + code + '</span>' +
+          '</div>' +
+          (fullTracking ? '<div class="flex justify-between items-center text-[10px] text-slate-400 font-mono"><span>Vận đơn:</span><span>' + fullTracking + '</span></div>' : '') +
+        '</div>' +
+        '<p class="text-[11px] text-slate-600 font-medium leading-relaxed">' +
+          'Quý khách vui lòng ra tủ SmartLocker và nhập mã nhận đồ trên để nhận kiện hàng.' +
+        '</p>';
+
+      if (container) {
+        container.prepend(card);
+        const total = container.children.length;
+        if (countBadge) countBadge.textContent = total;
+      }
+
+      if (window.lucide) window.lucide.createIcons();
     }
 
-    function fillPickupForm(phone, last4) {
-      AudioEngine.beep(600, 0.04);
-      document.getElementById('pickup-phone-input').value = phone;
-      document.getElementById('pickup-tracking-input').value = last4;
-      document.getElementById('pickup-error-msg').classList.add('hidden');
-    }
+    function clearCustomerMiniPhone(reason = 'Làm mới') {
+      AudioEngine.beep(420, 0.05);
+      const container = document.getElementById('customer-pickup-messages-container');
+      const emptyState = document.getElementById('customer-pickup-empty-state');
+      const countBadge = document.getElementById('customer-pickup-count');
+      const aiScroll = document.getElementById('ai-messages-scroll');
 
-    function executeResidentPickupByForm() {
-      const phoneVal = document.getElementById('pickup-phone-input').value.replace(/[^0-9]/g, '');
-      const trackingVal = document.getElementById('pickup-tracking-input').value.trim().toUpperCase();
-      const errBox = document.getElementById('pickup-error-msg');
-      const errText = document.getElementById('pickup-error-text');
+      if (container) container.innerHTML = '';
+      if (emptyState) emptyState.classList.remove('hidden');
+      if (countBadge) countBadge.textContent = '0';
+      if (aiScroll) aiScroll.innerHTML = '';
 
-      if (!phoneVal || !trackingVal) {
-        AudioEngine.beep(250, 0.15);
-        errBox.classList.remove('hidden');
-        errText.textContent = 'Vui lòng nhập đầy đủ Số điện thoại và Mã vận đơn (4 số cuối)!';
-        return;
-      }
-
-      // Tìm ngăn tủ có SĐT và mã vận đơn (khớp 4 số cuối hoặc toàn bộ mã)
-      const matchedBox = deliveryBoxes.find(b => {
-        if (b.status !== 'OCCUPIED' || !b.parcel) return false;
-        const phoneMatch = b.parcel.phone === phoneVal;
-        const trackingDigits = trackingVal.replace(/[^0-9]/g, '');
-        const codeMatch =
-          b.parcel.last4 === trackingVal ||
-          b.parcel.last4 === trackingDigits.slice(-4) ||
-          b.parcel.trackingCode.toUpperCase() === trackingVal;
-        return phoneMatch && codeMatch;
-      });
-
-      if (!matchedBox) {
-        AudioEngine.beep(250, 0.15);
-        errBox.classList.remove('hidden');
-        errText.textContent = 'Không tìm thấy đơn hàng nào khớp với SĐT và Mã vận đơn bạn vừa nhập!';
-        return;
-      }
-
-      errBox.classList.add('hidden');
-
-      // Khớp thành công -> Mở cửa tủ (giả lập mở tủ & đóng tủ)
-      pendingDoorAction = {
-        mode: 'RESIDENT_PICKUP',
-        boxId: matchedBox.id,
-        boxSize: matchedBox.size,
-        phone: matchedBox.parcel.phone,
-        trackingCode: matchedBox.parcel.trackingCode,
-        last4: matchedBox.parcel.last4
-      };
-
-      openDoorSimulationModal({
-        boxId: matchedBox.id,
-        boxSize: matchedBox.size,
-        title: `Xác Thực Đúng! Mở Ngăn ${String(matchedBox.id).padStart(2, '0')}`,
-        subtitle: `Khách hàng (${matchedBox.parcel.phone}) vui lòng lấy đơn hàng [${matchedBox.parcel.trackingCode}] và đóng cửa tủ.`,
-        contentEmoji: '🎁',
-        contentText: `Đơn ${matchedBox.parcel.last4}`,
-        buttonText: 'Đã Lấy Hàng & Đóng Cửa Tủ'
-      });
+      activeRentalTokens = [];
+      updateRentalPickupHint();
+      showPhoneToast('Đã làm mới màn hình khách hàng', '✨');
     }
 
     // =========================================================================
-    // 9. LUỒNG 3: THUÊ ĐỒ TIỆN ÍCH (CHỌN BLOCK 3H -> QR XÁC THỰC -> QR THANH TOÁN -> MỞ/ĐÓNG TỦ -> TIN NHẮN)
+    // 10. LOGIC MÁY KHÁCH HÀNG: THUÊ ĐỒ & POPUP VIETQR CHUẨN NGÂN HÀNG
     // =========================================================================
     function renderRentalCatalogGrid() {
-      const grid = document.getElementById('rental-catalog-grid');
+      const grid = document.getElementById('customer-rental-catalog-grid');
       if (!grid) return;
+      grid.innerHTML = '';
 
-      grid.innerHTML = rentalItems.map(item => {
+      rentalItems.forEach(item => {
+        const svg = REALISTIC_TOOL_SVGS[item.key] || '<div class="text-2xl">🔧</div>';
         const isAvail = item.status === 'AVAILABLE';
-        const svgContent = REALISTIC_TOOL_SVGS[item.svgKey] || '';
-        return `
-          <div class="bg-white border-2 ${isAvail ? 'border-slate-200' : 'border-amber-300 bg-amber-50/30'} rounded-2xl p-3 flex flex-col justify-between transition-all shadow-2xs">
-            <div>
-              <div class="flex items-start justify-between mb-2">
-                <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center p-1 shadow-2xs">
-                  ${svgContent}
-                </div>
-                <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full ${
-                  isAvail ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
-                }">
-                  ${isAvail ? 'Sẵn sàng' : `Đang thuê (${item.blocks} block)`}
-                </span>
-              </div>
-              <div class="text-xs font-extrabold text-slate-900 leading-tight">${item.name}</div>
-              <div class="text-[11px] font-bold text-amber-600 mt-0.5">
-                ${item.pricePerBlock.toLocaleString('vi-VN')}đ/block 3h • Ngăn ${String(item.boxId).padStart(2, '0')}
-              </div>
-            </div>
+        const card = document.createElement('div');
+        card.className = 'bg-white border-2 ' + (isAvail ? 'border-slate-200' : 'border-slate-100 opacity-60') + ' rounded-3xl p-3 flex flex-col justify-between shadow-xs transition-all hover:border-brand/40';
 
-            ${isAvail ? `
-              <button onclick="openRentalModal('${item.id}')" class="press-effect w-full mt-2.5 bg-brand hover:bg-brandDark text-white py-2 rounded-xl font-extrabold text-xs shadow-xs flex items-center justify-center space-x-1">
-                <span>Thuê Ngay</span>
-              </button>
-            ` : `
-              <button onclick="returnRentedItem('${item.id}')" class="press-effect w-full mt-2.5 bg-emerald-600 hover:bg-emerald-700 text-white py-2 rounded-xl font-extrabold text-xs shadow-xs flex items-center justify-center space-x-1">
-                <span>Trả Đồ Vào Tủ</span>
-              </button>
-            `}
-          </div>
-        `;
-      }).join('');
+        card.innerHTML = 
+          '<div>' +
+            '<div class="flex justify-between items-center mb-1.5">' +
+              '<span class="text-[10px] font-black px-2 py-0.5 rounded-full ' + (isAvail ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500') + '">' +
+                (isAvail ? 'Sẵn sàng' : 'Đang thuê') +
+              '</span>' +
+              '<span class="text-[10px] font-bold text-slate-400 font-mono">Ngăn ' + String(item.boxId).padStart(2, '0') + '</span>' +
+            '</div>' +
+            '<div class="w-16 h-16 mx-auto flex items-center justify-center p-1 bg-slate-50 rounded-2xl border border-slate-100 mb-2">' +
+              svg +
+            '</div>' +
+            '<h4 class="text-xs font-black text-slate-900 leading-snug line-clamp-1">' + item.name + '</h4>' +
+            '<p class="text-[11px] font-extrabold text-amber-600 mt-0.5">' + (item.rate).toLocaleString('vi-VN') + 'đ / block 3h</p>' +
+          '</div>' +
+          '<button type="button" onclick="openRentalModal(\'' + item.id + '\')" ' + (!isAvail ? 'disabled' : '') + ' class="press-effect w-full mt-2.5 ' + (isAvail ? 'bg-brand hover:bg-brandDark text-white' : 'bg-slate-200 text-slate-400 cursor-not-allowed') + ' py-2 rounded-xl font-black text-xs shadow-xs transition-all">' +
+            (isAvail ? 'Thuê Ngay' : 'Đang Sử Dụng') +
+          '</button>';
+        grid.appendChild(card);
+      });
+
+      if (window.lucide) window.lucide.createIcons();
     }
 
     function openRentalModal(toolId) {
-      const item = rentalItems.find(i => i.id === toolId);
-      if (!item) return;
+      AudioEngine.beep(650, 0.04);
+      currentRentalItem = rentalItems.find(t => t.id === toolId);
+      if (!currentRentalItem) return;
 
-      AudioEngine.beep(600, 0.06);
+      selectedBlockHours = 1;
+      document.getElementById('rental-modal-name').textContent = currentRentalItem.name;
+      document.getElementById('rental-modal-box').textContent = 'Ngăn ' + String(currentRentalItem.boxId).padStart(2, '0');
+      document.getElementById('rental-modal-rate').textContent = (currentRentalItem.rate).toLocaleString('vi-VN') + 'đ / 1 Block (3 giờ)';
+      document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[currentRentalItem.key] || '🔧';
 
-      // LƯU Ý QUAN TRỌNG: Mỗi lần nhấn thuê đồ đều xóa trắng giao diện 1/2 bên cạnh
-      const defaultPhone = document.getElementById('rental-customer-phone')?.value || '0912345678';
-      clearCustomerMiniPhone(`Bắt đầu phiên thuê: ${item.name}`, defaultPhone);
-
-      activeRentalSession = {
-        item,
-        blocks: 1,
-        hours: 3,
-        totalPrice: item.pricePerBlock,
-        phone: defaultPhone
-      };
-
-      // Điền thông tin vào header modal
-      document.getElementById('rental-modal-svg').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
-      document.getElementById('rental-modal-name').textContent = item.name;
-      document.getElementById('rental-modal-box').textContent = `Ngăn ${String(item.boxId).padStart(2, '0')}`;
-      document.getElementById('rental-modal-rate').textContent = `${item.pricePerBlock.toLocaleString('vi-VN')}đ / 1 Block (3 giờ)`;
-
-      // Reset về Bước 1
-      showRentalStep(1);
       selectRentalBlocks(1);
+      showRentalStep(1);
 
       const modal = document.getElementById('rental-flow-modal');
       const panel = document.getElementById('rental-flow-panel');
       modal.classList.remove('opacity-0', 'pointer-events-none');
       panel.classList.remove('translate-y-full');
-
-      if (window.lucide) lucide.createIcons();
+      panel.classList.add('translate-y-0');
     }
 
     function closeRentalModal() {
-      AudioEngine.beep(420, 0.05);
+      AudioEngine.beep(480, 0.03);
       const modal = document.getElementById('rental-flow-modal');
       const panel = document.getElementById('rental-flow-panel');
+      panel.classList.remove('translate-y-0');
       panel.classList.add('translate-y-full');
-      modal.classList.add('opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }, 250);
+    }
+
+    function closeRentalModalAfterSuccess() {
+      closeRentalModal();
+      switchCustomerTab('pickup');
     }
 
     function showRentalStep(stepNum) {
-      const titles = {
-        1: 'Bước 1/4 • Chọn Sản Phẩm & Số Block Giờ',
-        2: 'Bước 2/4 • Quét Mã QR Xác Thực Định Danh',
-        3: 'Bước 3/4 • Quét Mã QR Thanh Toán',
-        4: 'Bước 4/4 • Mở Tủ & Đóng Tủ Lấy Đồ'
-      };
-      document.getElementById('rental-step-indicator').textContent = titles[stepNum] || '';
-
       document.getElementById('rental-step-1-blocks').classList.toggle('hidden', stepNum !== 1);
-      document.getElementById('rental-step-2-auth').classList.toggle('hidden', stepNum !== 2);
-      document.getElementById('rental-step-3-payment').classList.toggle('hidden', stepNum !== 3);
-      document.getElementById('rental-step-4-door').classList.toggle('hidden', stepNum !== 4);
+      document.getElementById('rental-step-3-payment').classList.toggle('hidden', stepNum !== 2);
+      document.getElementById('rental-step-4-code').classList.toggle('hidden', stepNum !== 3);
+
+      const titles = {
+        1: 'Bước 1/3 • Chọn Thời Gian Thuê',
+        2: 'Bước 2/3 • Quét VietQR Thanh Toán',
+        3: 'Bước 3/3 • Cấp Mã Số Mở Tủ'
+      };
+      const titleEl = document.getElementById('rental-step-indicator');
+      if (titleEl) titleEl.textContent = titles[stepNum] || '';
+      if (window.lucide) window.lucide.createIcons();
     }
 
-    function selectRentalBlocks(blockCount) {
-      if (!activeRentalSession) return;
-      AudioEngine.beep(550, 0.04);
-
-      activeRentalSession.blocks = blockCount;
-      activeRentalSession.hours = blockCount * 3;
-      activeRentalSession.totalPrice = blockCount * activeRentalSession.item.pricePerBlock;
-
-      [1, 2, 3, 4].forEach(n => {
-        const btn = document.getElementById(`block-btn-${n}`);
+    function selectRentalBlocks(blocks) {
+      selectedBlockHours = blocks;
+      [1, 2, 3, 4].forEach(b => {
+        const btn = document.getElementById('block-btn-' + b);
         if (!btn) return;
-        if (n === blockCount) {
+        if (b === blocks) {
           btn.className = 'press-effect border-2 border-brand bg-brandLight rounded-xl p-2.5 text-center';
         } else {
           btn.className = 'press-effect border-2 border-slate-200 bg-white rounded-xl p-2.5 text-center';
         }
       });
 
-      document.getElementById('rental-summary-hours').textContent = `${blockCount} Block (${activeRentalSession.hours} giờ sử dụng)`;
-      document.getElementById('rental-summary-price').textContent = `${activeRentalSession.totalPrice.toLocaleString('vi-VN')}đ`;
-    }
-
-    function goToRentalStep2AuthQr() {
-      if (!activeRentalSession) return;
-      const phoneVal = document.getElementById('rental-customer-phone').value.replace(/[^0-9]/g, '') || '0912345678';
-      activeRentalSession.phone = phoneVal;
-
-      // Cập nhật SĐT lên màn hình 1/2 đã xóa trắng
-      clearCustomerMiniPhone(`Khách ${phoneVal} đang thuê ${activeRentalSession.item.name}`, phoneVal);
-
-      AudioEngine.beep(680, 0.06);
-      showRentalStep(2);
-
-      // Reset trạng thái QR xác thực
-      document.getElementById('auth-spinner-overlay').classList.add('hidden');
-      document.getElementById('auth-success-overlay').classList.add('hidden');
-      document.getElementById('btn-simulate-auth').disabled = false;
-      document.getElementById('btn-simulate-auth').classList.remove('opacity-50');
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function triggerSimulateAuthSpinner() {
-      AudioEngine.beep(720, 0.07);
-      const spinner = document.getElementById('auth-spinner-overlay');
-      const success = document.getElementById('auth-success-overlay');
-      const btn = document.getElementById('btn-simulate-auth');
-
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      spinner.classList.remove('hidden');
-
-      // Animation quay quay 1.1 giây -> báo xác thực thành công -> tự chuyển sang QR thanh toán
-      setTimeout(() => {
-        AudioEngine.beep(880, 0.1);
-        spinner.classList.add('hidden');
-        success.classList.remove('hidden');
-        if (window.lucide) lucide.createIcons();
-
-        setTimeout(() => {
-          goToRentalStep3PaymentQr();
-        }, 750);
-      }, 1100);
+      const totalCost = (currentRentalItem ? currentRentalItem.rate : 25000) * blocks;
+      document.getElementById('rental-summary-hours').textContent = blocks + ' Block (' + (blocks * 3) + ' giờ sử dụng)';
+      document.getElementById('rental-summary-cost').textContent = totalCost.toLocaleString('vi-VN') + ' VNĐ';
     }
 
     function goToRentalStep3PaymentQr() {
-      if (!activeRentalSession) return;
-      showRentalStep(3);
+      AudioEngine.beep(680, 0.04);
+      if (!currentRentalItem) return;
 
-      document.getElementById('payment-block-badge').textContent = `${activeRentalSession.blocks} Block (${activeRentalSession.hours} giờ)`;
-      document.getElementById('payment-amount-display').textContent = `${activeRentalSession.totalPrice.toLocaleString('vi-VN')} VNĐ`;
-      const memoEl = document.getElementById('payment-memo-display');
-      if (memoEl) memoEl.textContent = `Nội dung: THUE DO NGAN ${String(activeRentalSession.item.boxId).padStart(2, '0')}`;
+      const totalCost = currentRentalItem.rate * selectedBlockHours;
+      document.getElementById('payment-amount-display').textContent = totalCost.toLocaleString('vi-VN') + ' VNĐ';
+      document.getElementById('payment-memo-display').textContent = 'Nội dung: THUE NGAN ' + String(currentRentalItem.boxId).padStart(2, '0');
 
-      document.getElementById('payment-spinner-overlay').classList.add('hidden');
-      document.getElementById('payment-success-overlay').classList.add('hidden');
+      const spinner = document.getElementById('payment-processing-spinner');
+      const success = document.getElementById('payment-success-overlay');
       const btn = document.getElementById('btn-simulate-payment');
-      btn.disabled = false;
-      btn.classList.remove('opacity-50');
-      if (window.lucide) lucide.createIcons();
+      if (spinner) spinner.classList.add('hidden');
+      if (success) success.classList.add('hidden');
+      if (btn) btn.disabled = false;
+
+      showRentalStep(2);
     }
 
     function triggerSimulatePaymentSpinner() {
-      AudioEngine.beep(750, 0.07);
-      const spinner = document.getElementById('payment-spinner-overlay');
+      AudioEngine.beep(750, 0.05);
+      const spinner = document.getElementById('payment-processing-spinner');
       const success = document.getElementById('payment-success-overlay');
       const btn = document.getElementById('btn-simulate-payment');
+      if (btn) btn.disabled = true;
+      if (spinner) spinner.classList.remove('hidden');
 
-      btn.disabled = true;
-      btn.classList.add('opacity-50');
-      spinner.classList.remove('hidden');
-
-      // Animation quay quay thanh toán 1.1 giây -> thành công -> chuyển sang mở tủ
       setTimeout(() => {
-        AudioEngine.beep(960, 0.12);
-        spinner.classList.add('hidden');
-        success.classList.remove('hidden');
-        if (window.lucide) lucide.createIcons();
+        if (spinner) spinner.classList.add('hidden');
+        if (success) success.classList.remove('hidden');
+        AudioEngine.successChime();
 
         setTimeout(() => {
-          goToRentalStep4OpenDoor();
-        }, 750);
-      }, 1100);
+          const pinCode = String(Math.floor(1000 + Math.random() * 9000));
+          const token = {
+            code: pinCode,
+            toolId: currentRentalItem.id,
+            toolName: currentRentalItem.name,
+            boxId: currentRentalItem.boxId,
+            hours: selectedBlockHours * 3,
+            time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+          };
+
+          activeRentalTokens.push(token);
+
+          document.getElementById('rental-issued-pin').textContent = pinCode;
+          document.getElementById('rental-issued-info').textContent = 'Ngăn ' + String(token.boxId).padStart(2, '0') + ' • ' + token.toolName;
+          showRentalStep(3);
+
+          updateRentalPickupHint();
+
+          pushCustomerPickupNotification({
+            type: 'rental',
+            title: 'Mã Thuê ' + token.toolName,
+            boxLabel: String(token.boxId).padStart(2, '0'),
+            code: pinCode,
+            fullTracking: 'THUE-' + pinCode,
+            phone: '0981056245',
+            time: token.time
+          });
+
+        }, 900);
+      }, 1000);
     }
 
-    function goToRentalStep4OpenDoor() {
-      if (!activeRentalSession) return;
-      AudioEngine.solenoidUnlock();
-      showRentalStep(4);
+    function updateRentalPickupHint() {
+      const hintBox = document.getElementById('rental-active-tokens-hint');
+      const hintText = document.getElementById('rental-token-hint-text');
+      const waitCount = document.getElementById('rental-waiting-pickup-count');
 
-      const item = activeRentalSession.item;
-      document.getElementById('rental-door-title').textContent = `Cửa Ngăn ${String(item.boxId).padStart(2, '0')} Đang Mở!`;
-      document.getElementById('rental-cavity-icon').innerHTML = REALISTIC_TOOL_SVGS[item.svgKey] || '';
-      document.getElementById('rental-cavity-name').textContent = item.name;
-      document.getElementById('rental-door-num').textContent = `${String(item.boxId).padStart(2, '0')}`;
+      if (!hintBox || !hintText) return;
 
-      const door = document.getElementById('rental-animated-door');
-      door.classList.remove('open');
-      setTimeout(() => door.classList.add('open'), 100);
-
-      const btn = document.getElementById('btn-close-rental-door');
-      btn.disabled = false;
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function confirmCloseRentalDoor() {
-      if (!activeRentalSession) return;
-      AudioEngine.doorCloseSound();
-
-      const door = document.getElementById('rental-animated-door');
-      const btn = document.getElementById('btn-close-rental-door');
-      btn.disabled = true;
-      door.classList.remove('open');
-
-      const { item, blocks, hours, totalPrice, phone } = activeRentalSession;
-
-      setTimeout(() => {
-        closeRentalModal();
-
-        // 1. Cập nhật trạng thái thiết bị sang RENTED (trừ 1 thiết bị sẵn có trong tủ)
-        const targetItem = rentalItems.find(i => i.id === item.id);
-        if (targetItem) {
-          targetItem.status = 'RENTED';
-          targetItem.rentedBy = phone;
-          targetItem.blocks = blocks;
-        }
-
-        // 2. Đồng bộ lại toàn bộ số ô trống / thiết bị sẵn có
-        syncAllCabinetUI();
-
-        // 3. Gửi thông tin lên giao diện 1/2 của khách hàng là đã thuê món gì trong mấy block
-        pushCustomerMessage({
-          phone: phone,
-          type: 'RENTAL',
-          title: 'Xác Nhận Thuê Thiết Bị',
-          bodyHtml: `Bạn đã thuê thành công <b class="text-brand">${item.name}</b> (Ngăn ${String(item.boxId).padStart(2, '0')}) trong <b class="text-emerald-700">${blocks} block (${hours} giờ)</b>.<br/>Tổng thanh toán: <b>${totalPrice.toLocaleString('vi-VN')} VNĐ</b>.`,
-          highlightCode: null
-        });
-
-        if (window.confetti) {
-          confetti({ particleCount: 60, spread: 55, origin: { y: 0.6 } });
-        }
-
-        showPhoneToast(`Đã đóng Ngăn ${String(item.boxId).padStart(2, '0')} & gửi xác nhận thuê ${blocks} block!`);
-        activeRentalSession = null;
-      }, 600);
-    }
-
-    function returnRentedItem(toolId) {
-      const item = rentalItems.find(i => i.id === toolId);
-      if (!item) return;
-
-      AudioEngine.solenoidUnlock();
-      item.status = 'AVAILABLE';
-      item.rentedBy = null;
-      item.blocks = 0;
-
-      syncAllCabinetUI();
-      showPhoneToast(`Đã mở & đóng Ngăn ${String(item.boxId).padStart(2, '0')}: Trả lại [${item.name}] thành công!`);
-    }
-
-    // =========================================================================
-    // 10. ĐIỀU HƯỚNG TAB & TIỆN ÍCH CHUNG
-    // =========================================================================
-    function switchTab(tabName) {
-      AudioEngine.beep(580, 0.04);
-      const tabs = ['shipper', 'resident', 'rental'];
-      tabs.forEach(t => {
-        const content = document.getElementById(`tab-content-${t}`);
-        const navBtn = document.getElementById(`nav-btn-${t}`);
-        if (t === tabName) {
-          content.classList.remove('hidden');
-          navBtn.classList.remove('text-slate-400');
-          navBtn.classList.add('text-brand');
-        } else {
-          content.classList.add('hidden');
-          navBtn.classList.add('text-slate-400');
-          navBtn.classList.remove('text-brand');
-        }
-      });
-
-      // Mỗi lần nhấn tab Gửi Hàng hoặc Thuê Đồ đều làm mới (xóa trắng) màn hình 1/2 bên cạnh
-      if (tabName === 'shipper') {
-        clearCustomerMiniPhone('Chuyển sang chế độ Gửi Hàng (Khách hàng mới)');
-      } else if (tabName === 'rental') {
-        clearCustomerMiniPhone('Chuyển sang chế độ Thuê Đồ (Khách hàng mới)');
+      if (activeRentalTokens.length > 0) {
+        const lastToken = activeRentalTokens[activeRentalTokens.length - 1];
+        hintText.textContent = 'Mã vừa thuê: ' + lastToken.code + ' (Ngăn ' + String(lastToken.boxId).padStart(2, '0') + ')';
+        hintBox.classList.remove('hidden');
+        if (waitCount) waitCount.textContent = activeRentalTokens.length;
+      } else {
+        hintBox.classList.add('hidden');
+        if (waitCount) waitCount.textContent = '0';
       }
-      syncAllCabinetUI();
     }
 
-    function resetAllDemo() {
-      AudioEngine.beep(500, 0.08);
-      deliveryBoxes = JSON.parse(JSON.stringify(INITIAL_DELIVERY_BOXES));
-      rentalItems = JSON.parse(JSON.stringify(INITIAL_RENTAL_ITEMS));
-      currentSelectedSize = 'S';
-      selectLockerSize('S');
-      clearCustomerMiniPhone('Đã khôi phục toàn bộ tủ về trạng thái ban đầu');
-      syncAllCabinetUI();
-      showPhoneToast('Đã khôi phục 12 ngăn tủ về trạng thái chuẩn!');
+    // =========================================================================
+    // 11. LOCAL CLIENT-SIDE AI ASSISTANT (TRỢ LÝ AI LOCAL TÍCH HỢP TRÊN MÁY KHÁCH)
+    // =========================================================================
+    const aiIntents = [
+      {
+        keywords: ['gui hang', 'gui do', 'gui', 'shipper', 'dat hang', 'bo hang'],
+        response: 'Để gửi hàng vào tủ: Tại màn hình tủ (bên trái), chọn tab **Gửi Hàng**, chọn cỡ ngăn S/M/L, nhập SĐT khách và mã vận đơn, bấm nút mở tủ. Sau khi đóng tủ, thông báo kèm mã mở tủ sẽ tự động gửi sang điện thoại khách hàng!'
+      },
+      {
+        keywords: ['nhan hang', 'nhan do', 'lay hang', 'lay do'],
+        response: 'Để nhận hàng: Khách hàng xem mã nhận hàng (4 số cuối) trong tab **Nhận Đồ** trên điện thoại. Khi có kiện hàng, hệ thống sẽ hiển thị rõ số ngăn tủ và mã lấy đồ!'
+      },
+      {
+        keywords: ['thue do', 'thue', 'vietqr', 'napas', 'thanh toan', 'ngan hang'],
+        response: 'Để thuê thiết bị: Trên điện thoại (máy khách bên phải), chuyển sang tab **Thuê Đồ**, chọn món cần thuê (Bộ Dụng Cụ, Máy Cắt, Máy Hút Bụi...) bấm Thuê Ngay, chọn thời gian và quét mã **VietQR ngân hàng**. Sau khi thanh toán, hệ thống sẽ cấp mã mở tủ 4 số!'
+      },
+      {
+        keywords: ['nhap ma', 'ma mo tu', 'pin', 'lay thiet bi', 'tu thue'],
+        response: 'Để lấy thiết bị đã thuê: Khách mang mã 4 số vừa nhận được, sang màn hình tủ (bên trái), chọn tab **Nhập Mã Thuê Đồ**, bấm số trên bàn phím cảm ứng (hoặc bấm Điền Nhanh) rồi nhấn Mở Ngăn Tủ!'
+      }
+    ];
+
+    function removeVietnameseTones(str) {
+      if (!str) return '';
+      return str.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+        .toLowerCase().trim();
     }
 
-    let toastTimer = null;
-    function showPhoneToast(msg) {
+    function matchAiIntent(query) {
+      const clean = removeVietnameseTones(query);
+      for (const item of aiIntents) {
+        if (item.keywords.some(k => clean.includes(k))) {
+          return item.response;
+        }
+      }
+      return 'Tôi có thể hỗ trợ bạn về: Cách gửi hàng cho shipper, Xem thông báo nhận đồ, Thuê thiết bị qua VietQR ngân hàng, hoặc Nhập mã mở tủ lấy thiết bị. Bạn muốn tìm hiểu mục nào?';
+    }
+
+    function handleAiQuickAsk(type) {
+      AudioEngine.beep(620, 0.04);
+      let text = '';
+      if (type === 'gui_hang') text = 'Làm sao để gửi hàng vào tủ?';
+      else if (type === 'nhan_hang') text = 'Làm sao để nhận kiện hàng?';
+      else if (type === 'thue_do') text = 'Cách thuê thiết bị và quét VietQR?';
+      else if (type === 'nhap_ma') text = 'Cách nhập mã tại tủ để lấy thiết bị?';
+
+      appendAiMessage('user', text);
+      const reply = matchAiIntent(text);
+      setTimeout(() => appendAiMessage('ai', reply), 300);
+    }
+
+    function sendAiUserMessage() {
+      const input = document.getElementById('ai-user-input');
+      if (!input || !input.value.trim()) return;
+      const text = input.value.trim();
+      input.value = '';
+
+      appendAiMessage('user', text);
+      const reply = matchAiIntent(text);
+      setTimeout(() => appendAiMessage('ai', reply), 300);
+    }
+
+    function appendAiMessage(role, text) {
+      const container = document.getElementById('ai-messages-scroll');
+      if (!container) return;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'flex items-start space-x-2 animate-fade-in ' + (role === 'user' ? 'justify-end' : '');
+
+      if (role === 'ai') {
+        bubble.innerHTML = 
+          '<div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shrink-0 text-xs shadow-xs">' +
+            '<i data-lucide="bot" class="w-3.5 h-3.5"></i>' +
+          '</div>' +
+          '<div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3 text-xs text-slate-800 shadow-xs max-w-[85%] leading-relaxed">' +
+            text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>') +
+          '</div>';
+      } else {
+        bubble.innerHTML = 
+          '<div class="bg-blue-600 text-white rounded-2xl rounded-tr-xs p-3 text-xs shadow-xs max-w-[85%] leading-relaxed font-medium">' +
+            text +
+          '</div>';
+      }
+
+      container.appendChild(bubble);
+      container.scrollTop = container.scrollHeight;
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 12. ĐỒNG BỘ TOÀN BỘ GIAO DIỆN & KHỞI CHẠY HỆ THỐNG
+    // =========================================================================
+    function syncAllCabinetUI() {
+      const freeBoxes = deliveryBoxes.filter(b => b.status === 'FREE').length;
+      const occupiedBoxes = deliveryBoxes.length - freeBoxes;
+      const freeS = deliveryBoxes.filter(b => b.size === 'S' && b.status === 'FREE').length;
+      const freeM = deliveryBoxes.filter(b => b.size === 'M' && b.status === 'FREE').length;
+      const freeL = deliveryBoxes.filter(b => b.size === 'L' && b.status === 'FREE').length;
+      const availRental = rentalItems.filter(r => r.status === 'AVAILABLE').length;
+
+      const freeText = document.getElementById('shipper-free-boxes-text');
+      const occText = document.getElementById('shipper-occupied-boxes-text');
+      const countS = document.getElementById('size-count-s');
+      const countM = document.getElementById('size-count-m');
+      const countL = document.getElementById('size-count-l');
+      const headerSum = document.getElementById('header-summary-status');
+      const rentalAvail = document.getElementById('rental-available-count');
+
+      if (freeText) freeText.textContent = freeBoxes;
+      if (occText) occText.textContent = occupiedBoxes;
+      if (countS) countS.textContent = 'Trống: ' + freeS;
+      if (countM) countM.textContent = 'Trống: ' + freeM;
+      if (countL) countL.textContent = 'Trống: ' + freeL;
+      if (rentalAvail) rentalAvail.textContent = availRental + '/6';
+      if (headerSum) headerSum.textContent = 'Trống ' + freeBoxes + '/6 ngăn gửi • Sẵn sàng ' + availRental + '/6 đồ thuê';
+
+      renderRentalCatalogGrid();
+    }
+
+    function showPhoneToast(msg, icon = '📦') {
       const toast = document.getElementById('phone-toast');
-      const text = document.getElementById('phone-toast-text');
-      if (!toast || !text) return;
+      const iconEl = document.getElementById('phone-toast-icon');
+      const msgEl = document.getElementById('phone-toast-msg');
+      if (!toast) return;
 
-      text.textContent = msg;
+      if (iconEl) iconEl.textContent = icon;
+      if (msgEl) msgEl.textContent = msg;
+
       toast.classList.remove('opacity-0', '-translate-y-4', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
+      setTimeout(() => {
         toast.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
-        toast.classList.remove('opacity-100', 'translate-y-0');
-      }, 3400);
+      }, 3000);
     }
 
     function updateClocks() {
       const now = new Date();
-      const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-      document.querySelectorAll('.live-clock').forEach(el => {
-        el.textContent = timeStr;
-      });
-    }
-    setInterval(updateClocks, 20000);
-    updateClocks();
-
-    // Auto-fit Screen Scaling
-    let isFitScreen = true;
-    function applyFitScreen() {
-      const stage = document.getElementById('presentation-stage');
-      if (!stage) return;
-      if (isFitScreen && window.innerWidth >= 1024) {
-        const availableHeight = window.innerHeight - 105;
-        const contentHeight = 875;
-        if (availableHeight < contentHeight) {
-          const scale = Math.max(0.66, Math.min(1, availableHeight / contentHeight));
-          stage.style.transform = `scale(${scale})`;
-          stage.style.transformOrigin = 'top center';
-          stage.style.marginBottom = `${-(contentHeight * (1 - scale))}px`;
-        } else {
-          stage.style.transform = 'none';
-          stage.style.marginBottom = '0px';
-        }
-      } else {
-        stage.style.transform = 'none';
-        stage.style.marginBottom = '0px';
-      }
+      const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+      document.querySelectorAll('.live-clock').forEach(el => el.textContent = timeStr);
     }
 
     function toggleFitScreen() {
-      isFitScreen = !isFitScreen;
-      const btn = document.getElementById('btn-fit-screen');
-      if (btn) {
-        btn.innerHTML = isFitScreen
-          ? '<i data-lucide="maximize" class="w-3.5 h-3.5"></i><span>Vừa Màn Hình</span>'
-          : '<i data-lucide="minimize" class="w-3.5 h-3.5"></i><span>Chuẩn 100%</span>';
-        lucide.createIcons();
+      const stage = document.getElementById('presentation-stage');
+      if (!stage) return;
+      if (stage.style.transform === 'scale(0.85)') {
+        stage.style.transform = 'scale(1)';
+        document.getElementById('btn-fit-screen').classList.remove('bg-brand', 'text-white');
+      } else {
+        stage.style.transform = 'scale(0.85)';
+        document.getElementById('btn-fit-screen').classList.add('bg-brand', 'text-white');
       }
-      applyFitScreen();
     }
-    window.addEventListener('resize', applyFitScreen);
 
-    // Khởi tạo
     window.addEventListener('DOMContentLoaded', () => {
+      setColorTheme('blue');
       syncAllCabinetUI();
-      lucide.createIcons();
-      applyFitScreen();
+      updateClocks();
+      setInterval(updateClocks, 10000);
+      if (window.lucide) window.lucide.createIcons();
     });
-    syncAllCabinetUI();
-    lucide.createIcons();
-    setTimeout(applyFitScreen, 120);
-  
 
-// =========================================================================
-    // 11. LOCAL CLIENT-SIDE AI ASSISTANT ENGINE (SMARTLOCKER AI GUIDE)
-    // =========================================================================
-    let isAiWidgetOpen = false;
-    let isAiResponding = false;
-
-    function toggleAiWidget() {
-      AudioEngine.beep(600, 0.05);
-      const chatWin = document.getElementById('ai-chat-window');
-      const label = document.getElementById('ai-toggle-btn-label');
-      if (!chatWin) return;
-
-      isAiWidgetOpen = !isAiWidgetOpen;
-      if (isAiWidgetOpen) {
-        chatWin.classList.remove('hidden');
-        chatWin.classList.add('flex');
-        if (label) label.textContent = 'Đóng Trợ Lý AI';
-        setTimeout(() => {
-          const input = document.getElementById('ai-user-input');
-          if (input) input.focus();
-        }, 150);
-      } else {
-        chatWin.classList.add('hidden');
-        chatWin.classList.remove('flex');
-        if (label) label.textContent = 'Trợ Lý AI Hướng Dẫn';
-      }
-      if (window.lucide) lucide.createIcons();
-    }
-
-    function removeVietnameseTones(str) {
-      if (!str) return '';
-      return str
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/đ/g, 'd')
-        .replace(/Đ/g, 'D')
-        .toLowerCase()
-        .trim();
-    }
-
-    const SMARTLOCKER_AI_KNOWLEDGE = {
-      gui_hang: {
-        keywords: ['gui hang', 'gui do', 'shipper', 'dat hang', 'gui', 'kich co', 'co ngan', 'size s', 'size m', 'size l', 'ma van don'],
-        title: 'Hướng dẫn chế độ Gửi Hàng (Shipper)',
-        responseHtml: `
-          <b>Quy trình Gửi Hàng vào tủ:</b><br/>
-          <b>1. Chọn Cỡ Ngăn:</b> Chọn cỡ <b>S</b>, <b>M</b>, hoặc <b>L</b> tùy kích thước kiện hàng.<br/>
-          <b>2. Nhập SĐT Khách:</b> Nhập số điện thoại khách nhận (có 2 nút Mẫu để điền nhanh).<br/>
-          <b>3. Mã Vận Đơn:</b> Hệ thống tự sinh mã (hoặc bấm đổi mã ngẫu nhiên).<br/>
-          <b>4. Mở Tủ:</b> Bấm <i>GỬI HÀNG & MỞ TỦ NGAY</i> để bung cửa tủ 3D.<br/>
-          <b>5. Đóng Tủ:</b> Bấm <i>Đã Đặt Hàng & Đóng Cửa Tủ</i>.<br/>
-          💡 <i>Ngay khi đóng tủ, tin nhắn kèm 4 số cuối mã vận đơn sẽ tự động gửi sang màn hình phụ 1/2 bên cạnh!</i>
-        `
-      },
-      nhan_hang: {
-        keywords: ['nhan hang', 'lay do', 'lay hang', 'nhan', 'cu dan', 'khach hang', '4 so cuoi', 'ma pin', 'xac thuc'],
-        title: 'Hướng dẫn chế độ Nhận Hàng (Cư dân)',
-        responseHtml: `
-          <b>Quy trình Nhận Hàng tại tủ:</b><br/>
-          <b>1. Chuyển Tab:</b> Bấm vào mục <b>Nhận Hàng</b> ở thanh điều hướng đáy màn hình.<br/>
-          <b>2. Nhập SĐT:</b> Nhập số điện thoại của bạn.<br/>
-          <b>3. Nhập Mã Vận Đơn:</b> Nhập 4 số cuối mã vận đơn (xem trên màn hình phụ 1/2 hoặc bấm <i>Điền nhanh</i> ở danh sách đơn đang lưu).<br/>
-          <b>4. Mở Tủ:</b> Bấm <i>XÁC THỰC & MỞ TỦ NHẬN HÀNG</i>.<br/>
-          <b>5. Lấy Đồ:</b> Lấy kiện hàng và bấm đóng tủ để giải phóng ngăn tủ về trạng thái trống!
-        `
-      },
-      thue_do: {
-        keywords: ['thue do', 'thue', 'thiet bi', 'vietqr', 'napas', 'thanh toan', 'ngan hang', 'block', '3h', '3 gio', 'may cat', 'may hut bui', 'may in', 'may chieu', 'may khoan', 'rua xe'],
-        title: 'Hướng dẫn Thuê Thiết Bị & Thanh Toán VietQR',
-        responseHtml: `
-          <b>Quy trình Thuê Thiết Bị Tiện Ích:</b><br/>
-          <b>1. Chuyển Tab:</b> Bấm vào mục <b>Thuê Đồ</b> ở đáy màn hình điện thoại.<br/>
-          <b>2. Chọn Đồ:</b> Chọn 1 trong 6 thiết bị (Máy cắt tay, Máy hút bụi, Máy in, Máy chiếu, Máy khoan, Máy rửa xe).<br/>
-          <b>3. Chọn Block:</b> Quy ước <b>1 Block = 3 Giờ</b>. Chọn từ 1 đến 4 Block (3h đến 12h).<br/>
-          <b>4. Xác Thực QR:</b> Quét mã QR định danh VNeID/Zalo -> Giả lập quay quay xác thực thành công.<br/>
-          <b>5. Thanh Toán VietQR:</b> Hệ thống hiển thị mã VietQR ngân hàng (MBBank, NAPAS 247) có sẵn STK, số tiền và nội dung chuyển khoản theo số ngăn tủ.<br/>
-          <b>6. Lấy Đồ:</b> Cửa tủ bung mở, lấy thiết bị và đóng tủ. Thông tin thuê sẽ được gửi sang điện thoại phụ bên cạnh!
-        `
-      },
-      man_hinh_phu: {
-        keywords: ['man hinh phu', 'man hinh 1/2', 'ben canh', 'nho', 'dien thoai phu', 'tin nhan', 'sms', 'zalo', 'xoa trang'],
-        title: 'Ý nghĩa Màn hình phụ 1/2 bên cạnh',
-        responseHtml: `
-          <b>Vai trò của Màn hình phụ (1/2):</b><br/>
-          • Mô phỏng màn hình điện thoại cá nhân (SMS / Zalo OA) của khách hàng nhận thông báo từ tủ thông minh.<br/>
-          • <b>Khi gửi hàng:</b> Nhận thông báo kèm 4 số cuối mã vận đơn và vị trí ngăn tủ.<br/>
-          • <b>Khi thuê đồ:</b> Nhận thông báo xác nhận đã thuê thiết bị trong bao nhiêu block.<br/>
-          • <b>Cơ chế xóa trắng tự động:</b> Cứ mỗi lần người dùng bấm Gửi đồ hoặc Thuê đồ mới, màn hình này sẽ tự động xóa trắng mô phỏng như điện thoại của một khách hàng mới!
-        `
-      },
-      auto_tour: {
-        keywords: ['auto tour', 'tu dong', 'dan duong', 'huong dan tung buoc', 'chay thu', 'demo tu dong', 'tour'],
-        title: 'Tự động dẫn đường (Auto-Tour)',
-        responseHtml: `
-          <b>Đang bắt đầu chế độ Tự Động Dẫn Đường!</b><br/>
-          Tôi sẽ tự động chuyển qua các tab và thao tác mẫu trên giao diện điện thoại ngay bây giờ...
-        `
-      },
-      chao_hoi: {
-        keywords: ['chao', 'hello', 'hi', 'xin chao', 'alo', 'ban la ai'],
-        title: 'Lời chào từ Trợ lý AI',
-        responseHtml: `
-          Xin chào bạn! Tôi là <b>SmartLocker AI Guide</b> chạy local trong trình duyệt.<br/>
-          Tôi có thể giúp bạn hiểu và thao tác với 3 chế độ: <b>Gửi Hàng (Shipper)</b>, <b>Nhận Hàng (Cư dân)</b>, và <b>Thuê Đồ (VietQR)</b>. Bạn muốn tìm hiểu mục nào trước?
-        `
-      },
-      cam_on: {
-        keywords: ['cam on', 'thank', 'thanks', 'tuyet', 'hay qua', 'ok', 'oke'],
-        title: 'Phản hồi',
-        responseHtml: `
-          Rất vui được hỗ trợ bạn! Chúc bạn có một buổi trình bày đồ án SmartLocker thật thành công và ấn tượng! 🎉
-        `
-      }
-    };
-
-    function matchAiIntent(userInput) {
-      const cleanInput = removeVietnameseTones(userInput);
-      if (!cleanInput) return null;
-
-      // Check specific intents
-      for (const [intentKey, data] of Object.entries(SMARTLOCKER_AI_KNOWLEDGE)) {
-        for (const kw of data.keywords) {
-          if (cleanInput.includes(removeVietnameseTones(kw))) {
-            return intentKey;
-          }
-        }
-      }
-
-      // Check if user asks about size S, M, L
-      if (cleanInput.includes('size') || cleanInput.includes('co ngan') || cleanInput.includes('ngan tu')) {
-        return 'gui_hang';
-      }
-
-      return null;
-    }
-
-    function appendAiMessage(sender, htmlContent, isMarkdown = false) {
-      const container = document.getElementById('ai-messages-scroll');
-      if (!container) return null;
-
-      const msgDiv = document.createElement('div');
-      msgDiv.className = sender === 'user'
-        ? 'flex items-start justify-end space-x-2'
-        : 'flex items-start space-x-2';
-
-      if (sender === 'user') {
-        msgDiv.innerHTML = `
-          <div class="bg-blue-600 text-white rounded-2xl rounded-tr-xs p-3 shadow-xs max-w-[85%] text-xs font-semibold leading-relaxed">
-            ${htmlContent}
-          </div>
-          <div class="w-7 h-7 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 font-bold text-xs">
-            Bạn
-          </div>
-        `;
-      } else {
-        msgDiv.innerHTML = `
-          <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-          </div>
-          <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3 text-slate-800 shadow-xs max-w-[85%] space-y-1 text-xs leading-relaxed ai-bubble-content">
-            ${htmlContent}
-          </div>
-        `;
-      }
-
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-      if (window.lucide) lucide.createIcons();
-      return msgDiv;
-    }
-
-    function typeWriterAiResponse(htmlContent, onComplete = null) {
-      isAiResponding = true;
-      const container = document.getElementById('ai-messages-scroll');
-      if (!container) return;
-
-      const msgDiv = document.createElement('div');
-      msgDiv.className = 'flex items-start space-x-2';
-      msgDiv.innerHTML = `
-        <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-        </div>
-        <div class="bg-white border border-slate-200 rounded-2xl rounded-tl-xs p-3 text-slate-800 shadow-xs max-w-[85%] text-xs leading-relaxed ai-typing-box">
-          <span class="typing-text"></span><span class="inline-block w-1.5 h-3 bg-blue-600 animate-pulse ml-0.5"></span>
-        </div>
-      `;
-
-      container.appendChild(msgDiv);
-      container.scrollTop = container.scrollHeight;
-      if (window.lucide) lucide.createIcons();
-
-      const typingSpan = msgDiv.querySelector('.typing-text');
-      const cursor = msgDiv.querySelector('.animate-pulse');
-
-      // Instant typewriter effect
-      let charIdx = 0;
-      const strippedText = htmlContent;
-      // If html tags present, render directly with quick reveal
-      setTimeout(() => {
-        if (typingSpan) typingSpan.innerHTML = htmlContent;
-        if (cursor) cursor.remove();
-        container.scrollTop = container.scrollHeight;
-        isAiResponding = false;
-        if (onComplete) onComplete();
-      }, 250);
-    }
-
-    function handleAiQuickAsk(intentKey) {
-      if (isAiResponding) return;
-      const item = SMARTLOCKER_AI_KNOWLEDGE[intentKey];
-      if (!item) return;
-
-      AudioEngine.beep(650, 0.04);
-      appendAiMessage('user', item.title);
-
-      typeWriterAiResponse(item.responseHtml, () => {
-        if (intentKey === 'auto_tour') {
-          triggerAiAutoTour();
-        }
-      });
-    }
-
-    function sendAiUserMessage() {
-      if (isAiResponding) return;
-      const input = document.getElementById('ai-user-input');
-      if (!input) return;
-
-      const userText = input.value.trim();
-      if (!userText) return;
-
-      input.value = '';
-      AudioEngine.beep(650, 0.04);
-      appendAiMessage('user', userText);
-
-      const matchedKey = matchAiIntent(userText);
-      if (matchedKey) {
-        const item = SMARTLOCKER_AI_KNOWLEDGE[matchedKey];
-        typeWriterAiResponse(item.responseHtml, () => {
-          if (matchedKey === 'auto_tour') {
-            triggerAiAutoTour();
-          }
-        });
-      } else {
-        const fallbackHtml = `
-          Tôi đã ghi nhận câu hỏi của bạn! Với web demo SmartLocker này, bạn có thể thử:<br/>
-          • <b>Gửi hàng:</b> Chọn kích cỡ S/M/L -> Nhập SĐT -> Bấm Gửi & Mở tủ.<br/>
-          • <b>Nhận hàng:</b> Nhập SĐT & 4 số cuối mã vận đơn từ màn hình 1/2.<br/>
-          • <b>Thuê đồ:</b> Chọn thiết bị -> Quét VietQR ngân hàng -> Lấy đồ.<br/>
-          Bạn có muốn tôi bấm <b>Tự Động Dẫn Đường (Auto-Tour)</b> giúp bạn không?
-        `;
-        typeWriterAiResponse(fallbackHtml);
-      }
-    }
-
-    function triggerAiAutoTour() {
-      AudioEngine.beep(750, 0.08);
-      // 1. Chuyển sang Tab Shipper
-      switchTab('shipper');
-      selectLockerSize('S');
-      quickFillShipper('0912345678');
-
-      // 2. Sau 1.8s chuyển sang Tab Nhận Hàng
-      setTimeout(() => {
-        AudioEngine.beep(700, 0.08);
-        switchTab('resident');
-        fillPickupForm('0912345678', '6829');
-
-        // 3. Sau 1.8s chuyển sang Tab Thuê Đồ
-        setTimeout(() => {
-          AudioEngine.beep(700, 0.08);
-          switchTab('rental');
-
-          // Kết thúc tour
-          setTimeout(() => {
-            appendAiMessage('ai', '✅ <b>Đã hoàn thành Auto-Tour!</b> Bạn có thể tự do bấm thử từng chức năng trên màn hình điện thoại nhé!');
-          }, 1200);
-        }, 1800);
-      }, 1800);
-    }
   </script>
 </body>
 </html>
